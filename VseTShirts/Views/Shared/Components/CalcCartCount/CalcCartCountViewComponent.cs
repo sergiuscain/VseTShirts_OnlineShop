@@ -14,7 +14,7 @@ namespace VseTShirts.Views.Shared.Components.CalcCartCount
         {
             var cart = _cartStorage.GetCartByUserId(Constants.UserId);//.Positions.Count();
             var positions = cart == null ? null : cart.Positions;
-            int count = positions == null ? 0 : Mapping.ToViewModel(cart).productsCountInCart;
+            int count = positions == null ? 0 : Helper.ToViewModel(cart).productsCountInCart;
             return View("CalcCartCountViewComponent", count);
         }
     }

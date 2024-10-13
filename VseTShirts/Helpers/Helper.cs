@@ -3,9 +3,13 @@ using VseTShirts.Models;
 
 namespace VseTShirts;
 
-public static class Mapping
+public static class Helper
 {
-
+    public static int RandomNumber(this int n)
+    {
+        Random random = new Random();
+        return random.Next(n);
+    } 
     public static List<ProductViewModel> ToViewModel(this List<Product> list)
     {
         var products = new List<ProductViewModel>();
@@ -92,15 +96,6 @@ public static class Mapping
         };
     }
 
-    private static List<CartPosition> ToDBModel(this List<CartPositionViewModel> items)
-    {
-        List<CartPosition> cartPositions = new List<CartPosition>();
-        foreach (var item in items)
-        {
-            cartPositions.Add(ToDBModel(item));
-        }
-        return cartPositions;
-    }
 
     public static OrderStatusViewModel ToViewModel(this OrderStatus orderStatus)
     {
@@ -125,6 +120,15 @@ public static class Mapping
             case OrderStatusViewModel.Получен: return OrderStatus.Получен;
             default: return OrderStatus.Error;
         }
+    }
+    private static List<CartPosition> ToDBModel(this List<CartPositionViewModel> items)
+    {
+        List<CartPosition> cartPositions = new List<CartPosition>();
+        foreach (var item in items)
+        {
+            cartPositions.Add(ToDBModel(item));
+        }
+        return cartPositions;
     }
     public static CartPositionViewModel ToViewModel(this CartPosition cartPosition)
     {

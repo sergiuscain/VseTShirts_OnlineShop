@@ -19,7 +19,7 @@ namespace VseTShirts.Areas.Admin.Controllers
         public IActionResult Index()
         {
             List<Order> orders = ordersStorage.GetAll();
-            return View(Mapping.ToViewModel(orders));
+            return View(Helper.ToViewModel(orders));
         }
         public IActionResult UpdateStatus(Guid id, OrderStatus status)
         {

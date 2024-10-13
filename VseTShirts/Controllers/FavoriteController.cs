@@ -15,7 +15,7 @@ namespace VseTShirts.Controllers
         public IActionResult Index()
         {
             var favoriteProducts = _favoriteProductsStorage.GetByUserId(Constants.UserId);
-            var favoriteProductsViewModel = Mapping.ToViewModel(favoriteProducts);
+            var favoriteProductsViewModel = Helper.ToViewModel(favoriteProducts);
             return View(favoriteProductsViewModel);
         }
         public IActionResult Add(Guid Id)
