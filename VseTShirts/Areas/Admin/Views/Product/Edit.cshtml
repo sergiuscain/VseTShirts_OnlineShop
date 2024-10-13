@@ -1,0 +1,76 @@
+﻿@model ProductViewModel
+
+<form method="post">
+    <div class="col text-center">
+        <div>
+             <label asp-for="Id">Id продукта:</label>
+             <br />
+             <input asp-for="Id" value="@Model.Id" readonly><br>
+            <div><span asp-validation-for="Id"></span></div>
+        </div>
+
+        <div>
+            <label asp-for="Name">Название:</label>
+            <br />
+            <input asp-for="Name" value="@Model.Name"><br>
+            <div><span asp-validation-for="Name"></span></div>
+        </div>
+
+        <div>
+            <label asp-for="Description">Описание:</label>
+            <br />
+            <input asp-for="Description" value="@Model.Description"><br>
+            <div><span asp-validation-for="Description"></span></div>
+        </div>
+
+        <div>
+            <label asp-for="Price">Цена:</label>
+            <br />
+            <input asp-for="Price" value="@Model.Price"><br>
+            <div><span asp-validation-for="Price"></span></div>
+        </div>
+        
+        <div>
+             <label asp-for="Sex">Пол:</label>
+            <br />
+            <input asp-for="Sex" value="@Model.Sex"><br>
+            <div><span asp-validation-for="Sex"></span></div>
+        </div>
+
+        <div>
+            <label asp-for="Quantity">Количество:</label>
+            <br />
+            <input asp-for="Quantity" value="@Model.Quantity"><br>
+            <div><span asp-validation-for="Quantity"></span></div>
+        </div>
+
+        <div>
+            <label asp-for="Color">Цвет:</label>
+            <br />
+            <input asp-for="Color" value="@Model.Color"><br>
+            <div><span asp-validation-for="Color"></span></div>
+        </div>
+
+        <div>
+            <label asp-for="Size">Размер:</label>
+            <br />
+            <input asp-for="Size" value="@Model.Size"><br>
+            <div><span asp-validation-for="Size"></span></div>
+        </div>
+        <div>
+            <label asp-for="Category">Категория:</label>
+            <br />
+             <input asp-for="Category" value="@Model.Category"><br>
+             <div><span asp-validation-for="Category"></span></div>
+        </div>
+        <div>
+            <label asp-for="ImagePath">Изображение:</label>
+            <br />
+            <input type="text" id="ImagePath" name="ImagePath" value="@Model.ImagePath" required><br>
+        </div>
+        <div>
+            <button class="btn border-success" type="submit" asp-area="Admin" asp-controller="Product" asp-action="SaveСhanges">Сохранить изменения</button>
+        </div>
+
+    </div>
+</form>

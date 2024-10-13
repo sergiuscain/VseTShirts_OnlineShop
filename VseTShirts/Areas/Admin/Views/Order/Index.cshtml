@@ -1,0 +1,52 @@
+﻿@model List<OrderViewModel>
+
+<div class="row">
+   @await Html.PartialAsync("AdminLeftMenu")
+
+    <div class="col">
+        <form method="post">
+        <h3>Список заказов:</h3>
+        @foreach (OrderViewModel order in Model)
+        {
+            <div class="col">
+                <table class="btn border-success">
+                   <tr>
+                       <th class="btn border-success">Id заказа: @order.Id</th>
+                       <th  class="btn border-success">Дата: @order.DateAndTime.Date.ToString().Substring(0,10)</th>
+                       <th  class="btn border-success">Время: @order.DateAndTime.TimeOfDay.ToString().Substring(0,5)</th>
+                       <th  class="btn border-success">Адрес получателя: @order.Address</th>
+                   </tr>
+                   <tr>
+                       <th  class="btn border-success">Номер телефона получателя: @order.Phone</th>
+                       <th  class="btn border-success">Статус заказа: @order.Status</th>
+                       <th class="btn border-success">
+                            Изменить статус:
+                            <select name="status" 
+                                asp-for="@order.Status" 
+                                asp-items="@Html.GetEnumSelectList<OrderStatusViewModel>()"></select>
+                            <button type="submit" 
+                                asp-area="Admin" 
+                                asp-controller="Order" 
+                                asp-action="UpdateStatus" 
+                                asp-route-id="@order.Id">Обновить</button>
+                       </th>
+                       <th class="btn btn-danger"><a class="btn" 
+                           asp-area="Admin" 
+                           asp-controller="Order" 
+                           asp-action="DelOrder" 
+                           asp-route-id="@order.Id">Удалить заказ!</a></th>
+                   </tr>
+                        <th class="btn border-success"><a class="btn" 
+                            asp-area="" 
+                            asp-controller="Order" 
+                            asp-action="Order" 
+                            asp-route-id="@order.Id">Список товаров</a></th>
+                   <tr>
+                   </tr>
+                </table>
+            </div>
+            <hr />
+        }
+        </form>
+    </div>
+</div>

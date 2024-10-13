@@ -1,0 +1,49 @@
+﻿@model List<ProductViewModel>
+
+    @if (Model != null && Model.Count > 0)
+{
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-3 card shadow">
+            <div class="card-body">
+                <a style="color:black"
+                   asp-area=""
+                   asp-controller="Product"
+                   asp-action="Index"
+                   asp-route-id="@product.Id">
+                   <h5>@product.Name</h5>
+                </a>
+                 <a class="btn btn-success" 
+                 asp-area=""
+                asp-controller="Home"
+                asp-action="compare"
+                asp-route-id="@product.Id" 
+                role="button" >Сравнить</a>
+                <img style="column-fill" width="250" src="@product.ImagePath" alt="изображение товара" />
+                <h5>@product.Price</h5>
+                <a class="btn border-success"
+                 asp-area=""
+                 asp-controller="Cart"
+                 asp-action="Add"
+                 asp-route-id="@product.Id"
+                role="button">
+                 <h5>Добавить в корзину</h5>
+                </a>
+
+                <a class="btn border-danger"
+                asp-area=""
+                asp-controller="Favorite"
+                asp-action="Remove"
+                asp-route-id="@product.Id">
+                <h5>Удалить из избранного</h5>
+                </a>
+            </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <h3> Список избранного пуст..</h3>
+}

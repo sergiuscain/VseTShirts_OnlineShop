@@ -1,0 +1,39 @@
+﻿@model List<ProductViewModel>;
+@{
+    int comparedPrice = Convert.ToInt32( Model[0].Price - Model[1].Price);
+}
+
+<div class="row">
+    <div class="col-3 card shadow">
+         <div class="card-body">
+             <a style="color:black" href="/product/Index/@Model[0].Id">
+            <h5>@Model[0].Name</h5>
+             </a>
+            <img style="column-fill" width="200" src="@Model[0].ImagePath" alt="@Model[0].ImagePath" />
+        </div>
+    </div>
+
+    <div class="col-3">
+        <h4>Цена: @Model[0].Price</h4>
+        <h4>Цвет: @Model[0].Color</h4>
+        <h4>Размер: @Model[0].Size</h4>
+    </div>
+
+    <div class="col-3">
+          <h4>@Model[1].Price</h4>
+         <h4>@Model[1].Color</h4>
+         <h4>@Model[1].Size</h4>
+    </div>
+
+
+
+    <div class="col-3 card shadow">
+        <div class="card-body">
+             <a style="color:black" href="/product/Index/@Model[1].Id">
+            <h5>@Model[1].Name</h5>
+            </a>
+            <img style="column-fill" width="200" src="@Model[1].ImagePath" alt="@Model[1].ImagePath" />
+        </div>
+    </div>
+    <a class="btn btn-dark" href="/home/removeCompare" role="button">Очистить список сравнения</a>
+</div>

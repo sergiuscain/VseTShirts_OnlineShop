@@ -1,0 +1,26 @@
+﻿@model DeliveryInfo
+
+<form method="post">
+
+<div class="row">
+    <div class="text-center">
+        <label asp-for="Name">ФИО:</label>
+        <div>
+             <input asp-for="Name"/>
+                <div><span asp-validation-for="Name"></span></div>
+        </div>
+        <label asp-for="Address">Адрес доставки:</label>
+        <div>
+             <input asp-for="Address"/>
+        </div>
+        <div><span asp-validation-for="Address"></span></div>
+        <label asp-for="Phone">Номер телефона:</label>
+        <div>
+              <input asp-for="Phone"/>
+        </div>
+            <div><span asp-validation-for="Phone"></span></div>
+        <button class="btn btn-success" type="submit" asp-controller="Order" asp-action="Buy">Оформить заказ</button>
+        
+    </div>
+</div>
+</form>

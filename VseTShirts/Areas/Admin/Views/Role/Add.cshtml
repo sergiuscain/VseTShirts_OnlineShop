@@ -1,0 +1,20 @@
+﻿@model Role
+
+<div class="row">
+    @await Html.PartialAsync("AdminLeftMenu")
+    <div class="col-6">
+<form method="post">
+    <div asp-validation-summary="All"></div>
+    <div col-9>
+        <label asp-for="Name">Введите название роли: </label>
+        <input asp-for="Name">
+        <div><span asp-validation-for="Name" /></div>
+        <br />
+         <label asp-for="Description">Введите Описание роли: </label>
+        <input asp-for="Description">
+         <div><span asp-validation-for="Description" /></div>
+        <button type="submit" asp-area="Admin" asp-controller="Role" asp-action="Add">Создать</button>
+    </div>
+</form>
+</div>
+</div >

@@ -1,0 +1,69 @@
+﻿@model ProductViewModel
+
+<form method="post">
+    <div class="col text-center">
+        <div>
+            <label asp-for="Name">Название:</label>
+            <br />
+            <input asp-for="Name"><br>
+            <div><span asp-validation-for="Name"></span></div>
+        </div>
+
+        <div>
+            <label asp-for="Description">Описание:</label>
+            <br />
+            <input asp-for="Description"><br>
+            <div><span asp-validation-for="Description"></span></div>
+        </div>
+
+        <div>
+            <label asp-for="Price">Цена:</label>
+            <br />
+            <input asp-for="Price"><br>
+            <div><span asp-validation-for="Price"></span></div>
+        </div>
+        
+        <div>
+             <label asp-for="Sex">Пол:</label>
+            <br />
+            <input asp-for="Sex"><br>
+            <div><span asp-validation-for="Sex"></span></div>
+        </div>
+
+        <div>
+            <label asp-for="Quantity">Количество:</label>
+            <br />
+            <input asp-for="Quantity"><br>
+            <div><span asp-validation-for="Quantity"></span></div>
+        </div>
+
+        <div>
+            <label asp-for="Color">Цвет:</label>
+            <br />
+            <input asp-for="Color"><br>
+            <div><span asp-validation-for="Color"></span></div>
+        </div>
+
+        <div>
+            <label asp-for="Size">Размер:</label>
+            <br />
+            <input asp-for="Size"><br>
+            <div><span asp-validation-for="Size"></span></div>
+        </div>
+        <div>
+            <label asp-for="Category">Категория:</label>
+            <br />
+             <input asp-for="Category"><br>
+             <div><span asp-validation-for="Category"></span></div>
+        </div>
+        <div>
+            <label asp-for="ImagePath">Изображение:</label>
+            <br />
+            <input type="text" id="ImagePath" name="ImagePath" value="/img/2.jpg" required><br>
+        </div>
+        <div>
+            <button class="btn border-success" type="submit" asp-area="Admin" asp-controller="Product" asp-action="SaveAdd">Создать продукт</button>
+        </div>
+
+    </div>
+</form>

@@ -1,0 +1,77 @@
+﻿@model List<ProductViewModel>
+
+@if (Model != null && Model.Count > 0)
+{
+<div class="row">
+    @await Html.PartialAsync("AdminLeftMenu")
+
+    <div class="col-9">
+        <h3>Список товаров:</h3>
+        <a class="btn border-primary" 
+        asp-area="Admin"
+        asp-controller="Product"
+        asp-action="Add">Добавить товар</a>
+        <table class="table table-striped">
+            <tr>
+                <th>Название</th>
+                <th>Категория</th>
+                <th>Цена</th>
+                <th>Пол</th>
+                <th>Количество</th>
+                <th>Уменьшить / Увеличить остаток на складе</th>
+                <th>Действия</th>
+            </tr>
+            @foreach (var product in Model)
+            {
+                <tr class"border-success">
+                    <td>@product.Name</td>
+                    <td>@product.Category</td>
+                    <td>@product.Price</td>
+                    <td>@product.Sex</td>
+                    <td>@product.Quantity</td>
+                    <td>
+                        <a class="btn border-primary"
+                        asp-area="Admin"
+                        asp-controller="Product"
+                        asp-action="QuantitiReduce"
+                        asp-route-id="@product.Id">-</a> 
+                        <a class="btn border-primary"
+                        asp-area="Admin"
+                        asp-controller="Product"
+                        asp-action="QuantityIncrease"
+                        asp-route-id="@product.Id">+</a></td>
+                    <td>
+                        <a class="btn border-danger" 
+                         asp-area="Admin"
+                         asp-controller="Product"
+                         asp-action="Delete"
+                         asp-route-id="@product.Id">Удалить</a>
+                    
+                        <a class="btn border-success" 
+                        asp-area="Admin"
+                        asp-controller="Product"
+                        asp-action="Edit"
+                        asp-route-id="@product.Id">Изменить</a>
+                    </td>
+                </tr>
+            }
+            </table>
+
+    </div>
+</div>
+}
+else
+{
+<div class="row">
+    @await Html.PartialAsync("AdminLeftMenu")
+
+    <div class="col-9">
+        <h3>Список товаров:</h3>
+        <h4>Упс, список товаров пуст...</h4>
+            <a class="btn border-primary" 
+            asp-area="Admin"
+            asp-controller="Product"
+            asp-action="Add">Добавить товар</a>
+    </div>
+</div>
+}

@@ -1,0 +1,22 @@
+﻿@model ProductViewModel
+
+<div class="row">
+    <div class=" col-6">
+        <img class="card-img-top" src="@Model.ImagePath" alt="@Model.ImagePath" />
+    </div>
+    <div class="col-6 card shadow">
+        <div>
+            <h5>@Model.Name</h5>
+            <h5>@Model.Price</h5>
+            <a class="btn btn-dark" 
+            asp-area=""
+            asp-controller="Home"\
+            asp-action="Index" role="button">Продолжить покупки</a>
+            <a class="btn btn-dark"
+               asp-area=""
+               asp-controller="Cart"
+               asp-action="Add"
+               asp-route-id="@Model.Id" role="button">Добавить в корзину</a>
+            <h5>@Model.Description</h5>
+        </div>
+    </div>
