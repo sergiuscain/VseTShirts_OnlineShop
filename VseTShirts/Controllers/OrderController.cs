@@ -43,7 +43,7 @@ namespace VseTShirts.Controllers
         public IActionResult Order(Guid id)
         {
             var order = ordersStorage.GetById(id);
-            return View(Mapping.ToViewModel(order));
+            return View(order.ToViewModel());
         }
     }
 }

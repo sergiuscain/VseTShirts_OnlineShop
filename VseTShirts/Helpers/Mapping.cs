@@ -3,10 +3,10 @@ using VseTShirts.Models;
 
 namespace VseTShirts;
 
-public class Mapping
+public static class Mapping
 {
 
-    public static List<ProductViewModel> ToViewModel(List<Product> list)
+    public static List<ProductViewModel> ToViewModel(this List<Product> list)
     {
         var products = new List<ProductViewModel>();
         foreach (var product in list)
@@ -15,7 +15,7 @@ public class Mapping
         }
         return products;
     }
-    public static ProductViewModel ToViewModel(Product product)
+    public static ProductViewModel ToViewModel(this Product product)
     {
         return new ProductViewModel
         {
@@ -33,7 +33,7 @@ public class Mapping
     }
 
 
-    public static List<Product> ToDBModel(List<ProductViewModel> list)
+    public static List<Product> ToDBModel(this List<ProductViewModel> list)
     {
         var products = new List<Product>();
         foreach (var product in list)
@@ -42,7 +42,7 @@ public class Mapping
         }
         return products;
     }
-    public static Product ToDBModel(ProductViewModel productVM)
+    public static Product ToDBModel(this ProductViewModel productVM)
     {
         return new Product
         {
@@ -59,7 +59,7 @@ public class Mapping
         };
     }
 
-    public static OrderViewModel ToViewModel(Order order)
+    public static OrderViewModel ToViewModel(this Order order)
     {
         return new OrderViewModel
         {
@@ -73,11 +73,11 @@ public class Mapping
             UserId = order.UserId
         };
     }
-    public static List<OrderViewModel> ToViewModel(List<Order> orders)
+    public static List<OrderViewModel> ToViewModel(this List<Order> orders)
     {
         return orders.Select(o => ToViewModel(o)).ToList();
     }
-    public static Order ToDBModel(OrderViewModel orderViewMOdel)
+    public static Order ToDBModel(this OrderViewModel orderViewMOdel)
     {
         return new Order
         {
@@ -92,7 +92,7 @@ public class Mapping
         };
     }
 
-    private static List<CartPosition> ToDBModel(List<CartPositionViewModel> items)
+    private static List<CartPosition> ToDBModel(this List<CartPositionViewModel> items)
     {
         List<CartPosition> cartPositions = new List<CartPosition>();
         foreach (var item in items)
@@ -102,7 +102,7 @@ public class Mapping
         return cartPositions;
     }
 
-    public static OrderStatusViewModel ToViewModel(OrderStatus orderStatus)
+    public static OrderStatusViewModel ToViewModel(this OrderStatus orderStatus)
     {
         switch (orderStatus)
         {
@@ -114,7 +114,7 @@ public class Mapping
             default: return OrderStatusViewModel.Error;
         }
     }
-    public static OrderStatus ToDBModel(OrderStatusViewModel orderStatus)
+    public static OrderStatus ToDBModel(this OrderStatusViewModel orderStatus)
     {
         switch (orderStatus)
         {
@@ -126,7 +126,7 @@ public class Mapping
             default: return OrderStatus.Error;
         }
     }
-    public static CartPositionViewModel ToViewModel(CartPosition cartPosition)
+    public static CartPositionViewModel ToViewModel(this CartPosition cartPosition)
     {
         return new CartPositionViewModel
         {
@@ -137,7 +137,7 @@ public class Mapping
             
         };
     }
-    public static CartPosition ToDBModel(CartPositionViewModel cartPositionViewModel)
+    public static CartPosition ToDBModel(this CartPositionViewModel cartPositionViewModel)
     {
         return new CartPosition
         {
@@ -147,7 +147,7 @@ public class Mapping
             Quantity = cartPositionViewModel.Quantity
         };
     }
-    public static CartViewModel ToViewModel(Cart cartDB)
+    public static CartViewModel ToViewModel(this Cart cartDB)
     {
         if (cartDB == null)
             return null;
@@ -163,7 +163,7 @@ public class Mapping
         return newCart;
     }
 
-    public static Cart ToDBModel(CartViewModel cartViewModel)
+    public static Cart ToDBModel(this CartViewModel cartViewModel)
     {
         Cart newCart = new Cart();
         newCart.Id = cartViewModel.Id;

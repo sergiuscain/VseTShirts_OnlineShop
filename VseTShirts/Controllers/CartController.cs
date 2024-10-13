@@ -18,7 +18,7 @@ namespace VseTShirts.Controllers
         public IActionResult Index()
         {
             var cart = cartsStorage.GetCartByUserId(Constants.UserId);
-            return View(Mapping.ToViewModel(cart));
+            return View(cart.ToViewModel());
         }
         public IActionResult Add(Guid Id)
         {

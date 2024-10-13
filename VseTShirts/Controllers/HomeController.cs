@@ -20,7 +20,7 @@ namespace VseTShirts.Controllers
 
         public IActionResult Index()
         {
-                return View(Mapping.ToViewModel(productStorage.GetAll()));
+                return View(productStorage.GetAll().ToViewModel());
         }
 
         public IActionResult Privacy(string a)
@@ -43,9 +43,9 @@ namespace VseTShirts.Controllers
                 if (products.Count < 2)
                     return RedirectToAction("Index");
                 else
-                    return View(Mapping.ToViewModel(products));
+                    return View(products.ToViewModel());
             }
-            return View(Mapping.ToViewModel(comparedStorage.GetByUserId(Constants.UserId)));
+            return View(comparedStorage.GetByUserId(Constants.UserId).ToViewModel());
         }
 
         public IActionResult RemoveCompare()
@@ -58,7 +58,7 @@ namespace VseTShirts.Controllers
         {
             var products = productStorage.GetAll();
             var newProductsList = products.Where(p => p.Name.ToLower().Contains(serachTxt.ToLower())).ToList();
-            return View("Index", Mapping.ToViewModel( newProductsList ));
+            return View("Index", newProductsList.ToViewModel());
         }
     }
 }
