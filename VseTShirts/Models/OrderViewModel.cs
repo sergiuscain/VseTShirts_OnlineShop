@@ -1,7 +1,4 @@
-﻿
-
-using Microsoft.CodeAnalysis.Elfie.Diagnostics;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace VseTShirts.Models
 {
