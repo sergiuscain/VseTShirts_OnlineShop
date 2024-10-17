@@ -9,10 +9,11 @@ namespace VseTShirts
     {
         public static void Main(string[] args)
         {
+
             var builder = WebApplication.CreateBuilder(args);
 
-            string connection = builder.Configuration.GetConnectionString("VseTShirts");
-            object value = builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connection));
+            string connection = builder.Configuration.GetConnectionString("DefaultConnection");
+            object value = builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(connection));
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();

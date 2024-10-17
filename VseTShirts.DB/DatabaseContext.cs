@@ -20,7 +20,7 @@ namespace VseTShirts.DB
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
-            Database.Migrate();  
+            Database.Migrate();
         }
     }
 }
