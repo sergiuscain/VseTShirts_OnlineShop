@@ -4,11 +4,13 @@ using VseTShirts.Areas.Admin.Models;
 using VseTShirts;
 using VseTShirts.DB;
 using VseTShirts.DB.Models;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace VseTShirts.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area(Constants.AdminRoleName)]
+    [Authorize(Roles=Constants.AdminRoleName)]
     public class OrderController : Controller
     {
         private readonly IOrdersStorage ordersStorage;

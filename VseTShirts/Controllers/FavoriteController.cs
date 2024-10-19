@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VseTShirts.DB;
 
 namespace VseTShirts.Controllers
 {
+    [Authorize]
     public class FavoriteController : Controller
     {
         private readonly IFavoriteProductsStorage _favoriteProductsStorage;

@@ -1,14 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VseTShirts.Models;
+using VseTShirts.DB.Models;
+using VseTShirts.DB;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VseTShirts.Controllers
 {
+    
     public class AccountController : Controller
     {
-        private readonly IAccountManager _accountManager;
-        public AccountController(IAccountManager accountManager)
+        private readonly UserManager<User> _usersManager;
+        //private readonly IUsersManager  usersManager;
+        private readonly SignInManager<User> _signInManager;
+        public AccountController(UserManager<User> _usersManager, SignInManager<User> signInManager)
         {
-            _accountManager = accountManager;
+           // this.usersManager = usersManager;
+            this._signInManager = signInManager;
+            this._usersManager = _usersManager;
         }
         public IActionResult Login()
         {
@@ -20,47 +29,20 @@ namespace VseTShirts.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = _accountManager.GetByUserName(login.UserName);
-                if (user == null)
+                var result = _signInManager.PasswordSignInAsync(login.UserName, login.Password, login.isRemembMe, false).Result;
+                if (result.Succeeded)
                 {
-                    user = _accountManager.GetByEmail(login.UserName);
-                    if (user == null)
-                    {
-                       ModelState.AddModelError("Error", "Неверный логин или пароль");
-                       return View(login);
-                    }
-                    if (!_accountManager.VerifyPassword(user, login.Password))
-                    {
-                        ModelState.AddModelError("Error", "Неверный логин или пароль");
-                        return View(login);
-                    }
-                    if (_accountManager.VerifyPassword(user, login.Password))
-                    {
-                        _accountManager.Login(user);
-                    }
+                    return RedirectToAction(nameof(HomeController.Index), "Home");
                 }
-                if (!_accountManager.VerifyPassword(user, login.Password))
+                else
                 {
-                    ModelState.AddModelError("Error", "Неверный логин или пароль");
-                    return View(login);
+                    ModelState.AddModelError("", "Неправильный логин или пароль");
                 }
-                if (_accountManager.VerifyPassword(user, login.Password))
-                {
-                    _accountManager.Login(user);
-                }
-                return RedirectToAction(nameof(HomeController.Index), "Home");
             }
-            else
-            {
-                return RedirectToAction(nameof(Login));
-            }
+                return View(login);
         }
 
 
-        public IActionResult Logout()
-        {
-            return View();
-        }
 
         public IActionResult Register()
         {
@@ -76,10 +58,14 @@ namespace VseTShirts.Controllers
             }
             if (ModelState.IsValid)
             {
-                _accountManager.Register(register);
+               // _accountManager.Register(register);
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
             return RedirectToAction(nameof(Register));
+        }
+        public IActionResult Logout()
+        {
+            return View();
         }
 
         public IActionResult ResetPassword()

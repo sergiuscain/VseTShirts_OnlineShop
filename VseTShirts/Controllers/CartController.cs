@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VseTShirts.DB;
 using VseTShirts.DB.Models;
 using VseTShirts.Models;
 
 namespace VseTShirts.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private readonly ICartsStorage cartsStorage;

@@ -2,6 +2,8 @@ using VseTShirts.Models;
 using VseTShirts.DB;
 using Serilog;
 using Microsoft.EntityFrameworkCore;
+using VseTShirts.DB.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace VseTShirts
 {
@@ -14,8 +16,19 @@ namespace VseTShirts
 
             string connection = builder.Configuration.GetConnectionString("DefaultConnection");
             object value = builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(connection));
-
-            // Add services to the container.
+            builder.Services.AddDbContext<IdentityContext>(options => options.UseNpgsql(connection));
+            builder.Services.AddIdentity<User, IdentityRole>()
+                           .AddEntityFrameworkStores<IdentityContext>();
+            builder.Services.ConfigureApplicationCookie(options =>           //настраиваем куки
+            {
+                options.ExpireTimeSpan = TimeSpan.FromHours(12);
+                options.LoginPath = "/Account/Login";
+                options.LogoutPath = "/Account/Logout";
+                options.Cookie = new CookieBuilder
+                {
+                    IsEssential = true
+                };
+            });
             builder.Services.AddControllersWithViews();
             builder.Services.AddTransient<ICartsStorage ,CartsDBStorage>();
             builder.Services.AddTransient<IProductsStorage ,ProductsDBStorage>();
@@ -28,7 +41,16 @@ namespace VseTShirts
                 .ReadFrom.Configuration(context.Configuration)
                 .Enrich.WithProperty("ApplicationName", "Online Shop"));
 
+
             var app = builder.Build();
+
+            using (var serviceScope = app.Services.CreateScope())
+            {
+                var services = serviceScope.ServiceProvider;
+                var userManager = services.GetRequiredService<UserManager<User>>();
+                var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                IdentityInitializer.Initialize(userManager, rolesManager);
+            }
 
             app.UseSerilogRequestLogging();
 
@@ -45,6 +67,7 @@ namespace VseTShirts
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

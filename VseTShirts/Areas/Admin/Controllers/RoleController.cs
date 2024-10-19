@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VseTShirts.Areas.Admin.Models;
+using VseTShirts.DB;
 using VseTShirts.Models;
 
 namespace VseTShirts.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area(Constants.AdminRoleName)]
+    [Authorize(Roles = Constants.AdminRoleName)]
     public class RoleController : Controller
     {
         private readonly IRolesStorage rolesStorage;
