@@ -15,5 +15,6 @@ namespace VseTShirts.Models
         [PasswordPropertyText]
         public string Password { get; set; }
         public bool isRemembMe { get; set; }
+        public string ReturnUrl { get; set; }
     }
 }

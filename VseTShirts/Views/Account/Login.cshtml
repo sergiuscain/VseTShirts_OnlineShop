@@ -3,6 +3,7 @@
 <form method="post">
     <div class="col text-center  border-primary">
          <div class="validation btn text-danger" asp-validation-summary="All"></div>
+        <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
     <div>
          <label asp-for="UserName" ><h5>Логин:</h5></label>
             <br />

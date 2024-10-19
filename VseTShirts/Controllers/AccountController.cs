@@ -19,9 +19,9 @@ namespace VseTShirts.Controllers
             this._signInManager = signInManager;
             this._usersManager = _usersManager;
         }
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl)
         {
-            return View();
+            return View(new LoginModel() { ReturnUrl = returnUrl});
         }
 
         [HttpPost]
@@ -32,7 +32,7 @@ namespace VseTShirts.Controllers
                 var result = _signInManager.PasswordSignInAsync(login.UserName, login.Password, login.isRemembMe, false).Result;
                 if (result.Succeeded)
                 {
-                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                    return Redirect(login.ReturnUrl);
                 }
                 else
                 {
