@@ -19,6 +19,10 @@ namespace VseTShirts.Controllers
             this._signInManager = signInManager;
             this._usersManager = _usersManager;
         }
+        public IActionResult Index()
+        {
+            return View();
+        }
         public IActionResult Login(string returnUrl)
         {
             return View(new LoginModel() { ReturnUrl = returnUrl});
@@ -44,9 +48,9 @@ namespace VseTShirts.Controllers
 
 
 
-        public IActionResult Register()
+        public IActionResult Register(string returnUrl)
         {
-            return View();
+            return View(new RegisterModel() {ReturnUrl = returnUrl});
         }
 
         [HttpPost]
@@ -58,14 +62,27 @@ namespace VseTShirts.Controllers
             }
             if (ModelState.IsValid)
             {
-               // _accountManager.Register(register);
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+               User user = new User {Email = register.Email, UserName = register.UserName, PhoneNumber = register.PhoneNumber};
+               var result = _usersManager.CreateAsync(user, register.Password).Result;
+                if (result.Succeeded)
+                {
+                    _signInManager .SignInAsync(user, false).Wait();
+                    return Redirect(register.ReturnUrl?? "/Home");
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(error.Code, error.Description);
+                    }
+                }
             }
-            return RedirectToAction(nameof(Register));
+            return View(register);
         }
-        public IActionResult Logout()
+        public  IActionResult Logout()
         {
-            return View();
+             _signInManager.SignOutAsync().Wait();
+            return RedirectToAction("Index");
         }
 
         public IActionResult ResetPassword()

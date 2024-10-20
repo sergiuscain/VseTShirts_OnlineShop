@@ -180,4 +180,13 @@ public static class Helper
         newCart.Positions = positions;
         return newCart;
     }
+    public static UserViewModel ToViewModel(this User user)
+    {
+        return new UserViewModel()
+        {
+            Email = user.Email,
+            UserName = user.UserName,
+            PhoneNumber =  user.PhoneNumber
+        };
+    }
 }

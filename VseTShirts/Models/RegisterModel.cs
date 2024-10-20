@@ -5,6 +5,7 @@ namespace VseTShirts.Models
     public class RegisterModel
 
     {
+        public string ReturnUrl { get; set; }
         [Required(ErrorMessage = "Обязательное поле")]
         [MinLength(8, ErrorMessage = "Email не может быть короче 8 символов")]
         public string Email { get; set; }

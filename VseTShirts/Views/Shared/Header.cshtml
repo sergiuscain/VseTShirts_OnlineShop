@@ -32,9 +32,12 @@
                     </li>
                         @if (User.Identity.IsAuthenticated)
                         {
-                        <li class="nav-item text-dark">
-                            @User.Identity.Name
-                        </li> 
+                        <li class="nav-item">
+                            <a class="nav-link text-dark"
+                               asp-area=""
+                            asp-controller="Account"
+                               asp-action="Index">@User.Identity.Name</a>                     
+                       </li> 
                         <li class="nav-item">
                                <a class="nav-link text-dark"
                                asp-area=""

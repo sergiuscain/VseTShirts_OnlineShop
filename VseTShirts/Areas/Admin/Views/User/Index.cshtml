@@ -1,4 +1,4 @@
-﻿@model List<UserAccount>
+﻿@model List<UserViewModel>
 
 <div class="row">
      @await Html.PartialAsync("AdminLeftMenu")
@@ -16,7 +16,7 @@
             <tr>
                 <th>Логин</th>
                 <th>Email</th>
-                <th>ID</th>
+                <th>Номер</th>
                 <th>Действия</th>
             </tr>
             @foreach (var user in Model)
@@ -24,7 +24,7 @@
                 <tr>
                     <td>@user.UserName</td>
                     <td>@user.Email</td>
-                    <td>@user.Id</td>
+                    <td>@user.PhoneNumber</td>
                     <td>
                        <div class="dropdown">
                         <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -32,8 +32,9 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Block">Заблокировать</a></li>
-                                     <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Del" >Удалить аккаунт</a></li>
-                                     <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="EditRole" >Права доступа</a></li>
+                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Del" >Удалить аккаунт</a></li>
+                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="EditRole" >Права доступа</a></li>
+                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="ChangePassword" asp-route-Email="@user.Email">Сменить пароль</a></li>
                         </ul>
                        </div>
                     </td>

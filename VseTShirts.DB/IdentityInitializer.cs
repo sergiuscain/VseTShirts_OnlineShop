@@ -12,8 +12,8 @@ namespace VseTShirts.DB
     {
         public static void Initialize(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
-            var adminEmail = "admin@admin.com";
-            var adminPassword = "_Admon001@1";
+            var adminEmail = "admin@admin.admin";
+            var adminPassword = "@Admin2024!!";
             if (roleManager.FindByNameAsync(Constants.AdminRoleName).Result == null)
             {
                 roleManager.CreateAsync(new IdentityRole(Constants.AdminRoleName)).Wait();
@@ -24,7 +24,7 @@ namespace VseTShirts.DB
             }
             if (userManager.FindByNameAsync(adminEmail).Result == null)
             {
-                var user = new User { UserName = adminEmail, Email = adminEmail };
+                var user = new User { UserName = adminEmail, Email = adminEmail, PhoneNumber = "+6-666-666-66-6" };
                 var result = userManager.CreateAsync(user, adminPassword).Result;
                 if (result.Succeeded)
                 {
