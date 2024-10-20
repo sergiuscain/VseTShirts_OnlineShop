@@ -25,6 +25,7 @@ namespace VseTShirts.Controllers
         }
         public IActionResult Login(string returnUrl)
         {
+            if (returnUrl == null) returnUrl = "/Home";
             return View(new LoginModel() { ReturnUrl = returnUrl});
         }
 
