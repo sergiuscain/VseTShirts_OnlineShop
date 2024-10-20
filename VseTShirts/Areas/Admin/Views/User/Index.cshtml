@@ -31,9 +31,9 @@
                             Действия:
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Block">Заблокировать</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Del" >Удалить аккаунт</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="EditRole" >Права доступа</a></li>
+                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Block" asp-route-Email="@user.Email">Заблокировать</a></li>
+                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Del" asp-route-Email="@user.Email" >Удалить аккаунт</a></li>
+                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="EditRole" asp-route-Email="@user.Email" >Права доступа</a></li>
                                     <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="ChangePassword" asp-route-Email="@user.Email">Сменить пароль</a></li>
                         </ul>
                        </div>

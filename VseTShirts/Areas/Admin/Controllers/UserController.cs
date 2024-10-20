@@ -47,9 +47,11 @@ namespace VseTShirts.Areas.Admin.Controllers
         {
             return View();
         }
-        public IActionResult Del(uint id)
+        public IActionResult Del(string Email)
         {
-            return View();
+            var user = userManager.FindByEmailAsync(Email);
+            userManager.DeleteAsync(user.Result).Wait();
+            return RedirectToAction("Index");
         }
         public IActionResult EditRole(uint id)
         {
