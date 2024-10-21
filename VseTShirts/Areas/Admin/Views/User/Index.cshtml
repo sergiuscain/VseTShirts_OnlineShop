@@ -1,26 +1,27 @@
-﻿@model List<UserViewModel>
+﻿@model UserIndexViewModel
 
 <div class="row">
      @await Html.PartialAsync("AdminLeftMenu")
-    @if (Model is null || Model.Count < 1)
+    @if (Model is null || Model.Users.Count < 1)
     {
         <div class="col-3 btn border-danger">
-             <h4 class="align-content-center">Упс, Список пользователей пуст</h4>
+            <h4 class="align-content-center">Упс, Список пользователей пуст</h4>
         </div>
     }
     else
     {
         <div class="col-9">
             <h3>Список пользователей:</h3>
-           <table class="table table-striped">
+            <table class="table table-striped">
             <tr>
                 <th>Логин</th>
                 <th>Email</th>
                 <th>Номер</th>
                 <th>Роль</th>
+                <th>Изменить роль</th>
                 <th>Действия</th>
             </tr>
-            @foreach (var user in Model)
+            @foreach (var user in Model.Users)
             {
                 <tr>
                     <td>@user.UserName</td>
@@ -28,21 +29,34 @@
                     <td>@user.PhoneNumber</td>
                     <td>@user.Role</td>
                     <td>
-                       <div class="dropdown">
-                        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                 Роли:
+                                </button>
+                                 <ul class="dropdown-menu"  aria-labelledby="dropdownMenuButton1">
+                                 @foreach (var role in Model.Roles)
+                                 {
+                                     <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="EditRole" asp-route-RoleName="@role.Name" asp-route-Email="@user.Email" >@role.Name</a></li>  
+                                 }
+                                 </ul>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
                             Действия:
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Block" asp-route-Email="@user.Email">Заблокировать</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Del" asp-route-Email="@user.Email" >Удалить аккаунт</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="EditRole" asp-route-Email="@user.Email" >Права доступа</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="ChangePassword" asp-route-Email="@user.Email">Сменить пароль</a></li>
-                        </ul>
-                       </div>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                            <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Block" asp-route-Email="@user.Email">Заблокировать</a></li>
+                            <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Del" asp-route-Email="@user.Email" >Удалить аккаунт</a></li>
+                            <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="ChangePassword" asp-route-Email="@user.Email">Сменить пароль</a></li>
+                            <li><a class="dropdown-item">Test</a> </li>
+                            </ul>
+                        </div>
                     </td>
                 </tr>
             }
-         </table>
+            </table>
        </div>
     } 
 </div>

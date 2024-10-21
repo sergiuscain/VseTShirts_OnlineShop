@@ -13,15 +13,19 @@ namespace VseTShirts.Areas.Admin.Controllers
     public class UserController : Controller
     {
         private readonly UserManager<User> userManager;
-        public UserController(UserManager<User> userManager)
+        private readonly RoleManager<IdentityRole> roleManager;
+        public UserController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             this.userManager = userManager;
+            this.roleManager = roleManager;
         }
 
         public IActionResult Index()
         {
             var users = userManager.Users.ToList();
-            return View(users.Select(u => u.ToViewModel()).ToList());
+            var roles = roleManager.Roles.ToList();
+            var model =  new UserIndexViewModel { Users = users.Select(u => u.ToViewModel()).ToList(), Roles = roles.Select(r => new RoleViewModel { Name = r.Name }).ToList() };
+            return View(model);
         }
         public IActionResult ChangePassword(string Email)
         {
@@ -53,9 +57,14 @@ namespace VseTShirts.Areas.Admin.Controllers
             userManager.DeleteAsync(user.Result).Wait();
             return RedirectToAction("Index");
         }
-        public IActionResult EditRole(uint id)
+        public IActionResult EditRole(string RoleName ,string Email)
         {
-            return View();
+            var user = userManager.FindByEmailAsync(Email).Result;
+            var lastRole = userManager.GetRolesAsync(user).Result.FirstOrDefault();//
+            user.Role = RoleName;
+            userManager.RemoveFromRoleAsync(user, lastRole).Wait();
+            var s = userManager.AddToRoleAsync(user, RoleName).Result;
+            return RedirectToAction("Index");
         }
     }
 }

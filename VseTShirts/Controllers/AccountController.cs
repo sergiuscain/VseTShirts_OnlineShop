@@ -63,12 +63,19 @@ namespace VseTShirts.Controllers
             }
             if (ModelState.IsValid)
             {
-               User user = new User {Email = register.Email, UserName = register.UserName, PhoneNumber = register.PhoneNumber};
+               User user = new User {Email = register.Email, UserName = register.UserName, PhoneNumber = register.PhoneNumber, Role = Constants.UserRoleName};
                var result = _usersManager.CreateAsync(user, register.Password).Result;
                 if (result.Succeeded)
                 {
                     _signInManager .SignInAsync(user, false).Wait();
-                    _usersManager.AddToRoleAsync(user, Constants.UserRoleName).Wait();
+                    try
+                    {
+                        _usersManager.AddToRoleAsync(user, Constants.UserRoleName).Wait();
+                    }
+                    catch (System.Exception ex)
+                    {
+                        ModelState.AddModelError("", "Не удалось добавить роль пользователю: " + ex.Message);
+                    }
                     return Redirect(register.ReturnUrl?? "/Home");
                 }
                 else
