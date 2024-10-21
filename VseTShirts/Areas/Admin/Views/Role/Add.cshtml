@@ -1,4 +1,4 @@
-﻿@model Role
+﻿@model RoleViewModel
 
 <div class="row">
     @await Html.PartialAsync("AdminLeftMenu")
@@ -10,9 +10,6 @@
         <input asp-for="Name">
         <div><span asp-validation-for="Name" /></div>
         <br />
-         <label asp-for="Description">Введите Описание роли: </label>
-        <input asp-for="Description">
-         <div><span asp-validation-for="Description" /></div>
         <button type="submit" asp-area="Admin" asp-controller="Role" asp-action="Add">Создать</button>
     </div>
 </form>

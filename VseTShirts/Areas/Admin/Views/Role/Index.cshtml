@@ -1,4 +1,4 @@
-﻿@model List<Role>
+﻿@model List<RoleViewModel>
 <div class="row">
     @await Html.PartialAsync("AdminLeftMenu")
     @if (Model is null || Model.Count < 1)
@@ -21,15 +21,13 @@
             asp-action="Add">Добавить роль</a>
             <table class="table table-striped">
                 <tr>
-                    <th>Название</th>
-                    <th>Описание роли</th>
+                    <th>Название роли</th>
                     <th>Удалить роль</th>
                 </tr>
                 @foreach (var role in Model)
                 {
                     <tr>
                         <td>@role.Name</td>
-                        <td>@role.Description</td>
                         <td><a class="btn btn-danger"
                             asp-area="Admin"
                             asp-controller="Role"

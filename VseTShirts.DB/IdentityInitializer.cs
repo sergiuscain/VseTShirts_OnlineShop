@@ -31,6 +31,16 @@ namespace VseTShirts.DB
                     userManager.AddToRoleAsync(user, Constants.AdminRoleName).Wait();
                 }
             }
+            else if (userManager.FindByNameAsync(adminEmail).Result != null)
+            {
+                var user = userManager.FindByNameAsync(adminEmail).Result;
+                var isAdmin = userManager.IsInRoleAsync(user, Constants.AdminRoleName);
+                if (!isAdmin.Result)
+                {
+                    userManager.RemoveFromRoleAsync(user, Constants.AdminRoleName).Wait();
+                    userManager.AddToRoleAsync(user, Constants.AdminRoleName).Wait();
+                }
+            }
         }
     }
 }

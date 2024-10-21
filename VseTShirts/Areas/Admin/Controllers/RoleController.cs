@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using VseTShirts.Areas.Admin.Models;
 using VseTShirts.DB;
+using VseTShirts.DB.Models;
 using VseTShirts.Models;
 
 namespace VseTShirts.Areas.Admin.Controllers
@@ -10,16 +12,16 @@ namespace VseTShirts.Areas.Admin.Controllers
     [Authorize(Roles = Constants.AdminRoleName)]
     public class RoleController : Controller
     {
-        private readonly IRolesStorage rolesStorage;
-        public RoleController(IRolesStorage rolesStorage)
+        private readonly RoleManager<IdentityRole> roleManager;
+        public RoleController(RoleManager<IdentityRole> roleManager)
         {
-            this.rolesStorage = rolesStorage;
+            this.roleManager = roleManager;
         }
 
         public IActionResult Index()
         {
-            var roles = rolesStorage.GetAll();
-            return View(roles);
+            var roles = roleManager.Roles.ToList();
+            return View(roles.Select(r => new RoleViewModel { Name = r.Name }).ToList());
         }
 
         public IActionResult Add()
@@ -28,15 +30,15 @@ namespace VseTShirts.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add(Role role)
+        public ActionResult Add(RoleViewModel role)
         {
-            if (rolesStorage.GetByName(role.Name) != null)
+            if (roleManager.FindByNameAsync(role.Name).Result != null)
             {
                 ModelState.AddModelError("Name", "Роль уже существует!");
             }
             else if (ModelState.IsValid)
             {
-                rolesStorage.Add(role);
+                roleManager.CreateAsync(new IdentityRole(role.Name)).Wait();
                 return RedirectToAction(nameof(Index));
             }
             return View(role);
@@ -44,7 +46,8 @@ namespace VseTShirts.Areas.Admin.Controllers
 
         public ActionResult Remove(string name)
         {
-            rolesStorage.Remove(rolesStorage.GetByName(name));
+            var role = roleManager.FindByNameAsync(name).Result;
+            roleManager.DeleteAsync(role).Wait();
             return RedirectToAction(nameof(Index));
         }
     }

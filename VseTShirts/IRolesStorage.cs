@@ -4,10 +4,10 @@ namespace VseTShirts.Models
 {
     public interface IRolesStorage
     {
-        List<Role> GetAll();
-        Role GetByName(string name);
-        void Add(Role role);
+        List<RoleViewModel> GetAll();
+        RoleViewModel GetByName(string name);
+        void Add(RoleViewModel role);
         void RemoveAll();
-        void Remove(Role role);
+        void Remove(RoleViewModel role);
     }
 }
