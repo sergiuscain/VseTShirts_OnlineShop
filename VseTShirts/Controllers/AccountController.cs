@@ -68,6 +68,7 @@ namespace VseTShirts.Controllers
                 if (result.Succeeded)
                 {
                     _signInManager .SignInAsync(user, false).Wait();
+                    _usersManager.AddToRoleAsync(user, Constants.UserRoleName).Wait();
                     return Redirect(register.ReturnUrl?? "/Home");
                 }
                 else
