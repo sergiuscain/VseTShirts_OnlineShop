@@ -36,10 +36,24 @@ namespace VseTShirts.Areas.Admin.Controllers
             {
                 ModelState.AddModelError("Name", "Роль уже существует!");
             }
+            else if (role.Name.Length > 30)
+            {
+                ModelState.AddModelError("Name", "Слишком длинное название роли");
+            }
             else if (ModelState.IsValid)
             {
-                roleManager.CreateAsync(new IdentityRole(role.Name)).Wait();
-                return RedirectToAction(nameof(Index));
+                var result = roleManager.CreateAsync(new IdentityRole(role.Name)).Result;
+                if (result.Succeeded)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
             }
             return View(role);
         }
