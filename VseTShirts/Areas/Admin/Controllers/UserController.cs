@@ -60,10 +60,10 @@ namespace VseTShirts.Areas.Admin.Controllers
         public IActionResult EditRole(string RoleName ,string Email)
         {
             var user = userManager.FindByEmailAsync(Email).Result;
-            var lastRole = userManager.GetRolesAsync(user).Result.FirstOrDefault();//
+            var userRoles = userManager.GetRolesAsync(user).Result;
             user.Role = RoleName;
-            userManager.RemoveFromRoleAsync(user, lastRole).Wait();
-            var s = userManager.AddToRoleAsync(user, RoleName).Result;
+            var result = userManager.RemoveFromRolesAsync(user, userRoles).Result;
+            userManager.AddToRoleAsync(user, RoleName).Wait();
             return RedirectToAction("Index");
         }
     }
