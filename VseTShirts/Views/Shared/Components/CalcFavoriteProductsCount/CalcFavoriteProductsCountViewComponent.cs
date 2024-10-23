@@ -1,19 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using VseTShirts.DB;
+using VseTShirts.DB.Models;
 
 namespace VseTShirts.Views.Shared.ViewComponents.CartViewComponents
 {
     public class CalcFavoriteProductsCountViewComponent : ViewComponent
     {
-        private readonly IFavoriteProductsStorage _favoriteProductsStorage;
-        public CalcFavoriteProductsCountViewComponent(IFavoriteProductsStorage favoriteProductsStorage)
+        private readonly IFavoriteProductsStorage favoriteProductsStorage;
+        private readonly UserManager<User> userManager;
+
+        public CalcFavoriteProductsCountViewComponent(IFavoriteProductsStorage _favoriteProductsStorage, UserManager<User> _userManager)
         {
-            _favoriteProductsStorage = favoriteProductsStorage;
+            favoriteProductsStorage = _favoriteProductsStorage;
+            userManager = _userManager;
         }
         public IViewComponentResult Invoke()
         {
-            int productsCount = _favoriteProductsStorage.GetByUserId(Constants.UserId).Count;
-            return View("FavoriteProductsCountView",productsCount);
+            try 
+            {
+                var user = userManager.FindByNameAsync(User.Identity.Name).Result;
+                int productsCount = favoriteProductsStorage.GetByUserId(user.Id).Count;
+                return View("FavoriteProductsCountView",productsCount);
+            }
+            catch
+            {
+                return View("FavoriteProductsCountView",0);
+            }
         }
     }
 }

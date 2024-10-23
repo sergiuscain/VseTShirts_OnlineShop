@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using VseTShirts.DB;
 using VseTShirts.DB.Models;
@@ -11,10 +12,12 @@ namespace VseTShirts.Controllers
     {
         private readonly ICartsStorage cartsStorage;
         private readonly IOrdersStorage ordersStorage;
-        public OrderController(ICartsStorage cartsStorage, IOrdersStorage ordersStorage)
+        private readonly UserManager<User> userManager;
+        public OrderController(ICartsStorage cartsStorage, IOrdersStorage ordersStorage, UserManager<User> userManager)
         {
             this.cartsStorage = cartsStorage;
             this.ordersStorage = ordersStorage;
+            this.userManager = userManager;
         }
 
         public IActionResult Index()
@@ -29,16 +32,17 @@ namespace VseTShirts.Controllers
             {
                 return View(deliveryInfo);
             }
+            var user = userManager.FindByNameAsync(User.Identity.Name).Result;
             var order = new Order
             {
                 Address = deliveryInfo.Address,
-                Positions = cartsStorage.GetCartByUserId(Constants.UserId).Positions,
+                Positions = cartsStorage.GetCartByUserId(user.Id).Positions,
                 Name = deliveryInfo.Name,
                 Phone = deliveryInfo.Phone,
-                UserId = Constants.UserId
+                UserId = user.Id
             };
             ordersStorage.Add(order);
-            cartsStorage.RemoveAll(Constants.UserId);
+            cartsStorage.RemoveAll(user.Id);
             return View(deliveryInfo);
         }
 

@@ -12,6 +12,6 @@ namespace VseTShirts.DB
         public const string AdminRoleName = "admin";
         public const string UserRoleName = "user";
         public const string UserId = "UserId";
-        public const string UserName = "Пользователь1";
+        //public const string UserName = "Пользователь1";
     }
 }

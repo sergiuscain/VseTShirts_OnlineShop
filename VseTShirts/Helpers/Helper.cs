@@ -127,17 +127,14 @@ public static class Helper
     }
     public static CartPositionViewModel ToViewModel(this CartPosition cartPosition)
     {
-        MapperConfiguration mapperConfig = new MapperConfiguration(config => config.CreateMap<CartPosition, CartPositionViewModel>());
-        Mapper mapper = new Mapper(mapperConfig);
-        return mapper.Map<CartPosition, CartPositionViewModel>(cartPosition);
-        //return new CartPositionViewModel
-        //{
-        //    Id = cartPosition.Id,
-        //    Name = cartPosition.Name,
-        //    Product = ToViewModel(cartPosition.Product),
-        //    Quantity = cartPosition.Quantity,
-            
-        //};
+        return new CartPositionViewModel
+        {
+            Id = cartPosition.Id,
+            Name = cartPosition.Name,
+            Product = ToViewModel(cartPosition.Product),
+            Quantity = cartPosition.Quantity,
+
+        };
     }
     public static CartPosition ToDBModel(this CartPositionViewModel cartPositionViewModel)
     {
@@ -154,38 +151,32 @@ public static class Helper
     }
     public static CartViewModel ToViewModel(this Cart cartDB)
     {
-        MapperConfiguration mapperConfig = new MapperConfiguration(config => config.CreateMap<Cart,CartViewModel>());
-        Mapper mapper = new Mapper(mapperConfig);
-        return mapper.Map<Cart, CartViewModel>(cartDB);
-        //if (cartDB == null)
-        //    return null;
-        //CartViewModel newCart = new CartViewModel();
-        //newCart.Id = cartDB.Id;
-        //newCart.UserId = cartDB.UserId;
-        //List<CartPositionViewModel> positions = new List<CartPositionViewModel>();
-        //foreach (var position in cartDB.Positions)
-        //{
-        //    positions.Add(ToViewModel(position));
-        //}
-        //newCart.Positions = positions;
-        //return newCart;
+        if (cartDB == null)
+            return null;
+        CartViewModel newCart = new CartViewModel();
+        newCart.Id = cartDB.Id;
+        newCart.UserId = cartDB.UserId;
+        List<CartPositionViewModel> positions = new List<CartPositionViewModel>();
+        foreach (var position in cartDB.Positions)
+        {
+            positions.Add(ToViewModel(position));
+        }
+        newCart.Positions = positions;
+        return newCart;
     }
 
     public static Cart ToDBModel(this CartViewModel cartViewModel)
     {
-        MapperConfiguration mapperConfig = new MapperConfiguration(config => config.CreateMap<CartViewModel, Cart>());
-        Mapper mapper = new Mapper(mapperConfig);
-        return mapper.Map<CartViewModel, Cart>(cartViewModel);
-        //Cart newCart = new Cart();
-        //newCart.Id = cartViewModel.Id;
-        //newCart.UserId = cartViewModel.UserId;
-        //List<CartPosition> positions = new List<CartPosition>();
-        //foreach (var position in cartViewModel.Positions)
-        //{
-        //    positions.Add(ToDBModel(position));
-        //}
-        //newCart.Positions = positions;
-        //return newCart;
+        Cart newCart = new Cart();
+        newCart.Id = cartViewModel.Id;
+        newCart.UserId = cartViewModel.UserId;
+        List<CartPosition> positions = new List<CartPosition>();
+        foreach (var position in cartViewModel.Positions)
+        {
+            positions.Add(ToDBModel(position));
+        }
+        newCart.Positions = positions;
+        return newCart;
     }
     public static UserViewModel ToViewModel(this User user)
     {
