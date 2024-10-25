@@ -15,8 +15,8 @@ namespace VseTShirts
             var builder = WebApplication.CreateBuilder(args);
 
             string connection = builder.Configuration.GetConnectionString("DefaultConnection");
-            object value = builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(connection));
-            builder.Services.AddDbContext<IdentityContext>(options => options.UseNpgsql(connection));
+            object value = builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer (connection));
+            builder.Services.AddDbContext<IdentityContext>(options => options.UseSqlServer(connection));
             builder.Services.AddIdentity<User, IdentityRole>()
                            .AddEntityFrameworkStores<IdentityContext>();
             builder.Services.ConfigureApplicationCookie(options =>           //настраиваем куки
