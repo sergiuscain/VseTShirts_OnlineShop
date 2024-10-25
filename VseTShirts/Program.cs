@@ -4,6 +4,7 @@ using Serilog;
 using Microsoft.EntityFrameworkCore;
 using VseTShirts.DB.Models;
 using Microsoft.AspNetCore.Identity;
+using VseTShirts.Helpers;
 
 namespace VseTShirts
 {
@@ -34,6 +35,7 @@ namespace VseTShirts
             builder.Services.AddTransient<IProductsStorage ,ProductsDBStorage>();
             builder.Services.AddTransient<IFavoriteProductsStorage, FavoriteProductsDBStorage>();
             builder.Services.AddTransient<IOrdersStorage, OrdersDBStorage>();
+            builder.Services.AddTransient<ImageProvider>();
             builder.Services.AddTransient<IComparedProductsStorage, ComparedProductsDBStorage>();
             builder.Services.AddSingleton<IAccountManager, AccountInMemoryManager>();
             builder.Services.AddSingleton<IRolesStorage, RolesInMemoryStorage>();

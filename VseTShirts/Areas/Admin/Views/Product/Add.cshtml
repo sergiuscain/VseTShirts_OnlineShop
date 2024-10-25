@@ -1,6 +1,6 @@
 ﻿@model ProductViewModel
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <div class="col text-center">
         <div>
             <label asp-for="Name">Название:</label>
@@ -56,10 +56,10 @@
              <input asp-for="Category"><br>
              <div><span asp-validation-for="Category"></span></div>
         </div>
-        <div>
-            <label asp-for="ImagePath">Изображение:</label>
+        <div class="form-group">
+            <label>Изображение:</label>
             <br />
-            <input type="text" id="ImagePath" name="ImagePath" value="/img/2.jpg" required><br>
+            <input type="file"  name="UploadedFiles" class="form-control"><br>
         </div>
         <div>
             <button class="btn border-success" type="submit" asp-area="Admin" asp-controller="Product" asp-action="SaveAdd">Создать продукт</button>

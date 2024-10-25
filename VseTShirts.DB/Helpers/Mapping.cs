@@ -18,7 +18,6 @@ namespace VseTShirts.DB
                 Description = compared.product.Description,
                 Price = compared.product.Price,
                 CartPositions = compared.product.CartPositions,
-                ImagePath = compared.product.ImagePath,
                 Category = compared.product.Category,
                 Color = compared.product.Color,
                 Size = compared.product.Size,

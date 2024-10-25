@@ -23,36 +23,50 @@ public static class Helper
     }
     public static ProductViewModel ToViewModel(this Product product)
     {
-         MapperConfiguration mapperConfig = new MapperConfiguration(config => config.CreateMap<Product, ProductViewModel>());
-         Mapper mapper = new Mapper(mapperConfig);
-        return mapper.Map<Product, ProductViewModel>(product);
+        var newProduct = new ProductViewModel
+        {
+            Id = product.Id,
+            Name = product.Name,
+            Description = product.Description,
+            Price = product.Price,
+            Quantity = product.Quantity,
+            Category = product.Category,
+            Color = product.Color,
+            Size = product.Size,
+            Sex = product.Sex,
+        };
+        if (product.Images != null)
+        {
+            newProduct.ImagePaths = product.Images.Select(i => i.URL).ToArray();
+        }
+        else
+        {
+            newProduct.ImagePaths = new string[1];
+        }
+            return newProduct;
     }
 
 
     public static List<Product> ToDBModel(this List<ProductViewModel> list)
     {
-        MapperConfiguration mapperConfig = new MapperConfiguration(config => config.CreateMap<List<ProductViewModel>,List<Product>>());
-        Mapper mapper = new Mapper(mapperConfig);
-        return mapper.Map<List<ProductViewModel>, List<Product>>(list);
+        var DBModel = list.ToDBModel();
+        return DBModel;
     }
     public static Product ToDBModel(this ProductViewModel productVM)
     {
-        MapperConfiguration mapperConfig = new MapperConfiguration(config => config.CreateMap<ProductViewModel, Product>());
-        Mapper mapper = new Mapper(mapperConfig);
-        return mapper.Map < ProductViewModel, Product>(productVM);
-        //return new Product
-        //{
-        //    Id = productVM.Id,
-        //    Name = productVM.Name,
-        //    Description = productVM.Description,
-        //    Price = productVM.Price,
-        //    Quantity = productVM.Quantity,
-        //    Sex = productVM.Sex,
-        //    ImagePath = productVM.ImagePath,
-        //    Category = productVM.Category,
-        //    Color = productVM.Color,
-        //    Size = productVM.Size,
-        //};
+        return new Product
+        {
+            Id = productVM.Id,
+            Name = productVM.Name,
+            Description = productVM.Description,
+            Price = productVM.Price,
+            Quantity = productVM.Quantity,
+            Sex = productVM.Sex,
+            Images = productVM.ImagePaths.Select(i => new Image { URL = i}).ToList(),
+            Category = productVM.Category,
+            Color = productVM.Color,
+            Size = productVM.Size,
+        };
     }
 
     public static OrderViewModel ToViewModel(this Order order)

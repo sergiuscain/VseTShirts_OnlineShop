@@ -12,7 +12,7 @@ using VseTShirts.DB;
 namespace VseTShirts.DB.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20241025140837_init")]
+    [Migration("20241025161637_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -113,6 +113,40 @@ namespace VseTShirts.DB.Migrations
                     b.ToTable("FavoriteProducts");
                 });
 
+            modelBuilder.Entity("VseTShirts.DB.Models.Image", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("URL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Images");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("c96dc613-1372-4746-87d7-47fed78a990b"),
+                            ProductId = new Guid("92bced76-82ba-4f44-af74-70eb7b31a6f9"),
+                            URL = "/Images/Products/Image1.jpg"
+                        },
+                        new
+                        {
+                            Id = new Guid("68bfe1d6-a659-4407-aa2a-d38b10af42b1"),
+                            ProductId = new Guid("ba7aec10-45d0-49ad-8ee6-ddbe95371796"),
+                            URL = "/Images/Products/Image2.jpg"
+                        });
+                });
+
             modelBuilder.Entity("VseTShirts.DB.Models.Order", b =>
                 {
                     b.Property<Guid>("Id")
@@ -164,10 +198,6 @@ namespace VseTShirts.DB.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImagePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -189,6 +219,32 @@ namespace VseTShirts.DB.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("92bced76-82ba-4f44-af74-70eb7b31a6f9"),
+                            Category = "Category 1",
+                            Color = "Red",
+                            Description = "Description 1",
+                            Name = "Product 1",
+                            Price = 100m,
+                            Quantity = 10,
+                            Sex = "Male",
+                            Size = "S"
+                        },
+                        new
+                        {
+                            Id = new Guid("ba7aec10-45d0-49ad-8ee6-ddbe95371796"),
+                            Category = "Category 1",
+                            Color = "Red",
+                            Description = "Description 1",
+                            Name = "Product 1",
+                            Price = 100m,
+                            Quantity = 10,
+                            Sex = "Male",
+                            Size = "S"
+                        });
                 });
 
             modelBuilder.Entity("VseTShirts.DB.Models.CartPosition", b =>
@@ -232,6 +288,17 @@ namespace VseTShirts.DB.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("VseTShirts.DB.Models.Image", b =>
+                {
+                    b.HasOne("VseTShirts.DB.Models.Product", "Product")
+                        .WithMany("Images")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("VseTShirts.DB.Models.Cart", b =>
                 {
                     b.Navigation("Positions");
@@ -245,6 +312,8 @@ namespace VseTShirts.DB.Migrations
             modelBuilder.Entity("VseTShirts.DB.Models.Product", b =>
                 {
                     b.Navigation("CartPositions");
+
+                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }

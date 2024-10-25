@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using VseTShirts.DB;
 using VseTShirts.DB.Models;
+using VseTShirts.Helpers;
 using VseTShirts.Models;
 
 
@@ -11,37 +12,39 @@ namespace VseTShirts.Areas.Admin.Controllers
     [Authorize(Roles = Constants.AdminRoleName)]
     public class ProductController : Controller
     {
-        private readonly IProductsStorage productsStorage;
-        public ProductController(IProductsStorage productsStorage)
+        private readonly IProductsStorage _productsStorage;
+        private readonly ImageProvider _imageProvider;
+        public ProductController(IProductsStorage productsStorage, ImageProvider imageProvider)
         {
-            this.productsStorage = productsStorage;
+            this._productsStorage = productsStorage;
+            this._imageProvider = imageProvider;
         }
 
         public IActionResult Index()
         {
-            var products = Helper.ToViewModel( productsStorage.GetAll() );
+            var products = Helper.ToViewModel( _productsStorage.GetAll() );
             
             return View(products);
         }
 
         public IActionResult Delete(Guid Id)
         {
-            productsStorage.Delete(Id);
-             var products = Helper.ToViewModel( productsStorage.GetAll() );
+            _productsStorage.Delete(Id);
+             var products = Helper.ToViewModel( _productsStorage.GetAll() );
             return View(nameof(Index), products);
         }
 
         public IActionResult QuantitiReduce(Guid id) // Уменьшение количества товара на складе
         {
-            productsStorage.QuantitiReduce(id);
-            return View(nameof(Index), Helper.ToViewModel( productsStorage.GetAll() ));
+            _productsStorage.QuantitiReduce(id);
+            return View(nameof(Index), Helper.ToViewModel( _productsStorage.GetAll() ));
         }
 
         public IActionResult QuantityIncrease(Guid id)  //Увеличение количества товара на складе
         {
-            productsStorage.QuantityIncrease(id);
+            _productsStorage.QuantityIncrease(id);
             
-            return View(nameof(Index), Helper.ToViewModel( productsStorage.GetAll() ));
+            return View(nameof(Index), Helper.ToViewModel( _productsStorage.GetAll() ));
         }
 
         public IActionResult Add()
@@ -50,23 +53,26 @@ namespace VseTShirts.Areas.Admin.Controllers
         }
         public IActionResult SaveAdd(ProductViewModel product)
         {
+            var imagePath = _imageProvider.SaveFiles(product.UploadedFiles, ImageFolders.Products);
+            product.ImagePaths = imagePath.ToArray();
             if (!ModelState.IsValid)
             {
                 return View(product);
             }
-            productsStorage.Add(Helper.ToDBModel(product));
+            var productDB = product.ToDBModel();
+            _productsStorage.Add(productDB);
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Edit(Guid id)
         {
-            return View(Helper.ToViewModel( productsStorage.GetById(id) ));
+            return View(Helper.ToViewModel( _productsStorage.GetById(id) ));
         }
 
         [HttpPost]
         public ActionResult SaveСhanges(ProductViewModel newProduct)
         {
-            productsStorage.EditProduct(newProduct.Id, Helper.ToDBModel( newProduct));
+            _productsStorage.EditProduct(newProduct.Id, Helper.ToDBModel( newProduct));
             return RedirectToAction(nameof(Index));
         }
     }

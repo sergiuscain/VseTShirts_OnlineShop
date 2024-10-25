@@ -35,7 +35,7 @@
             asp-route-id="@product.Id" 
             role="button">В избранное</a>
 
-            <img style="column-fill" width="250" src="@product.ImagePath" alt="@product.ImagePath" />
+            <img style="column-fill" width="250" src="@product.ImagePaths.FirstOrDefault()" alt="@product.ImagePaths.FirstOrDefault()" />
             <h5>@product.Price</h5>
             <a class="btn btn-success" 
             asp-area=""
