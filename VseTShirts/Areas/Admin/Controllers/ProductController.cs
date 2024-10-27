@@ -51,28 +51,33 @@ namespace VseTShirts.Areas.Admin.Controllers
         {
             return View();
         }
-        public IActionResult SaveAdd(ProductViewModel product)
+        [HttpPost]
+        public IActionResult SaveAdd(ProductAddViewModel product)
         {
             var imagePath = _imageProvider.SaveFiles(product.UploadedFiles, ImageFolders.Products);
-            product.ImagePaths = imagePath.ToArray();
             if (!ModelState.IsValid)
             {
                 return View(product);
             }
-            var productDB = product.ToDBModel();
+            var productDB = product.ToDBModel(imagePath);
             _productsStorage.Add(productDB);
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Edit(Guid id)
         {
-            return View(Helper.ToViewModel( _productsStorage.GetById(id) ));
+            return View(Helper.ToProductAddViewModel( _productsStorage.GetById(id) ));
         }
 
         [HttpPost]
-        public ActionResult SaveСhanges(ProductViewModel newProduct)
+        public ActionResult SaveСhanges(ProductAddViewModel newProduct)
         {
-            _productsStorage.EditProduct(newProduct.Id, Helper.ToDBModel( newProduct));
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Edit" ,newProduct);
+            }
+            var imagePath = _imageProvider.SaveFiles(newProduct.UploadedFiles, ImageFolders.Products);
+            _productsStorage.EditProduct(newProduct.Id, newProduct.ToDBModel(imagePath));
             return RedirectToAction(nameof(Index));
         }
     }

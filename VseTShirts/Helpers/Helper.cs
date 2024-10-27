@@ -37,11 +37,11 @@ public static class Helper
         };
         if (product.Images != null)
         {
-            newProduct.ImagePaths = product.Images.Select(i => i.URL).ToArray();
+            newProduct.ImagePaths = product.Images.Select(i => i.URL).ToList();
         }
         else
         {
-            newProduct.ImagePaths = new string[1];
+            newProduct.ImagePaths = new List<string>();
         }
             return newProduct;
     }
@@ -66,6 +66,37 @@ public static class Helper
             Category = productVM.Category,
             Color = productVM.Color,
             Size = productVM.Size,
+        };
+    }
+    public static Product ToDBModel(this ProductAddViewModel productVM, List<string> imagePaths)
+    {
+        return new Product
+        {
+            Id = productVM.Id,
+            Name = productVM.Name,
+            Description = productVM.Description,
+            Price = productVM.Price,
+            Quantity = productVM.Quantity,
+            Sex = productVM.Sex,
+            Images = imagePaths.Select(i => new Image { URL = i }).ToList(),
+            Category = productVM.Category,
+            Color = productVM.Color,
+            Size = productVM.Size,
+        };
+    }
+    public static ProductAddViewModel ToProductAddViewModel(Product product)
+    {
+        return new ProductAddViewModel
+        {
+            Id = product.Id,
+            Name = product.Name,
+            Description = product.Description,
+            Price = product.Price,
+            Quantity = product.Quantity,
+            Category = product.Category,
+            Color = product.Color,
+            Size = product.Size,
+            Sex = product.Sex
         };
     }
 
@@ -206,4 +237,5 @@ public static class Helper
 
         //};
     }
+
 }

@@ -1,10 +1,9 @@
-﻿using VseTShirts.DB.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
 namespace VseTShirts.Models
 {
-    public  class ProductViewModel
+    public class ProductAddViewModel
     {
         public Guid Id { get; set; }   //уникальный идентификатор
 
@@ -17,18 +16,18 @@ namespace VseTShirts.Models
         public string Description { get; set; } //описание товара
 
         [Required(ErrorMessage = "Обязательное поле")]
-        [Range(100,99000,ErrorMessage = "Некорректная цена")]
+        [Range(100, 99000, ErrorMessage = "Некорректная цена")]
         public decimal Price { get; set; }  //цена
 
         [Required(ErrorMessage = "Обязательное поле")]
-        [Range(1,10000,ErrorMessage = "Некорректное количество товара")]
+        [Range(1, 10000, ErrorMessage = "Некорректное количество товара")]
         public int Quantity { get; set; } //количество
 
         [Required(ErrorMessage = "Обязательное поле")]
         public string Sex { get; set; } //себестоимость
 
         [Required(ErrorMessage = "Обязательное поле")]
-        [MinLength(4,ErrorMessage = "Слишком короткое название категрии")]
+        [MinLength(4, ErrorMessage = "Слишком короткое название категрии")]
         public string Category { get; set; } //категория товара
 
         [Required(ErrorMessage = "Обязательное поле")]
@@ -38,9 +37,7 @@ namespace VseTShirts.Models
         [Required(ErrorMessage = "Обязательное поле")]
         [MaxLength(4, ErrorMessage = "Введите размер одежды(XS/X/M/L/XL/XXL/XXXL)")]
         public string Size { get; set; }
-        [AllowNull]
-        public List<string> ImagePaths { get; set;}
+        [Required(ErrorMessage ="Загрузите новую картинку")]
         public List<IFormFile> UploadedFiles { get; set; }
-
     }
 }

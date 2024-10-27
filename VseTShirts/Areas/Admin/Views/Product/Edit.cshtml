@@ -1,7 +1,8 @@
-﻿@model ProductViewModel
+﻿@model ProductAddViewModel
 
 <form method="post" enctype="multipart/form-data">
     <div class="col text-center">
+         <div class="validation btn text-danger" asp-validation-summary="All"></div>
         <div>
              <label asp-for="Id">Id продукта:</label>
              <br />
@@ -64,9 +65,10 @@
              <div><span asp-validation-for="Category"></span></div>
         </div>
         <div>
-            <label>Изображение:</label>
+            <label asp-for="UploadedFiles">Изображение:</label>
             <br />
-            <input type="file"  name="UploadedFiles" class="form-control"><br>
+            <input type="file"  name="UploadedFiles" multiple accept="image/*" class="form-control" asp-for="UploadedFiles"><br>
+            <div><span asp-validation-for="UploadedFiles"></span></div>
         </div>
         <div>
             <button class="btn border-success" type="submit" asp-area="Admin" asp-controller="Product" asp-action="SaveСhanges">Сохранить изменения</button>

@@ -8,7 +8,7 @@ namespace VseTShirts.Helpers
         {
             _environment = environment;
         }
-        public List<string> SaveFiles(IFormFile[] files, ImageFolders folder)
+        public List<string> SaveFiles(List<IFormFile> files, ImageFolders folder)
         {
             List<string> imagePaths = new List<string>();
             foreach (var file in files)
