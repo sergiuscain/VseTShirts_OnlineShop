@@ -23,6 +23,7 @@ namespace VseTShirts.DB
                 Size = compared.product.Size,
                 Quantity = compared.product.Quantity,
                 Sex = compared.product.Sex,
+                Images = compared.product.Images
             };
             return product;
         }

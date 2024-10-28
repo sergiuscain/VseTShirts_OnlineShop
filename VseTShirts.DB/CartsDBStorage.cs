@@ -13,14 +13,14 @@ namespace VseTShirts.DB
         }
         public Cart GetCartByUserId(string userId)
         {
-            return _dbContext.Carts.Include(x=>x.Positions).ThenInclude(x=>x.Product).FirstOrDefault(c => c.UserId == userId);
+            return _dbContext.Carts.Include(x=>x.Positions).ThenInclude(x=>x.Product).ThenInclude(p => p.Images).FirstOrDefault(c => c.UserId == userId);
         }
 
         public void Add(Guid productId, string userId)
         {
 
             var existingCart = GetCartByUserId(userId);
-            var product = _dbContext.Products.FirstOrDefault(p => p.Id == productId);
+            var product = _dbContext.Products.Include(p => p.Images).FirstOrDefault(p => p.Id == productId);
             if (existingCart == null)
             {
                 var positions = new List<CartPosition> { new CartPosition{ Name = product.Name, Product = product, Quantity = 1} };
@@ -82,7 +82,7 @@ namespace VseTShirts.DB
         {
 
             var existingCart = GetCartByUserId(userId);
-            var product = _dbContext.Products.FirstOrDefault(p => p.Name == productName);
+            var product = _dbContext.Products.Include(p => p.Images).FirstOrDefault(p => p.Name == productName);
             if (existingCart == null)
             {
                 var positions = new List<CartPosition> { new CartPosition { Name = product.Name, Product = product, Quantity = 1 } };

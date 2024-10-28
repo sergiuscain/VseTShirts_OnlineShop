@@ -32,6 +32,7 @@ namespace VseTShirts.DB
             var order = _dbContext.Orders
                 .Include(c => c.Positions)
                 .ThenInclude(p=>p.Product)
+                .ThenInclude(o => o.Images)
                 .FirstOrDefault(o => o.Id == id);
             return order;
         }
@@ -47,6 +48,7 @@ namespace VseTShirts.DB
             var removedOrder = _dbContext.Orders
                 .Include(o => o.Positions)
                 .ThenInclude(p => p.Product)
+                .ThenInclude(p => p.Images)
                 .FirstOrDefault(o => o.Id == id);
             _dbContext.Orders.Remove(removedOrder);
             _dbContext.SaveChanges();

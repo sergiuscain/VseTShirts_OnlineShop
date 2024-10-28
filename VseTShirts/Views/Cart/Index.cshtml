@@ -18,7 +18,7 @@ else
                      asp-area=""
                      asp-controller="Product"
                      asp-action="Index"
-                     asp-route-Id="@item.Id">
+                     asp-route-Id="@item.Product.Id">
                      <h5>@item.Product.Name</h5>
                      </a>
                     <img style="column-fill" width="200" src="@item.Product.ImagePaths.FirstOrDefault()" alt="@item.Product.ImagePaths.FirstOrDefault()" />
