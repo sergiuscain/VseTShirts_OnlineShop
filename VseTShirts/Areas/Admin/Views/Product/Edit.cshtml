@@ -1,7 +1,8 @@
-﻿@model ProductViewModel
+﻿@model ProductEditViewModel
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <div class="col text-center">
+         <div class="validation btn text-danger" asp-validation-summary="All"></div>
         <div>
              <label asp-for="Id">Id продукта:</label>
              <br />
@@ -64,13 +65,19 @@
              <div><span asp-validation-for="Category"></span></div>
         </div>
         <div>
-            <label asp-for="ImagePath">Изображение:</label>
+            <label asp-for="UploadedFiles">Изображения:</label>
             <br />
-            <input type="text" id="ImagePath" name="ImagePath" value="@Model.ImagePath" required><br>
+            @foreach (var img in Model.ImagePaths)
+            {
+                <img src="@Url.Content(img)" alt=""  width="100" />
+            }
+            <input type="file"  name="UploadedFiles" multiple accept="image/*" class="form-control" asp-for="UploadedFiles"><br>
+            <div><span asp-validation-for="UploadedFiles"></span></div>
+            <input hidden asp-for="ImagePaths" value="@Model.ImagePaths" />
         </div>
         <div>
             <button class="btn border-success" type="submit" asp-area="Admin" asp-controller="Product" asp-action="SaveСhanges">Сохранить изменения</button>
         </div>
 
     </div>
-</form>
+</form> 

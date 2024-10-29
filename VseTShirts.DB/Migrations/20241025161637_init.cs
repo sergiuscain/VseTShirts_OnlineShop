@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace VseTShirts.DB.Migrations
 {
     /// <inheritdoc />
@@ -50,7 +52,6 @@ namespace VseTShirts.DB.Migrations
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Sex = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Size = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -130,6 +131,43 @@ namespace VseTShirts.DB.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    URL = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Images_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Products",
+                columns: new[] { "Id", "Category", "Color", "Description", "Name", "Price", "Quantity", "Sex", "Size" },
+                values: new object[,]
+                {
+                    { new Guid("92bced76-82ba-4f44-af74-70eb7b31a6f9"), "Category 1", "Red", "Description 1", "Product 1", 100m, 10, "Male", "S" },
+                    { new Guid("ba7aec10-45d0-49ad-8ee6-ddbe95371796"), "Category 1", "Red", "Description 1", "Product 1", 100m, 10, "Male", "S" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Images",
+                columns: new[] { "Id", "ProductId", "URL" },
+                values: new object[,]
+                {
+                    { new Guid("68bfe1d6-a659-4407-aa2a-d38b10af42b1"), new Guid("ba7aec10-45d0-49ad-8ee6-ddbe95371796"), "/Images/Products/Image2.jpg" },
+                    { new Guid("c96dc613-1372-4746-87d7-47fed78a990b"), new Guid("92bced76-82ba-4f44-af74-70eb7b31a6f9"), "/Images/Products/Image1.jpg" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_CartPositions_CartId",
                 table: "CartPositions",
@@ -154,6 +192,11 @@ namespace VseTShirts.DB.Migrations
                 name: "IX_FavoriteProducts_ProductId",
                 table: "FavoriteProducts",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Images_ProductId",
+                table: "Images",
+                column: "ProductId");
         }
 
         /// <inheritdoc />
@@ -167,6 +210,9 @@ namespace VseTShirts.DB.Migrations
 
             migrationBuilder.DropTable(
                 name: "FavoriteProducts");
+
+            migrationBuilder.DropTable(
+                name: "Images");
 
             migrationBuilder.DropTable(
                 name: "Carts");

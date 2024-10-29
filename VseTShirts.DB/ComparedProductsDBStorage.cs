@@ -40,7 +40,7 @@ namespace VseTShirts.DB
         }
         public List<Product> GetByUserId(string userId)
         {
-            var comparedProducts = _dbContext.ComparedProducts.Include(p=>p.product).Where(p => p.UserId == userId).ToList();
+            var comparedProducts = _dbContext.ComparedProducts.Include(p=>p.product).ThenInclude(p => p.Images).Where(p => p.UserId == userId).ToList();
             return Mapping.ToProducts(comparedProducts);
         }
     }

@@ -9,7 +9,7 @@
              <a style="color:black" href="/product/Index/@Model[0].Id">
             <h5>@Model[0].Name</h5>
              </a>
-            <img style="column-fill" width="200" src="@Model[0].ImagePath" alt="@Model[0].ImagePath" />
+            <img style="column-fill" width="200" src="@Model[0].ImagePaths.FirstOrDefault()" alt="@Model[0].ImagePaths.FirstOrDefault()" />
         </div>
     </div>
 
@@ -32,7 +32,7 @@
              <a style="color:black" href="/product/Index/@Model[1].Id">
             <h5>@Model[1].Name</h5>
             </a>
-            <img style="column-fill" width="200" src="@Model[1].ImagePath" alt="@Model[1].ImagePath" />
+            <img style="column-fill" width="200" src="@Model[1].ImagePaths.FirstOrDefault()" alt="@Model[1].ImagePaths.FirstOrDefault()" />
         </div>
     </div>
     <a class="btn btn-dark" href="/home/removeCompare" role="button">Очистить список сравнения</a>

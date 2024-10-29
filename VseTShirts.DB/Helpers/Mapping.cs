@@ -18,12 +18,12 @@ namespace VseTShirts.DB
                 Description = compared.product.Description,
                 Price = compared.product.Price,
                 CartPositions = compared.product.CartPositions,
-                ImagePath = compared.product.ImagePath,
                 Category = compared.product.Category,
                 Color = compared.product.Color,
                 Size = compared.product.Size,
                 Quantity = compared.product.Quantity,
                 Sex = compared.product.Sex,
+                Images = compared.product.Images
             };
             return product;
         }

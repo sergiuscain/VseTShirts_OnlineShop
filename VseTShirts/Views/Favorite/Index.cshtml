@@ -20,7 +20,7 @@
                 asp-action="compare"
                 asp-route-id="@product.Id" 
                 role="button" >Сравнить</a>
-                <img style="column-fill" width="250" src="@product.ImagePath" alt="изображение товара" />
+                <img style="column-fill" width="250" src="@product.ImagePaths.FirstOrDefault()" alt="изображение товара" />
                 <h5>@product.Price</h5>
                 <a class="btn border-success"
                  asp-area=""

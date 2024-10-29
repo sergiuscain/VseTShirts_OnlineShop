@@ -38,6 +38,7 @@ namespace VseTShirts.DB
         {
             return _dbContext.FavoriteProducts.Where(p => p.UserId == userId)
                 .Include(p => p.Product)
+                .ThenInclude(p => p.Images)
                 .Select(p => p.Product)
                 .ToList();
         }

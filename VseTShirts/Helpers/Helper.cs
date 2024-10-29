@@ -23,36 +23,113 @@ public static class Helper
     }
     public static ProductViewModel ToViewModel(this Product product)
     {
-         MapperConfiguration mapperConfig = new MapperConfiguration(config => config.CreateMap<Product, ProductViewModel>());
-         Mapper mapper = new Mapper(mapperConfig);
-        return mapper.Map<Product, ProductViewModel>(product);
+        var newProduct = new ProductViewModel
+        {
+            Id = product.Id,
+            Name = product.Name,
+            Description = product.Description,
+            Price = product.Price,
+            Quantity = product.Quantity,
+            Category = product.Category,
+            Color = product.Color,
+            Size = product.Size,
+            Sex = product.Sex,
+        };
+        if (product.Images != null)
+        {
+            newProduct.ImagePaths = product.Images.Select(i => i.URL).ToList();
+        }
+        else
+        {
+            newProduct.ImagePaths = new List<string>();
+        }
+            return newProduct;
     }
 
 
     public static List<Product> ToDBModel(this List<ProductViewModel> list)
     {
-        MapperConfiguration mapperConfig = new MapperConfiguration(config => config.CreateMap<List<ProductViewModel>,List<Product>>());
-        Mapper mapper = new Mapper(mapperConfig);
-        return mapper.Map<List<ProductViewModel>, List<Product>>(list);
+        var DBModel = list.ToDBModel();
+        return DBModel;
     }
     public static Product ToDBModel(this ProductViewModel productVM)
     {
-        MapperConfiguration mapperConfig = new MapperConfiguration(config => config.CreateMap<ProductViewModel, Product>());
-        Mapper mapper = new Mapper(mapperConfig);
-        return mapper.Map < ProductViewModel, Product>(productVM);
-        //return new Product
-        //{
-        //    Id = productVM.Id,
-        //    Name = productVM.Name,
-        //    Description = productVM.Description,
-        //    Price = productVM.Price,
-        //    Quantity = productVM.Quantity,
-        //    Sex = productVM.Sex,
-        //    ImagePath = productVM.ImagePath,
-        //    Category = productVM.Category,
-        //    Color = productVM.Color,
-        //    Size = productVM.Size,
-        //};
+        return new Product
+        {
+            Id = productVM.Id,
+            Name = productVM.Name.ToUpper(),
+            Description = productVM.Description,
+            Price = productVM.Price,
+            Quantity = productVM.Quantity,
+            Sex = productVM.Sex.ToUpper(),
+            Images = productVM.ImagePaths.Select(i => new ProductImage { URL = i}).ToList(),
+            Category = productVM.Category.ToUpper(),
+            Color = productVM.Color.ToUpper(),
+            Size = productVM.Size.ToUpper(),
+        };
+    }
+    public static Product ToDBModel(this ProductAddViewModel productVM, List<string> imagePaths)
+    {
+        return new Product
+        {
+            Id = productVM.Id,
+            Name = productVM.Name.ToUpper(),
+            Description = productVM.Description,
+            Price = productVM.Price,
+            Quantity = productVM.Quantity,
+            Sex = productVM.Sex.ToUpper(),
+            Images = imagePaths.Select(i => new ProductImage { URL = i }).ToList(),
+            Category = productVM.Category.ToUpper(),
+            Color = productVM.Color.ToUpper(),
+            Size = productVM.Size.ToUpper(),
+        };
+    }
+    public static ProductAddViewModel ToProductAddViewModel(Product product)
+    {
+        return new ProductAddViewModel
+        {
+            Name = product.Name,
+            Description = product.Description,
+            Price = product.Price,
+            Quantity = product.Quantity,
+            Category = product.Category,
+            Color = product.Color,
+            Size = product.Size,
+            Sex = product.Sex
+        };
+    }
+    public static ProductEditViewModel ToProductEditViewModel(Product product)
+    {
+        return new ProductEditViewModel
+        {
+            Id = product.Id,
+            Name = product.Name,
+            Description = product.Description,
+            Price = product.Price,
+            Quantity = product.Quantity,
+            Category = product.Category,
+            Color = product.Color,
+            Size = product.Size,
+            Sex = product.Sex, 
+            ImagePaths = product.Images.Select(i => i.URL).ToList(),
+            //ImagePathsForDelete = new List<string>()
+        };
+    }
+    public static Product ToDBModel(this ProductEditViewModel productVM, List<string> imagePaths)
+    {
+        return new Product
+        {
+            Id = productVM.Id,
+            Name = productVM.Name.ToUpper(),
+            Description = productVM.Description,
+            Price = productVM.Price,
+            Quantity = productVM.Quantity,
+            Category = productVM.Category.ToUpper(),
+            Color = productVM.Color .ToUpper(),
+            Size = productVM.Size.ToUpper(),
+            Sex = productVM.Sex.ToUpper(),
+            Images = imagePaths.Select(i => new ProductImage { URL = i }).ToList(),
+        };
     }
 
     public static OrderViewModel ToViewModel(this Order order)
@@ -192,4 +269,21 @@ public static class Helper
 
         //};
     }
+    public static FiltersModel ToDBModel(this FiltersViewModel filtersModel)
+    {
+
+        return new FiltersModel
+        {
+            Category = filtersModel.Category,
+            Color = filtersModel.Color,
+            Size = filtersModel.Size,
+            Sex = filtersModel.Sex,
+            StartPrice = filtersModel.StartPrice,
+            EndPrice = filtersModel.EndPrice,
+            MinQuantity = filtersModel.MinQuantity,
+            MaxQuantity = filtersModel.MaxQuantity,
+            SortBy = filtersModel.SortBy
+        };
+    }
+
 }

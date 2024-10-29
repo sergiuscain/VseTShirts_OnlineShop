@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using VseTShirts.DB;
 using VseTShirts.DB.Models;
+using VseTShirts.Areas.Admin.Models;
+using VseTShirts.Helpers;
 using VseTShirts.Models;
 
 
@@ -11,62 +13,111 @@ namespace VseTShirts.Areas.Admin.Controllers
     [Authorize(Roles = Constants.AdminRoleName)]
     public class ProductController : Controller
     {
-        private readonly IProductsStorage productsStorage;
-        public ProductController(IProductsStorage productsStorage)
+        private readonly IProductsStorage _productsStorage;
+        private readonly ImageProvider _imageProvider;
+        public ProductController(IProductsStorage productsStorage, ImageProvider imageProvider)
         {
-            this.productsStorage = productsStorage;
+            this._productsStorage = productsStorage;
+            this._imageProvider = imageProvider;
         }
 
         public IActionResult Index()
         {
-            var products = Helper.ToViewModel( productsStorage.GetAll() );
+            var products = Helper.ToViewModel( _productsStorage.GetAll() );
             
             return View(products);
         }
 
         public IActionResult Delete(Guid Id)
         {
-            productsStorage.Delete(Id);
-             var products = Helper.ToViewModel( productsStorage.GetAll() );
+            _productsStorage.Delete(Id);
+             var products = Helper.ToViewModel( _productsStorage.GetAll() );
             return View(nameof(Index), products);
         }
-
+        public IActionResult DeleteAllProducts()
+        {
+            _productsStorage.DeleteAll();
+            return RedirectToAction(nameof(Index));
+        }
         public IActionResult QuantitiReduce(Guid id) // Уменьшение количества товара на складе
         {
-            productsStorage.QuantitiReduce(id);
-            return View(nameof(Index), Helper.ToViewModel( productsStorage.GetAll() ));
+            _productsStorage.QuantitiReduce(id);
+            return View(nameof(Index), Helper.ToViewModel( _productsStorage.GetAll() ));
         }
 
         public IActionResult QuantityIncrease(Guid id)  //Увеличение количества товара на складе
         {
-            productsStorage.QuantityIncrease(id);
+            _productsStorage.QuantityIncrease(id);
             
-            return View(nameof(Index), Helper.ToViewModel( productsStorage.GetAll() ));
+            return View(nameof(Index), Helper.ToViewModel( _productsStorage.GetAll() ));
         }
 
         public IActionResult Add()
         {
             return View();
         }
-        public IActionResult SaveAdd(ProductViewModel product)
+        public IActionResult AddRandomProduct(int? count)
         {
+            if (count == null || count <= 0)
+            {
+                count = 1;
+            }
+            for (int i = 0; i < count; i++)
+            {
+                var name = RandomData.GetName();
+                var quantity = RandomData.GetQuantity();
+                var price = RandomData.GetPrice();
+                var sex = RandomData.GetSex();
+                var category = name.Split(" ").Last();
+                var color = name.Split(" ").First();
+                var images = new List<ProductImage>
+                {
+                    new ProductImage { URL = RandomData.GetProductImagePath(sex, category ) .First() }
+                };
+                var randomProduct = new Product
+                {
+                    Name = name,
+                    Quantity = quantity,
+                    Price = price,
+                    Category = category,
+                    Color = color,
+                    Size = RandomData.GetSize(),
+                    Sex = sex,
+                    Description = RandomData.GetDescription(),
+                    Images = images
+                };
+                _productsStorage.Add(randomProduct);
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+        [HttpPost]
+        public IActionResult SaveAdd(ProductAddViewModel product)
+        {
+            var imagePath = _imageProvider.SaveFiles(product.UploadedFiles, ImageFolders.Products);
             if (!ModelState.IsValid)
             {
                 return View(product);
             }
-            productsStorage.Add(Helper.ToDBModel(product));
+            var productDB = product.ToDBModel(imagePath);
+            _productsStorage.Add(productDB);
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Edit(Guid id)
         {
-            return View(Helper.ToViewModel( productsStorage.GetById(id) ));
+            return View(Helper.ToProductEditViewModel( _productsStorage.GetById(id) ));
         }
 
         [HttpPost]
-        public ActionResult SaveСhanges(ProductViewModel newProduct)
+        public ActionResult SaveСhanges(ProductEditViewModel newProduct)
         {
-            productsStorage.EditProduct(newProduct.Id, Helper.ToDBModel( newProduct));
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Edit" ,newProduct);
+            }
+            var imagePath = _imageProvider.SaveFiles(newProduct.UploadedFiles, ImageFolders.Products);
+            _productsStorage.EditProduct(newProduct.Id, newProduct.ToDBModel(imagePath));
             return RedirectToAction(nameof(Index));
         }
     }

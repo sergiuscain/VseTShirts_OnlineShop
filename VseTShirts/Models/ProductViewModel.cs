@@ -1,11 +1,11 @@
 ﻿using VseTShirts.DB.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace VseTShirts.Models
 {
     public  class ProductViewModel
     {
-        private static int instanceCounter = 0;
         public Guid Id { get; set; }   //уникальный идентификатор
 
         [Required(ErrorMessage = "Обязательное поле")]
@@ -28,9 +28,6 @@ namespace VseTShirts.Models
         public string Sex { get; set; } //себестоимость
 
         [Required(ErrorMessage = "Обязательное поле")]
-        public string ImagePath { get; set; } //патч изображения товара
-
-        [Required(ErrorMessage = "Обязательное поле")]
         [MinLength(4,ErrorMessage = "Слишком короткое название категрии")]
         public string Category { get; set; } //категория товара
 
@@ -41,6 +38,9 @@ namespace VseTShirts.Models
         [Required(ErrorMessage = "Обязательное поле")]
         [MaxLength(4, ErrorMessage = "Введите размер одежды(XS/X/M/L/XL/XXL/XXXL)")]
         public string Size { get; set; }
+        [AllowNull]
+        public List<string> ImagePaths { get; set;}
+        public List<IFormFile> UploadedFiles { get; set; }
 
     }
 }

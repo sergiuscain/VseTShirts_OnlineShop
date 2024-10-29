@@ -1,4 +1,6 @@
-﻿namespace VseTShirts.DB.Models
+﻿
+
+namespace VseTShirts.DB.Models
 {
     public class Product
     {
@@ -8,11 +10,10 @@
         public decimal Price { get; set; } 
         public int Quantity { get; set; } 
         public string Sex { get; set; } 
-        public string ImagePath { get; set; } 
         public string Category { get; set; } 
         public string Color { get; set; }
         public string Size { get; set; }
         public List<CartPosition> CartPositions { get; set; }
-  
+        public List<ProductImage> Images { get; set; }
     }
 }
