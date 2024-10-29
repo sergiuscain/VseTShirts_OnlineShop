@@ -12,5 +12,6 @@ namespace VseTShirts
         void EditProduct(Guid Id, Product newProduct);
         List<Product> GetAll();
         Product GetByName(string name);
+        void DeleteAll();
     }
 }

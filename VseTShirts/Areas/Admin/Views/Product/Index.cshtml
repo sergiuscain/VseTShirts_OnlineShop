@@ -16,6 +16,23 @@
         asp-area="Admin"
         asp-controller="Product"
         asp-action="AddRandomProduct">Добавить рандомный товар</a>
+
+         <a class="btn border-primary" 
+        asp-area="Admin"
+        asp-controller="Product"
+        asp-action="AddRandomProduct"
+        asp-route-count="10" >Добавить 10 товаров</a>
+
+         <a class="btn border-primary" 
+        asp-area="Admin"
+        asp-controller="Product"
+        asp-action="AddRandomProduct"
+        asp-route-count="50" >Добавить 50 товаров</a>
+        <a class="btn btn-danger"
+        asp-area="Admin"
+        asp-controller="Product"
+        asp-action="DeleteAllProducts"><h5 class="text-black">УДАЛИТЬ ВСЁ ТОВАРЫ!</h5></a>
+
         <table class="table table-success table-striped-columns table-bordered border-dark" border="1">
             <tr>
                 <th>Название</th>
@@ -24,6 +41,7 @@
                 <th>Пол</th>
                 <th>Количество</th>
                 <th>Уменьшить / Увеличить остаток на складе</th>
+                <th>Изображение</th>
                 <th>Действия</th>
             </tr>
             @foreach (var product in Model)
@@ -44,7 +62,11 @@
                         asp-area="Admin"
                         asp-controller="Product"
                         asp-action="QuantityIncrease"
-                        asp-route-id="@product.Id">+</a></td>
+                        asp-route-id="@product.Id">+</a>
+                    </td>
+                    <td>
+                        <img src="@product.ImagePaths.FirstOrDefault()" width="100" alt="@product.ImagePaths.FirstOrDefault()" />
+                    </td>
                     <td>
                         <a class="btn border-danger" 
                          asp-area="Admin"
@@ -82,6 +104,18 @@ else
             asp-area="Admin"
             asp-controller="Product"
             asp-action="AddRandomProduct">Добавить рандомный товар</a>
+
+            <a class="btn border-primary" 
+            asp-area="Admin"
+            asp-controller="Product"
+            asp-action="AddRandomProduct"
+            asp-route-count="10" >Добавить 10 товаров</a>
+
+            <a class="btn border-primary" 
+            asp-area="Admin"
+            asp-controller="Product"
+            asp-action="AddRandomProduct"
+            asp-route-count="50" >Добавить 50 товаров</a>
     </div>
 </div>
 }

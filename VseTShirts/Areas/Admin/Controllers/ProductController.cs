@@ -34,7 +34,11 @@ namespace VseTShirts.Areas.Admin.Controllers
              var products = Helper.ToViewModel( _productsStorage.GetAll() );
             return View(nameof(Index), products);
         }
-
+        public IActionResult DeleteAllProducts()
+        {
+            _productsStorage.DeleteAll();
+            return RedirectToAction(nameof(Index));
+        }
         public IActionResult QuantitiReduce(Guid id) // Уменьшение количества товара на складе
         {
             _productsStorage.QuantitiReduce(id);
@@ -52,31 +56,39 @@ namespace VseTShirts.Areas.Admin.Controllers
         {
             return View();
         }
-        public IActionResult AddRandomProduct()
+        public IActionResult AddRandomProduct(int? count)
         {
-            var name = RandomData.GetName();
-            var quantity = RandomData.GetQuantity();
-            var price = RandomData.GetPrice();
-            var sex = RandomData.GetSex();
-            var category = name.Split(" ").Last();
-            var color = name.Split(" ").First();
-            var images = new List<ProductImage>
+            if (count == null || count <= 0)
             {
-                new ProductImage { URL = RandomData.GetProductImagePath(sex, category ) .First() } 
-            };
-            var randomProduct = new Product
+                count = 1;
+            }
+            for (int i = 0; i < count; i++)
             {
-                Name = name,
-                Quantity = quantity,
-                Price = price,
-                Category = category,
-                Color = color,
-                Size = RandomData.GetSize(),
-                Sex = sex,
-                Description = RandomData.GetDescription(),
-                Images = images
-            };
-            _productsStorage.Add(randomProduct);
+                var name = RandomData.GetName();
+                var quantity = RandomData.GetQuantity();
+                var price = RandomData.GetPrice();
+                var sex = RandomData.GetSex();
+                var category = name.Split(" ").Last();
+                var color = name.Split(" ").First();
+                var images = new List<ProductImage>
+                {
+                    new ProductImage { URL = RandomData.GetProductImagePath(sex, category ) .First() }
+                };
+                var randomProduct = new Product
+                {
+                    Name = name,
+                    Quantity = quantity,
+                    Price = price,
+                    Category = category,
+                    Color = color,
+                    Size = RandomData.GetSize(),
+                    Sex = sex,
+                    Description = RandomData.GetDescription(),
+                    Images = images
+                };
+                _productsStorage.Add(randomProduct);
+            }
+
             return RedirectToAction(nameof(Index));
         }
         [HttpPost]

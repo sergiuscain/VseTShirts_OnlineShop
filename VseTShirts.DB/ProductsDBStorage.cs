@@ -29,6 +29,13 @@ namespace VseTShirts.DB
             _dbContext.SaveChanges();
         }
 
+        public void DeleteAll()
+        {
+            var allProducts = _dbContext.Products.ToArray();
+            _dbContext.Products.RemoveRange(allProducts);
+            _dbContext.SaveChanges();
+        }
+
         public void EditProduct(Guid id, Product newProduct)
         {
             _dbContext.Products
