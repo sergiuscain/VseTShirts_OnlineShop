@@ -25,7 +25,21 @@ namespace VseTShirts.Controllers
 
         public IActionResult Index()
         {
-                return View(_productStorage.GetAll().ToViewModel());
+            var filters = new FiltersViewModel
+            {
+                Category = "All",
+                StartPrice = 0,
+                EndPrice = 0,
+                SortBy = "Price",
+                Color = "All",
+                Size = "All",
+                Sex = "All",
+                MinQuantity = 0,
+                MaxQuantity = 0,
+            };
+            var productsViewModel = _productStorage.GetAll().ToViewModel();
+            var homeIndexModel = new HomeIndexViewModel { Products = productsViewModel, Filters = filters };
+            return View(homeIndexModel);
         }
 
         public IActionResult Privacy(string a)
@@ -65,7 +79,15 @@ namespace VseTShirts.Controllers
         {
             var products = _productStorage.GetAll();
             var newProductsList = products.Where(p => p.Name.ToLower().Contains(serachTxt.ToLower())).ToList();
-            return View("Index", newProductsList.ToViewModel());
+            var HomeIndexViewModel = new HomeIndexViewModel { Products = newProductsList.ToViewModel() };
+            return View("Index", HomeIndexViewModel);
+        }
+        public IActionResult Filter(FiltersViewModel filters)
+        {
+            var products = _productStorage.GetAll();        
+            var filtredProducts = _productStorage.Filtr(products, filters.ToDBModel());
+            var homeIndexViewModel = new HomeIndexViewModel { Products = filtredProducts.ToViewModel(), Filters = filters };
+            return View("Index", homeIndexViewModel);
         }
     }
 }

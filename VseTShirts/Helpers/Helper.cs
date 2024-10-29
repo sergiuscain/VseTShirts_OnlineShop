@@ -269,5 +269,21 @@ public static class Helper
 
         //};
     }
+    public static FiltersModel ToDBModel(this FiltersViewModel filtersModel)
+    {
+
+        return new FiltersModel
+        {
+            Category = filtersModel.Category,
+            Color = filtersModel.Color,
+            Size = filtersModel.Size,
+            Sex = filtersModel.Sex,
+            StartPrice = filtersModel.StartPrice,
+            EndPrice = filtersModel.EndPrice,
+            MinQuantity = filtersModel.MinQuantity,
+            MaxQuantity = filtersModel.MaxQuantity,
+            SortBy = filtersModel.SortBy
+        };
+    }
 
 }

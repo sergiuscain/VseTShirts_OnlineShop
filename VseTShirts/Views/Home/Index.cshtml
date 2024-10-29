@@ -1,16 +1,37 @@
-﻿@model List<ProductViewModel>
+﻿@model HomeIndexViewModel
 @{
     ViewData["Title"] = "Home Page";
 
 }
 <form method="post">
-    <div class="text-center">
+    <div>
         <input type="text" name="serachTxt" />
         <button asp-controller="Home" asp-action="Search" type="submit">Поиск</button>
     </div>
 </form>
+<form method="post"> 
+    <div>
+        <label asp-for="Filters.StartPrice">Цена от:</label>
+        <input asp-for="Filters.StartPrice" />
+        <label asp-for="Filters.EndPrice">До:</label>
+        <input asp-for="Filters.EndPrice" />
+        <label asp-for="Filters.MinQuantity">Кол-во от::</label>
+        <input asp-for="Filters.MinQuantity" />
+        <label asp-for="Filters.MaxQuantity">До:</label>
+        <input asp-for="Filters.MaxQuantity" />
+        <label asp-for="Filters.Sex">Пол:</label>
+        <input asp-for="Filters.Sex" />
+        <label asp-for="Filters.Color">Цвет:</label>
+        <input asp-for="Filters.Color" />
+        <label asp-for="Filters.Category">Категория:</label>
+        <input asp-for="Filters.Category" />
+        <label asp-for="Filters.Size">Размер</label>
+        <input asp-for="Filters.Size" />
+        <button asp-controller="Home" asp-action="Filter" type="submit">Фильтр</button>
+    </div>
+</form>
 <div class="row">
-@foreach (var product in Model)
+@foreach (var product in Model.Products)
 {
     <div class="col-3 card shadow">
         <div class="card-body">
