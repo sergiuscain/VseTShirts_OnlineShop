@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using VseTShirts.DB;
 using VseTShirts.DB.Models;
+using VseTShirts.Areas.Admin.Models;
 using VseTShirts.Helpers;
 using VseTShirts.Models;
 
@@ -66,11 +67,11 @@ namespace VseTShirts.Areas.Admin.Controllers
 
         public IActionResult Edit(Guid id)
         {
-            return View(Helper.ToProductAddViewModel( _productsStorage.GetById(id) ));
+            return View(Helper.ToProductEditViewModel( _productsStorage.GetById(id) ));
         }
 
         [HttpPost]
-        public ActionResult SaveСhanges(ProductAddViewModel newProduct)
+        public ActionResult SaveСhanges(ProductEditViewModel newProduct)
         {
             if (!ModelState.IsValid)
             {

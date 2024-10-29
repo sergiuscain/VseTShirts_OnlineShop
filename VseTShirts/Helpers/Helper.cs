@@ -99,6 +99,39 @@ public static class Helper
             Sex = product.Sex
         };
     }
+    public static ProductEditViewModel ToProductEditViewModel(Product product)
+    {
+        return new ProductEditViewModel
+        {
+            Id = product.Id,
+            Name = product.Name,
+            Description = product.Description,
+            Price = product.Price,
+            Quantity = product.Quantity,
+            Category = product.Category,
+            Color = product.Color,
+            Size = product.Size,
+            Sex = product.Sex, 
+            ImagePaths = product.Images.Select(i => i.URL).ToList(),
+            //ImagePathsForDelete = new List<string>()
+        };
+    }
+    public static Product ToDBModel(this ProductEditViewModel productVM, List<string> imagePaths)
+    {
+        return new Product
+        {
+            Id = productVM.Id,
+            Name = productVM.Name,
+            Description = productVM.Description,
+            Price = productVM.Price,
+            Quantity = productVM.Quantity,
+            Category = productVM.Category,
+            Color = productVM.Color,
+            Size = productVM.Size,
+            Sex = productVM.Sex,
+            Images = imagePaths.Select(i => new Image { URL = i }).ToList(),
+        };
+    }
 
     public static OrderViewModel ToViewModel(this Order order)
     {
