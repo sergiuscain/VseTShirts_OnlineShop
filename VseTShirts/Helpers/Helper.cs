@@ -57,15 +57,15 @@ public static class Helper
         return new Product
         {
             Id = productVM.Id,
-            Name = productVM.Name,
+            Name = productVM.Name.ToUpper(),
             Description = productVM.Description,
             Price = productVM.Price,
             Quantity = productVM.Quantity,
-            Sex = productVM.Sex,
+            Sex = productVM.Sex.ToUpper(),
             Images = productVM.ImagePaths.Select(i => new ProductImage { URL = i}).ToList(),
-            Category = productVM.Category,
-            Color = productVM.Color,
-            Size = productVM.Size,
+            Category = productVM.Category.ToUpper(),
+            Color = productVM.Color.ToUpper(),
+            Size = productVM.Size.ToUpper(),
         };
     }
     public static Product ToDBModel(this ProductAddViewModel productVM, List<string> imagePaths)
@@ -73,15 +73,15 @@ public static class Helper
         return new Product
         {
             Id = productVM.Id,
-            Name = productVM.Name,
+            Name = productVM.Name.ToUpper(),
             Description = productVM.Description,
             Price = productVM.Price,
             Quantity = productVM.Quantity,
-            Sex = productVM.Sex,
+            Sex = productVM.Sex.ToUpper(),
             Images = imagePaths.Select(i => new ProductImage { URL = i }).ToList(),
-            Category = productVM.Category,
-            Color = productVM.Color,
-            Size = productVM.Size,
+            Category = productVM.Category.ToUpper(),
+            Color = productVM.Color.ToUpper(),
+            Size = productVM.Size.ToUpper(),
         };
     }
     public static ProductAddViewModel ToProductAddViewModel(Product product)
@@ -120,14 +120,14 @@ public static class Helper
         return new Product
         {
             Id = productVM.Id,
-            Name = productVM.Name,
+            Name = productVM.Name.ToUpper(),
             Description = productVM.Description,
             Price = productVM.Price,
             Quantity = productVM.Quantity,
-            Category = productVM.Category,
-            Color = productVM.Color,
-            Size = productVM.Size,
-            Sex = productVM.Sex,
+            Category = productVM.Category.ToUpper(),
+            Color = productVM.Color .ToUpper(),
+            Size = productVM.Size.ToUpper(),
+            Sex = productVM.Sex.ToUpper(),
             Images = imagePaths.Select(i => new ProductImage { URL = i }).ToList(),
         };
     }
