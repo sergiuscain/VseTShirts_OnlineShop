@@ -8,8 +8,8 @@ namespace VseTShirts.Helpers
         private static Random random = new Random();
         private static List<string> _sex = new List<string>
         {
-            "Male",
-            "Female"
+            "Female",
+            "Male"
         };
         private static List<string> _randomProductSize = new List<string>
         {
@@ -21,7 +21,13 @@ namespace VseTShirts.Helpers
         };
         private static List<string> _randomImages = new List<string>
         {
-            "https://cdn1.ozone.ru/s3/multimedia-8/6105537860.jpg"
+            "1.jpg",
+            "2.jpg",
+            "3.jpg",
+            "4.jpg",
+            "5.jpg",
+            "6.jpg",
+            "7.jpg"
         };
         private static List<string> _randomProductDescription = new List<string>
         {
@@ -40,21 +46,11 @@ namespace VseTShirts.Helpers
             "Blue T-Shirt",
             "Green T-Shirt",
             "Red T-Shirt",
-            "Black blouses",
-            "White blouses",
-            "Blue Shiblousesrt",
-            "Green blouses",
-            "Red blouses",
-            "Black jeans",
-            "White jeans",
-            "Blue jeans",
-            "Green jeans",
-            "Red jeans",
-            "Black shoes",
-            "White shoes",
-            "Blue shoes",
-            "Green shoes",
-            "Red shoes",
+            "Black Jeans",
+            "White Jeans",
+            "Blue Jeans",
+            "Green Jeans",
+            "Red Jeans",
             "Black hat",
             "White hat",
             "Blue hat",
@@ -85,11 +81,6 @@ namespace VseTShirts.Helpers
             "Blue socks",
             "Green socks",
             "Red socks",
-            "Black shirt",
-            "White shirt",
-            "Blue shirt",
-            "Green shirt",
-            "Red shirt",
             "Black bag",
             "White bag",
             "Blue bag",
@@ -112,6 +103,6 @@ namespace VseTShirts.Helpers
         public static decimal GetPrice() => random.Next(900, 19990);
         public static int GetQuantity() => random.Next(1, 1000);
         public static string GetSex() => _sex[random.Next(0, _sex.Count)];
-        public static List<string> GetProductImagePath() => new List<string> { _randomImages[random.Next(0, _randomImages.Count)] };
+        public static List<string> GetProductImagePath(string sex ,string category) => new List<string> { $"/Images/RandomProduct/{sex}/{category}/" +_randomImages[random.Next(0, _randomImages.Count)]};
     }
 }

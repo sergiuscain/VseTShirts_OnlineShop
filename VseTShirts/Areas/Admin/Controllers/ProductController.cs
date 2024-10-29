@@ -57,19 +57,22 @@ namespace VseTShirts.Areas.Admin.Controllers
             var name = RandomData.GetName();
             var quantity = RandomData.GetQuantity();
             var price = RandomData.GetPrice();
+            var sex = RandomData.GetSex();
+            var category = name.Split(" ").Last();
+            var color = name.Split(" ").First();
             var images = new List<ProductImage>
             {
-                new ProductImage { URL = RandomData.GetProductImagePath().First() } 
+                new ProductImage { URL = RandomData.GetProductImagePath(sex, category ) .First() } 
             };
             var randomProduct = new Product
             {
                 Name = name,
                 Quantity = quantity,
                 Price = price,
-                Category = name.Split(" ").Last(),
-                Color = name.Split(" ").First(),
+                Category = category,
+                Color = color,
                 Size = RandomData.GetSize(),
-                Sex = RandomData.GetSex(),
+                Sex = sex,
                 Description = RandomData.GetDescription(),
                 Images = images
             };
