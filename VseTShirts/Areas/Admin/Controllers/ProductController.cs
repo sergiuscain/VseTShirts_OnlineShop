@@ -52,6 +52,30 @@ namespace VseTShirts.Areas.Admin.Controllers
         {
             return View();
         }
+        public IActionResult AddRandomProduct()
+        {
+            var name = RandomData.GetName();
+            var quantity = RandomData.GetQuantity();
+            var price = RandomData.GetPrice();
+            var images = new List<ProductImage>
+            {
+                new ProductImage { URL = RandomData.GetProductImagePath().First() } 
+            };
+            var randomProduct = new Product
+            {
+                Name = name,
+                Quantity = quantity,
+                Price = price,
+                Category = name.Split(" ").Last(),
+                Color = name.Split(" ").First(),
+                Size = RandomData.GetSize(),
+                Sex = RandomData.GetSex(),
+                Description = RandomData.GetDescription(),
+                Images = images
+            };
+            _productsStorage.Add(randomProduct);
+            return RedirectToAction(nameof(Index));
+        }
         [HttpPost]
         public IActionResult SaveAdd(ProductAddViewModel product)
         {

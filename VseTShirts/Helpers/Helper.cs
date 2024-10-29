@@ -62,7 +62,7 @@ public static class Helper
             Price = productVM.Price,
             Quantity = productVM.Quantity,
             Sex = productVM.Sex,
-            Images = productVM.ImagePaths.Select(i => new Image { URL = i}).ToList(),
+            Images = productVM.ImagePaths.Select(i => new ProductImage { URL = i}).ToList(),
             Category = productVM.Category,
             Color = productVM.Color,
             Size = productVM.Size,
@@ -78,7 +78,7 @@ public static class Helper
             Price = productVM.Price,
             Quantity = productVM.Quantity,
             Sex = productVM.Sex,
-            Images = imagePaths.Select(i => new Image { URL = i }).ToList(),
+            Images = imagePaths.Select(i => new ProductImage { URL = i }).ToList(),
             Category = productVM.Category,
             Color = productVM.Color,
             Size = productVM.Size,
@@ -88,7 +88,6 @@ public static class Helper
     {
         return new ProductAddViewModel
         {
-            Id = product.Id,
             Name = product.Name,
             Description = product.Description,
             Price = product.Price,
@@ -129,7 +128,7 @@ public static class Helper
             Color = productVM.Color,
             Size = productVM.Size,
             Sex = productVM.Sex,
-            Images = imagePaths.Select(i => new Image { URL = i }).ToList(),
+            Images = imagePaths.Select(i => new ProductImage { URL = i }).ToList(),
         };
     }
 
