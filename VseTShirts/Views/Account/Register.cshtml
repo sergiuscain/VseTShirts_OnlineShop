@@ -34,18 +34,39 @@
      </div>
 
      <div>
-         <label asp-for="Name"><h5>ФИО:</h5></label>
+         <label asp-for="LastName"><h5>Фамилия:</h5></label>
             <br />
-            <input class="col-3" asp-for="Name"/>
-            <div><span asp-validation-for="Name"></span></div>
+            <input class="col-3" asp-for="LastName"/>
+            <div><span asp-validation-for="LastName"></span></div>
      </div>
 
      <dev>
-            <label asp-for="PhoneNumber"><h5>Номер телефона:</h5></label>
+            <label asp-for="FirstName"><h5>Имя:</h5></label>
             <br />
-            <input class="col-3" asp-for="PhoneNumber" />
-            <div><span asp-validation-for="PhoneNumber"></span></div>
+            <input class="col-3" asp-for="FirstName" />
+            <div><span asp-validation-for="FirstName"></span></div>
      </dev>
+
+     <dev>
+       <label asp-for="DateOfBirth"><h5>Дата рождения:</h5></label>
+       <br />
+       <input class="col-3" asp-for="DateOfBirth" />
+       <div><span asp-validation-for="DateOfBirth"></span></div>
+    </dev>
+
+     <dev>
+        <label asp-for="PhoneNumber"><h5>Дата рождения:</h5></label>
+        <br />
+        <input class="col-3" asp-for="PhoneNumber" />
+        <div><span asp-validation-for="PhoneNumber"></span></div>
+    </dev>
+
+    <dev>
+       <label asp-for="Gender"><h5>Пол:</h5></label>
+       <br />
+       <input class="col-3" asp-for="Gender" />
+       <div><span asp-validation-for="Gender"></span></div>
+    </dev>
 
 
      <div>
