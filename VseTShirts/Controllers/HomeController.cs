@@ -38,7 +38,8 @@ namespace VseTShirts.Controllers
                 MaxQuantity = 0,
             };
             var productsViewModel = _productStorage.GetAll().ToViewModel();
-            var homeIndexModel = new HomeIndexViewModel { Products = productsViewModel, Filters = filters };
+            CollectionsList collections = new CollectionsList { Items = new List<string> { "Коллекция1", "Коллекция2", "Коллекция3", "Коллекция4", "Коллекция5", "Коллекция6", "Коллекция7", "Коллекция8", "Коллекция9", } };
+            var homeIndexModel = new HomeIndexViewModel { Products = productsViewModel, Filters = filters, CollectionsList = collections };
             return View(homeIndexModel);
         }
 
@@ -79,14 +80,16 @@ namespace VseTShirts.Controllers
         {
             var products = _productStorage.GetAll();
             var newProductsList = products.Where(p => p.Name.ToLower().Contains(serachTxt.ToLower())).ToList();
-            var HomeIndexViewModel = new HomeIndexViewModel { Products = newProductsList.ToViewModel() };
+            CollectionsList collections = new CollectionsList { Items = new List<string> { "Коллекция1", "Коллекция2", "Коллекция3", "Коллекция4", "Коллекция5", "Коллекция6", "Коллекция7", "Коллекция8", "Коллекция9", } };
+            var HomeIndexViewModel = new HomeIndexViewModel { Products = newProductsList.ToViewModel(), CollectionsList = collections };
             return View("Index", HomeIndexViewModel);
         }
         public IActionResult Filter(FiltersViewModel filters)
         {
             var products = _productStorage.GetAll();        
             var filtredProducts = _productStorage.Filtr(products, filters.ToDBModel());
-            var homeIndexViewModel = new HomeIndexViewModel { Products = filtredProducts.ToViewModel(), Filters = filters };
+            CollectionsList collections = new CollectionsList { Items = new List<string> { "Коллекция1", "Коллекция2", "Коллекция3", "Коллекция4", "Коллекция5", "Коллекция6", "Коллекция7", "Коллекция8", "Коллекция9", } };
+            var homeIndexViewModel = new HomeIndexViewModel { Products = filtredProducts.ToViewModel(), Filters = filters, CollectionsList = collections };
             return View("Index", homeIndexViewModel);
         }
     }
