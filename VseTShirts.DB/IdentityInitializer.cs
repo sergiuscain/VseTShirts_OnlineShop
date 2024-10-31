@@ -24,7 +24,14 @@ namespace VseTShirts.DB
             }
             if (userManager.FindByNameAsync(adminEmail).Result == null)
             {
-                var user = new User { UserName = adminEmail, Email = adminEmail, PhoneNumber = "+6-666-666-66-6", Role = Constants.AdminRoleName };
+                var user = new User 
+                { 
+                    UserName = adminEmail,
+                    Email = adminEmail,
+                    PhoneNumber = "+6-666-666-66-6",
+                    Role = Constants.AdminRoleName,
+                    AvatarURL = "/Images/Avatar/admin.jpg"
+                };
                 var result = userManager.CreateAsync(user, adminPassword).Result;
                 if (result.Succeeded)
                 {

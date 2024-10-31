@@ -13,15 +13,17 @@ namespace VseTShirts.Controllers
         private readonly UserManager<User> _usersManager;
         //private readonly IUsersManager  usersManager;
         private readonly SignInManager<User> _signInManager;
-        public AccountController(UserManager<User> _usersManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> usersManager, SignInManager<User> signInManager)
         {
            // this.usersManager = usersManager;
-            this._signInManager = signInManager;
-            this._usersManager = _usersManager;
+            _signInManager = signInManager;
+            _usersManager = usersManager;
         }
         public IActionResult Index()
         {
-            return View();
+            var user = _usersManager.FindByNameAsync(User.Identity.Name).Result;
+            var userVM = user.ToViewModel();
+            return View(userVM);
         }
         public IActionResult Login(string returnUrl)
         {
@@ -63,7 +65,14 @@ namespace VseTShirts.Controllers
             }
             if (ModelState.IsValid)
             {
-               User user = new User {Email = register.Email, UserName = register.UserName, PhoneNumber = register.PhoneNumber, Role = Constants.UserRoleName};
+               User user = new User 
+               {
+                   Email = register.Email,
+                   UserName = register.UserName,
+                   PhoneNumber = register.PhoneNumber,
+                   Role = Constants.UserRoleName,
+                   AvatarURL = "/Images/Avatar/standart.png"
+               };
                var result = _usersManager.CreateAsync(user, register.Password).Result;
                 if (result.Succeeded)
                 {
