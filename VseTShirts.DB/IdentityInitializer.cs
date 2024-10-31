@@ -30,7 +30,12 @@ namespace VseTShirts.DB
                     Email = adminEmail,
                     PhoneNumber = "+6-666-666-66-6",
                     Role = Constants.AdminRoleName,
-                    AvatarURL = "/Images/Avatar/admin.jpg"
+                    AvatarURL = "/Images/Avatar/admin.jpg",
+                    FirstName = "Админ",
+                    LastName = "Админович",
+                    DateOfBirth = DateTime.Now.AddYears(-25),
+                    Gender = Gender.Man,
+                    Status = UserStatus.Active
                 };
                 var result = userManager.CreateAsync(user, adminPassword).Result;
                 if (result.Succeeded)

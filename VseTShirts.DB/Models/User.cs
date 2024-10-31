@@ -7,5 +7,10 @@ namespace VseTShirts.DB.Models
     {
         public string Role { get; set; }
         public string AvatarURL { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public UserStatus Status { get; set; }
+        public Gender Gender { get; set; }
+        public DateTime DateOfBirth { get; internal set; }
     }
 }

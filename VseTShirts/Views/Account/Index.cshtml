@@ -1,5 +1,19 @@
 ﻿@model UserViewModel
-<div>
-    <h2>@Model.UserName</h2>
-    <img src="@Model.AvatarUrl" alt="@Model.AvatarUrl" />
+<div class="row">
+    @await Html.PartialAsync("UserLeftMenu", Model)
+
+    <div class="col">
+        <div>
+            <img class="rounded-circle" src="@Model.AvatarUrl" width="100" />
+            <h3>Информация о пользователе:</h3>
+            <p>Имя: @Model.FirstName</p>
+            <p>Фамилия: @Model.LastName</p>
+            <p>Email: @Model.Email</p>
+            <p>Дата рождения: @Model.DateOfBirth</p>
+            <p>Пол: @Model.Gender</p>
+            <p>Роль: @Model.Role</p>
+            <a class="btn btn-primary" href="@Url.Action("Edit", "User", new { id = Model.Email })">Редактировать</a>
+            <a class="btn btn-danger" href="@Url.Action("Delete", "User", new { id = Model.Email })">Удалить</a>
+        </div>
+    </div>
 </div>
