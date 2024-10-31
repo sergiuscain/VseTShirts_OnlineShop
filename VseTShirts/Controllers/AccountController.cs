@@ -72,7 +72,12 @@ namespace VseTShirts.Controllers
                    UserName = register.UserName,
                    PhoneNumber = register.PhoneNumber,
                    Role = Constants.UserRoleName,
-                   AvatarURL = "/Images/Avatar/standart.png"
+                   AvatarURL = "/Images/Avatar/standart.png",
+                   FirstName = register.FirstName,
+                   LastName = register.LastName,
+                   Gender = register.Gender.ToString(),
+                   Status = UserStatus.Active.ToString(),
+                   DateOfBirth = register.DateOfBirth
                };
                var result = _usersManager.CreateAsync(user, register.Password).Result;
                 if (result.Succeeded)
