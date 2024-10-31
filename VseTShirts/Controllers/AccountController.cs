@@ -19,6 +19,7 @@ namespace VseTShirts.Controllers
             _signInManager = signInManager;
             _usersManager = usersManager;
         }
+        [Authorize]
         public IActionResult Index()
         {
             var user = _usersManager.FindByNameAsync(User.Identity.Name).Result;
