@@ -292,7 +292,8 @@ public static class Helper
             Id = collectionDB.Id,
             Name = collectionDB.Name,
             Count = collectionDB.Count,
-            Description = collectionDB.Description
+            Description = collectionDB.Description,
+            Products = collectionDB.Products?.Select(p => ToViewModel(p)).ToList()
         };
     }
     public static Collection ToDBModel(this CollectionViewModel collectionViewModel)
@@ -302,7 +303,8 @@ public static class Helper
             Id = collectionViewModel.Id,
             Name = collectionViewModel.Name,
             Count = collectionViewModel.Count,
-            Description = collectionViewModel.Description
+            Description = collectionViewModel.Description,
+            Products = collectionViewModel.Products?.Select(p => ToDBModel(p)).ToList()
         };
     }
 }
