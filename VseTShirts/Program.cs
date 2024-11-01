@@ -31,6 +31,7 @@ namespace VseTShirts
                 };
             });
             builder.Services.AddControllersWithViews();
+            builder.Services.AddTransient<ICollectionsStorage, CollectionsDBStorage>();
             builder.Services.AddTransient<ICartsStorage ,CartsDBStorage>();
             builder.Services.AddTransient<IProductsStorage ,ProductsDBStorage>();
             builder.Services.AddTransient<IFavoriteProductsStorage, FavoriteProductsDBStorage>();

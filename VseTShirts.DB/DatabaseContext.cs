@@ -16,6 +16,7 @@ namespace VseTShirts.DB
         public DbSet<FavoriteProduct> FavoriteProducts { get; set; }
         public DbSet<ComparedProduct> ComparedProducts { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Collection> Collections { get; set; }
         public DbSet<ProductImage> Images { get; set; }
 
 

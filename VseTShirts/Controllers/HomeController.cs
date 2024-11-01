@@ -14,12 +14,14 @@ namespace VseTShirts.Controllers
         private readonly IProductsStorage _productStorage;
         public readonly IComparedProductsStorage _comparedStorage;
         private readonly UserManager<User> _userManager;
+        private readonly ICollectionsStorage _collectionsStorage;
 
-        public HomeController(IProductsStorage productStorage, IComparedProductsStorage comparedStorage, UserManager<User> userManager)
+        public HomeController(IProductsStorage productStorage, IComparedProductsStorage comparedStorage, UserManager<User> userManager, ICollectionsStorage collectionsStorage)
         {
-            this._productStorage = productStorage;
-            this._comparedStorage = comparedStorage;
-            this._userManager = userManager;
+            _productStorage = productStorage;
+            _comparedStorage = comparedStorage;
+            _userManager = userManager;
+            _collectionsStorage = collectionsStorage;
         }
 
 
@@ -38,7 +40,7 @@ namespace VseTShirts.Controllers
                 MaxQuantity = 0,
             };
             var productsViewModel = _productStorage.GetAll().ToViewModel();
-            CollectionsList collections = new CollectionsList { Items = new List<string> { "Коллекция1", "Коллекция2", "Коллекция3", "Коллекция4", "Коллекция5", "Коллекция6", "Коллекция7", "Коллекция8", "Коллекция9", } };
+            List<CollectionViewModel> collections = _collectionsStorage.GetAll().Select(c => c.ToViewModel()).ToList();
             var homeIndexModel = new HomeIndexViewModel { Products = productsViewModel, Filters = filters, CollectionsList = collections };
             return View(homeIndexModel);
         }
@@ -80,7 +82,7 @@ namespace VseTShirts.Controllers
         {
             var products = _productStorage.GetAll();
             var newProductsList = products.Where(p => p.Name.ToLower().Contains(serachTxt.ToLower())).ToList();
-            CollectionsList collections = new CollectionsList { Items = new List<string> { "Коллекция1", "Коллекция2", "Коллекция3", "Коллекция4", "Коллекция5", "Коллекция6", "Коллекция7", "Коллекция8", "Коллекция9", } };
+            List<CollectionViewModel> collections = _collectionsStorage.GetAll().Select(c => c.ToViewModel()).ToList();
             var HomeIndexViewModel = new HomeIndexViewModel { Products = newProductsList.ToViewModel(), CollectionsList = collections };
             return View("Index", HomeIndexViewModel);
         }
@@ -88,7 +90,7 @@ namespace VseTShirts.Controllers
         {
             var products = _productStorage.GetAll();        
             var filtredProducts = _productStorage.Filtr(products, filters.ToDBModel());
-            CollectionsList collections = new CollectionsList { Items = new List<string> { "Коллекция1", "Коллекция2", "Коллекция3", "Коллекция4", "Коллекция5", "Коллекция6", "Коллекция7", "Коллекция8", "Коллекция9", } };
+            List<CollectionViewModel> collections = _collectionsStorage.GetAll().Select(c => c.ToViewModel()).ToList();
             var homeIndexViewModel = new HomeIndexViewModel { Products = filtredProducts.ToViewModel(), Filters = filters, CollectionsList = collections };
             return View("Index", homeIndexViewModel);
         }

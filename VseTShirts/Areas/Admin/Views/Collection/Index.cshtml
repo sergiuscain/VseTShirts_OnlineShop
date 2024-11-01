@@ -1,0 +1,38 @@
+﻿@model List<CollectionViewModel> 
+<div class="row">
+    @await Html.PartialAsync("AdminLeftMenu")
+    <div class="col">
+        <h3>Список коллекций:</h3>
+        <form method="post" class="btn border-primary">
+            <label>Название:</label>
+            <input type="text" name="name" />
+            <label>Описание:</label>
+            <input type="text" name="description" />
+            <button class="btn border-primary" type="submit" asp-area="Admin" asp-controller="Collection" asp-action="Add")">Добавить коллекцию</button><br
+        </form>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Описание</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var collection in Model)
+                {
+                    <tr>
+                        <td>@collection.Id</td>
+                        <td>@collection.Name</td>
+                        <td>@collection.Description</td>
+                        <td>
+                            <a class="btn btn-info" href="@Url.Action("Edit", "Collection", new { id = collection.Id })">Изменить</a>
+                            <a class="btn btn-danger" href="@Url.Action("Delete", "Collection", new { id = collection.Id })">Удалить</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
