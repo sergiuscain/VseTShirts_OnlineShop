@@ -9,9 +9,11 @@ namespace VseTShirts.Areas.Admin.Controllers
     public class CollectionController : Controller
     {
         private readonly ICollectionsStorage _collections;
-        public CollectionController(ICollectionsStorage collections)
+        private readonly IProductsStorage _products;
+        public CollectionController(ICollectionsStorage collections, IProductsStorage productsStorage)
         {
             _collections = collections;
+            _products = productsStorage;
         }
         public IActionResult Index()
         {
@@ -30,6 +32,11 @@ namespace VseTShirts.Areas.Admin.Controllers
             _collections.Delete(id);
             return RedirectToAction("Index");
         }
-
+        public IActionResult Products(string name)
+        {
+            var products = _products.GetByCollection(name);
+            var productsVM = products.ToViewModel();
+            return View(productsVM);
+        }
     }
 }

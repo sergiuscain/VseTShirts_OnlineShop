@@ -60,6 +60,7 @@ namespace VseTShirts.DB
                     Category = "Category 1",
                     Color = "Red",
                     Size = "S",
+                    NameOfCollection = "Коллекция1"
                 },
                 new Product
 {
@@ -72,6 +73,7 @@ namespace VseTShirts.DB
                     Category = "Category 1",
                     Color = "Red",
                     Size = "S",
+                    NameOfCollection = "Коллекция1"
                 }
             }); 
         } 

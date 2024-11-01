@@ -169,6 +169,11 @@ namespace VseTShirts.DB
                 return products;
         }
 
+        public List<Product> GetByCollection(string nameOfCollection)
+        {
+            var products = _dbContext.Products.Where(p => p.NameOfCollection == nameOfCollection).ToList();
+            return products;
+        }
     }
 }   
     

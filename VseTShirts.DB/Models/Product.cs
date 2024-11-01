@@ -15,5 +15,6 @@ namespace VseTShirts.DB.Models
         public string Size { get; set; }
         public List<CartPosition> CartPositions { get; set; }
         public List<ProductImage> Images { get; set; }
+        public string NameOfCollection { get; set; }
     }
 }

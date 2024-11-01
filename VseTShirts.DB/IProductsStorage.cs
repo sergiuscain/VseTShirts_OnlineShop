@@ -14,5 +14,6 @@ namespace VseTShirts
         Product GetByName(string name);
         void DeleteAll();
         List<Product> Filtr(List<Product> products ,FiltersModel filters);
+        List<Product> GetByCollection(string name);
     }
 }

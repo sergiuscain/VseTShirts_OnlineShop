@@ -87,6 +87,15 @@ namespace VseTShirts.Helpers
             "GREEN BAG",
             "RED BAG",
         };
+        private static List<string> collections = new List<string>
+        {
+            "Аниме",
+            "Древние боги",
+            "LoL",
+            "DevilMayCry",
+            "GodOfWar"
+
+        };
 
         public static List<string> RandomProductName { get => _randomProductName; set => _randomProductName = value; }
         public static List<string> RandomImages { get => _randomImages; set => _randomImages = value; }
@@ -104,5 +113,10 @@ namespace VseTShirts.Helpers
         public static int GetQuantity() => random.Next(1, 1000);
         public static string GetSex() => _sex[random.Next(0, _sex.Count)];
         public static List<string> GetProductImagePath(string sex ,string category) => new List<string> { $"/Images/RandomProduct/{sex}/{category}/" +_randomImages[random.Next(0, _randomImages.Count)]};
+
+        public static string GetCollection()
+        {
+            return collections[random.Next(0, collections.Count)];
+        }
     }
 }

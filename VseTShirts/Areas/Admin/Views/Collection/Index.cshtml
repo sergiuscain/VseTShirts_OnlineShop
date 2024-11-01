@@ -27,8 +27,9 @@
                         <td>@collection.Name</td>
                         <td>@collection.Description</td>
                         <td>
-                            <a class="btn btn-info" href="@Url.Action("Edit", "Collection", new { id = collection.Id })">Изменить</a>
-                            <a class="btn btn-danger" href="@Url.Action("Delete", "Collection", new { id = collection.Id })">Удалить</a>
+                            <a class="btn btn-info"   asp-area="Admin" asp-controller="Collection" asp-action="Edit" asp-route-id="@collection.Id">Изменить</a>
+                            <a class="btn btn-danger" asp-area="Admin" asp-controller="Collection" asp-action="Delete" asp-route-id="@collection.Id">Удалить</a>
+                            <a class="btn btn-danger" asp-area="Admin" asp-controller="Collection" asp-action="Products" asp-route-name="@collection.Name" >Товары</a>
                         </td>
                     </tr>
                 }

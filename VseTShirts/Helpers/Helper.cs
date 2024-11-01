@@ -34,6 +34,7 @@ public static class Helper
             Color = product.Color,
             Size = product.Size,
             Sex = product.Sex,
+            NameOfCollection = product.NameOfCollection,
         };
         if (product.Images != null)
         {

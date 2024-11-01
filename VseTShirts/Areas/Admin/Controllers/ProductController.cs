@@ -84,7 +84,8 @@ namespace VseTShirts.Areas.Admin.Controllers
                     Size = RandomData.GetSize(),
                     Sex = sex,
                     Description = RandomData.GetDescription(),
-                    Images = images
+                    Images = images,
+                    NameOfCollection = RandomData.GetCollection()
                 };
                 _productsStorage.Add(randomProduct);
             }
@@ -100,6 +101,7 @@ namespace VseTShirts.Areas.Admin.Controllers
                 return View(product);
             }
             var productDB = product.ToDBModel(imagePath);
+            productDB.NameOfCollection = "Не задана";
             _productsStorage.Add(productDB);
             return RedirectToAction(nameof(Index));
         }

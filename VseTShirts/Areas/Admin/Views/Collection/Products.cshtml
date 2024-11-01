@@ -1,0 +1,48 @@
+﻿@model List<ProductViewModel>
+
+@if (Model != null && Model.Count > 0)
+{
+<div class="row">
+    @await Html.PartialAsync("AdminLeftMenu")
+
+    <div class="col-9">
+        <h3>Список товаров в коллекции:</h3>
+        <table class="table table-success table-striped-columns table-bordered border-dark" border="1">
+            <tr>
+                <th>Название</th>
+                <th>Категория</th>
+                <th>Цена</th>
+                <th>Пол</th>
+                <th>Количество</th>
+                <th>Коллекция:</th>
+                <th>Изображение</th>
+            </tr>
+            @foreach (var product in Model)
+            {
+                <tr class"border-success">
+                    <td>@product.Name</td>
+                    <td>@product.Category</td>
+                    <td>@product.Price</td>
+                    <td>@product.Sex</td>
+                    <td>@product.Quantity</td>
+                    <td>@product.NameOfCollection</td>
+                    <td>
+                        <img src="@product.ImagePaths.FirstOrDefault()" width="100" alt="@product.ImagePaths.FirstOrDefault()" />
+                    </td>
+                </tr>
+            }
+            </table>
+
+    </div>
+</div>
+}
+else
+{
+<div class="row">
+    @await Html.PartialAsync("AdminLeftMenu")
+
+    <div class="col-9">
+        <h3>Коллекция пустая:</h3>
+    </div>
+</div>
+}
