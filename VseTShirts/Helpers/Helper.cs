@@ -11,7 +11,7 @@ public static class Helper
     {
         Random random = new Random();
         return random.Next(n);
-    } 
+    }
     public static List<ProductViewModel> ToViewModel(this List<Product> list)
     {
         var products = new List<ProductViewModel>();
@@ -43,7 +43,7 @@ public static class Helper
         {
             newProduct.ImagePaths = new List<string>();
         }
-            return newProduct;
+        return newProduct;
     }
 
 
@@ -62,7 +62,7 @@ public static class Helper
             Price = productVM.Price,
             Quantity = productVM.Quantity,
             Sex = productVM.Sex.ToUpper(),
-            Images = productVM.ImagePaths.Select(i => new ProductImage { URL = i}).ToList(),
+            Images = productVM.ImagePaths.Select(i => new ProductImage { URL = i }).ToList(),
             Category = productVM.Category.ToUpper(),
             Color = productVM.Color.ToUpper(),
             Size = productVM.Size.ToUpper(),
@@ -110,7 +110,7 @@ public static class Helper
             Category = product.Category,
             Color = product.Color,
             Size = product.Size,
-            Sex = product.Sex, 
+            Sex = product.Sex,
             ImagePaths = product.Images.Select(i => i.URL).ToList(),
             //ImagePathsForDelete = new List<string>()
         };
@@ -125,7 +125,7 @@ public static class Helper
             Price = productVM.Price,
             Quantity = productVM.Quantity,
             Category = productVM.Category.ToUpper(),
-            Color = productVM.Color .ToUpper(),
+            Color = productVM.Color.ToUpper(),
             Size = productVM.Size.ToUpper(),
             Sex = productVM.Sex.ToUpper(),
             Images = imagePaths.Select(i => new ProductImage { URL = i }).ToList(),
@@ -285,5 +285,24 @@ public static class Helper
             SortBy = filtersModel.SortBy
         };
     }
-
+    public static CollectionViewModel ToViewModel(this Collection collectionDB)
+    {
+        return new CollectionViewModel
+        {
+            Id = collectionDB.Id,
+            Name = collectionDB.Name,
+            Count = collectionDB.Count,
+            Description = collectionDB.Description
+        };
+    }
+    public static Collection ToDBModel(this CollectionViewModel collectionViewModel)
+    {
+        return new Collection
+        {
+            Id = collectionViewModel.Id,
+            Name = collectionViewModel.Name,
+            Count = collectionViewModel.Count,
+            Description = collectionViewModel.Description
+        };
+    }
 }
