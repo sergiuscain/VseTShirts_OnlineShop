@@ -41,7 +41,7 @@ namespace VseTShirts.Controllers
             };
             var productsViewModel = _productStorage.GetAll().ToViewModel();
             List<CollectionViewModel> collections = _collectionsStorage.GetAll().Select(c => c.ToViewModel()).ToList();
-            var homeIndexModel = new HomeIndexViewModel { Products = productsViewModel, Filters = filters, CollectionsList = collections };
+            var homeIndexModel = new HomeIndexViewModel { Products = productsViewModel, Filters = filters, CollectionsList = collections, IsActiveFilters = false};
             return View(homeIndexModel);
         }
 
@@ -83,8 +83,8 @@ namespace VseTShirts.Controllers
             var products = _productStorage.GetAll();
             var newProductsList = products.Where(p => p.Name.ToLower().Contains(serachTxt.ToLower())).ToList();
             List<CollectionViewModel> collections = _collectionsStorage.GetAll().Select(c => c.ToViewModel()).ToList();
-            var HomeIndexViewModel = new HomeIndexViewModel { Products = newProductsList.ToViewModel(), CollectionsList = collections };
-            return View("Index", HomeIndexViewModel);
+            var homeIndexViewModel = new HomeIndexViewModel { Products = newProductsList.ToViewModel(), CollectionsList = collections };
+            return View("Index", homeIndexViewModel);
         }
         public IActionResult Filter(FiltersViewModel filters)
         {

@@ -1,0 +1,44 @@
+﻿@model HomeIndexViewModel
+<form method="post"> 
+    <div class="btn">
+        <label asp-for="Filters.StartPrice">Цена от: </label>
+        <input class="input-group-sm rounded-3" asp-for="Filters.StartPrice"/>
+        <label asp-for="Filters.EndPrice"> До:</label>
+        <input class="rounded-3" asp-for="Filters.EndPrice" /><br/>
+        <label asp-for="Filters.MinQuantity">Кол-во от:</label>
+        <input class="rounded-3" asp-for="Filters.MinQuantity" />
+        <label asp-for="Filters.MaxQuantity">До:</label>
+        <input class="rounded-3" asp-for="Filters.MaxQuantity" /><br/>
+        <label asp-for="Filters.Sex">Пол:</label>
+        <select class="gorm-select rounded-3 btn border-dark" aria-label="Пол" asp-for="Filters.Sex">
+            <option value="All">Все</option>
+            <option value="Male">Мужской</option>
+            <option value="female">Женский</option>
+        </select>
+        <label asp-for="Filters.Color">Цвет:</label>
+        <select class="gorm-select rounded-3 btn border-dark" aria-label="Цвет" asp-for="Filters.Color">
+            <option value="All">Все</option>
+            @foreach (var color in Model.Colors)
+            {
+                <option value="@color">@color</option>
+            }
+        </select>
+        <label asp-for="Filters.Size">Размер:</label>
+        <select class="gorm-select rounded-3 btn border-dark" aria-label="Размер" asp-for="Filters.Size">
+            <option value="All">Все</option>
+            @foreach (var size in Model.Sizes)
+            {
+                <option value="@size">@size</option>
+            }
+        </select>
+        <label asp-for="Filters.Category">Категория:</label>
+        <select class="gorm-select rounded-3 btn border-dark" aria-label="Категория" asp-for="Filters.Category">
+            <option value="All">Все</option>
+            @foreach (var category in Model.Categories)
+            {
+                <option value="@category">@category</option>
+            }
+        </select>
+        <button class="border-dark rounded-3" asp-controller="Home" asp-action="Filter" type="submit">Фильтр</button>
+    </div>
+</form>

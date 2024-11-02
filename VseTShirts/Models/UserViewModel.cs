@@ -1,4 +1,6 @@
-﻿namespace VseTShirts.Models
+﻿using VseTShirts.Helpers;
+
+namespace VseTShirts.Models
 {
     public class UserViewModel
     {

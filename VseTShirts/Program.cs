@@ -38,8 +38,6 @@ namespace VseTShirts
             builder.Services.AddTransient<IOrdersStorage, OrdersDBStorage>();
             builder.Services.AddTransient<ImageProvider>();
             builder.Services.AddTransient<IComparedProductsStorage, ComparedProductsDBStorage>();
-            builder.Services.AddSingleton<IAccountManager, AccountInMemoryManager>();
-            builder.Services.AddSingleton<IRolesStorage, RolesInMemoryStorage>();
             builder.Host.UseSerilog((context, configuration) => configuration
                 .ReadFrom.Configuration(context.Configuration)
                 .Enrich.WithProperty("ApplicationName", "Online Shop"));

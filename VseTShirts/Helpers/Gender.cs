@@ -1,4 +1,4 @@
-﻿namespace VseTShirts.Models
+﻿namespace VseTShirts.Helpers
 {
     public enum Gender
     {
