@@ -1,0 +1,57 @@
+﻿@model HomeIndexViewModel
+
+<div class="col">
+    <form method="post">
+        <div class="text-xl-center" >
+            <input class="rounded-3" type="text" name="serachTxt" />
+            <button class="rounded-3" asp-controller="Home" asp-action="Search" type="submit">Поиск</button>
+        </div>
+    </form>
+        <div class="dropdown-center">
+            <button class="btn btn-default dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Фильтры
+            </button>
+            <ul class="dropdown-menu border-dark" role="menu">
+                <li class="text-center">
+                     @await Html.PartialAsync("FilterComponent");
+                </li>
+          </ul>
+        </div>
+    <div class="row">
+    @foreach (var product in Model.Products)
+    {
+        <div class="col-3 card shadow m-1">
+            <div class="card-body ">
+                <img style="column-fill" width="200" src="@product.ImagePaths.FirstOrDefault()" alt="@product.ImagePaths.FirstOrDefault()" />
+                <a style="color:black" 
+                asp-area="" 
+                asp-controller="Product"
+                asp-action="Index"
+                asp-route-id="@product.Id">
+                <h5>@product.Name</h5></a>
+                <h5>@product.Price</h5>
+                <a class="btn btn-success" 
+                asp-area=""
+                asp-controller="Home"
+                asp-action="compare"
+                asp-route-id="@product.Id" 
+                role="button" >Comp</a>
+                <a class="btn btn-success" 
+                asp-area=""
+                asp-controller="Favorite"
+                asp-action="Add"
+                asp-route-id="@product.Id" 
+                role="button">inFav</a>
+                <a class="btn btn-success" 
+                asp-area=""
+                asp-controller="Cart"
+                asp-action="Add"
+                asp-route-id="@product.Id"
+                role="button">Buy</a>
+            </div>
+    
+        </div>
+    }
+
+    </div>
+</div>

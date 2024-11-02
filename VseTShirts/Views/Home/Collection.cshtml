@@ -3,6 +3,7 @@
     ViewData["Title"] = "Home Page";
 }
 <div class="row">
+    <h4>@Model.Products.FirstOrDefault()?.NameOfCollection</h4>
     @await Html.PartialAsync("CollectionLeftMenu", Model.CollectionsList)
     @await Html.PartialAsync("ProductsComponent", Model)
 </div>

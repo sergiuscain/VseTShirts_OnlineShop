@@ -95,5 +95,24 @@ namespace VseTShirts.Controllers
             var homeIndexViewModel = new HomeIndexViewModel { Products = filtredProducts.ToViewModel(), Filters = filters, CollectionsList = collections };
             return View("Index", homeIndexViewModel);
         }
+        public IActionResult Collection(string name)
+        {
+            var filters = new FiltersViewModel
+            {
+                Category = "ALL",
+                StartPrice = 0,
+                EndPrice = 0,
+                SortBy = "Price",
+                Color = "ALL",
+                Size = "ALL",
+                Sex = "ALL",
+                MinQuantity = 0,
+                MaxQuantity = 0,
+            };
+            var products = _productStorage.GetByCollection(name).ToViewModel();
+            List<CollectionViewModel> collections = _collectionsStorage.GetAll().Select(c => c.ToViewModel()).ToList();
+            var homeIndexModel = new HomeIndexViewModel { Products = products, Filters = filters, CollectionsList = collections, IsActiveFilters = false };
+            return View(homeIndexModel);
+        }
     }
 }
