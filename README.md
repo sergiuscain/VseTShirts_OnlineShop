@@ -63,6 +63,8 @@
 <h1>Профиль пользователя</h1>
 <h4>Нажав на ник пользователя (у админа Никнейм такой-же, как и Email просто), Мы переходим в личный кабинет(пока он не доделан немного)</h4>
     <img src="https://github.com/user-attachments/assets/ef037a3b-bb57-47d9-a05b-4a38d394ab98">
+<h1>Авторизация и регистрация</h1>
+<h4>Выполнена с помощью ASP.NET Core Identity</h4>
+  <img src="https://github.com/user-attachments/assets/fd6b80cf-b686-4b5f-b650-06ecb10e35ac">
 
-<h4></h4>
 <h4></h4>
