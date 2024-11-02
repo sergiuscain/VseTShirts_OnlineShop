@@ -1,0 +1,82 @@
+﻿@model ProductsOfCollection
+<div class="row">
+    @await Html.PartialAsync("AdminLeftMenu")
+    <div class="col">
+        <h3>Товары в коллекции @Model.Name:</h3>
+        @if (Model.ProductsInCollection.Count < 1)
+        {
+            <div class="col-3 btn border-danger">
+                <h4 class="align-content-center">Упс, в коллекции нет товаров</h4>
+            </div>
+        }
+        else
+        {
+            <table class="table table-success table-striped-columns table-bordered border-dark" border="1">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Изображение</th>
+                        <th>Название</th>
+                        <th>Цвет</th>
+                        <th>Размер</th>
+                        <th>Цена</th>
+                        <th>Добавить</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Model.ProductsInCollection)
+                    {
+                        <tr>
+                            <td>@product.Id</td>
+                            <td><img src="@product.ImagePaths.First()" alt="@product.ImagePaths.First()" width="100"/></td>
+                            <td>@product.Name</td>
+                            <td>@product.Color</td>
+                            <td>@product.Size</td>
+                            <td>@product.Price</td>
+                            <td><a class="btn border-dark" asp-area="Admin" asp-controller="Collection" asp-action="DeleteProduct" asp-route-idAndCollectionName="@product.Id*@Model.Name">Удалить</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        <h3>Добавить в коллекцию:</h3>
+        @if (Model.ProductsNotInCollection.Count < 1)
+        {
+            <div class="col-3 btn border-danger">
+                <h4 class="align-content-center">Нечего добавить</h4>
+            </div>
+        }
+        else
+        {
+            <table class="table table-success table-striped-columns table-bordered border-dark" border="1">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Изображение</th>
+                        <th>Название</th>
+                        <th>Цвет</th>
+                        <th>Размер</th>
+                        <th>Цена</th>
+                        <th>Добавить</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Model.ProductsNotInCollection)
+                    {
+                        <tr>
+                            <td>@product.Id</td>
+                            <td><img src="@product.ImagePaths.First()" alt="@product.ImagePaths.First()" width="100"/></td>
+                            <td>@product.Name</td>
+                            <td>@product.Color</td>
+                            <td>@product.Size</td>
+                            <td>@product.Price</td>
+                            <td>
+                                <a class="btn border-dark" asp-area="Admin" asp-controller="Collection" asp-action="AddProduct" asp-route-idAndCollectionName="@product.Id*@Model.Name">Добавить</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }   
+    </div>
+</div>

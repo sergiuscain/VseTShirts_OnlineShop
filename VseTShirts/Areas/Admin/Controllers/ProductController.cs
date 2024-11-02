@@ -5,6 +5,7 @@ using VseTShirts.DB.Models;
 using VseTShirts.Areas.Admin.Models;
 using VseTShirts.Helpers;
 using VseTShirts.Models;
+using VseTShirts.DB.Migrations;
 
 
 namespace VseTShirts.Areas.Admin.Controllers
@@ -15,10 +16,12 @@ namespace VseTShirts.Areas.Admin.Controllers
     {
         private readonly IProductsStorage _productsStorage;
         private readonly ImageProvider _imageProvider;
-        public ProductController(IProductsStorage productsStorage, ImageProvider imageProvider)
+        private readonly ICollectionsStorage _collectionsStorage;
+        public ProductController(IProductsStorage productsStorage, ImageProvider imageProvider, ICollectionsStorage collectionsStorage)
         {
-            this._productsStorage = productsStorage;
-            this._imageProvider = imageProvider;
+            _productsStorage = productsStorage;
+            _imageProvider = imageProvider;
+            _collectionsStorage = collectionsStorage;
         }
 
         public IActionResult Index()
@@ -70,6 +73,7 @@ namespace VseTShirts.Areas.Admin.Controllers
                 var sex = RandomData.GetSex();
                 var category = name.Split(" ").Last();
                 var color = name.Split(" ").First();
+                var collectionName =  RandomData.GetCollection();
                 var images = new List<ProductImage>
                 {
                     new ProductImage { URL = RandomData.GetProductImagePath(sex, category ) .First() }
@@ -85,9 +89,13 @@ namespace VseTShirts.Areas.Admin.Controllers
                     Sex = sex,
                     Description = RandomData.GetDescription(),
                     Images = images,
-                    NameOfCollection = RandomData.GetCollection()
+                    NameOfCollection = collectionName
                 };
                 _productsStorage.Add(randomProduct);
+                if (_collectionsStorage.GetAll().All(c => c.Name != collectionName))
+                {
+                    _collectionsStorage.Add(new Collection { Name = collectionName, Description = "Стандартная коллекция" });
+                }
             }
 
             return RedirectToAction(nameof(Index));

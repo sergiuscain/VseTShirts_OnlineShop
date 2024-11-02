@@ -172,6 +172,35 @@ namespace VseTShirts.DB
                 .ToList();
             return products;
         }
+
+        public void RemoveCollectionFromProducts(string name)
+        {
+            var products = _dbContext.Products.Where(p => p.NameOfCollection == name).ToList();
+            foreach(var product in products)
+            {
+                product.NameOfCollection = "Не задана";
+            }
+            _dbContext.SaveChanges();
+        }
+
+        public void RemoveCollectionFromProduct(string name, Guid productId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteProductFromCollection(Guid id, string collectionName)
+        {
+            var products = _dbContext.Products.Where(p => p.Id == id).First();
+            products.NameOfCollection = "Не задана";
+            _dbContext.SaveChanges();
+        }
+
+        public void AddProductToCollection(Guid id, string collectionName)
+        {
+            var products = _dbContext.Products.Where(p => p.Id == id).First();
+            products.NameOfCollection = collectionName;
+            _dbContext.SaveChanges();
+        }
     }
 }   
     

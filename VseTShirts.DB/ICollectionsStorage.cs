@@ -6,8 +6,8 @@ namespace VseTShirts.DB
     {
         void Add(Collection collection);
         void Clear();
-        void Delete(int id);
-        void Edit(int id, Collection newCollection);
+        void Delete(string id);
+        void Edit(string name, string newName, string description);
         List<Collection> GetAll();
     }
 }

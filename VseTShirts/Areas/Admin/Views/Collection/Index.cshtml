@@ -10,30 +10,50 @@
             <input type="text" name="description" />
             <button class="btn border-primary" type="submit" asp-area="Admin" asp-controller="Collection" asp-action="Add")">Добавить коллекцию</button><br
         </form>
-        <table class="table table-striped">
+        <table class="table table-success table-striped-columns table-bordered border-dark" border="1">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Название</th>
                     <th>Описание</th>
-                    <th>Действия</th>
+                    <th>Изменить</th>
+                    <th>Удалить</th>
+                    <th>Товароы</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach (var collection in Model)
-                {
-                    <tr>
-                        <td>@collection.Id</td>
-                        <td>@collection.Name</td>
-                        <td>@collection.Description</td>
-                        <td>
-                            <a class="btn btn-info"   asp-area="Admin" asp-controller="Collection" asp-action="Edit" asp-route-id="@collection.Id">Изменить</a>
-                            <a class="btn btn-danger" asp-area="Admin" asp-controller="Collection" asp-action="Delete" asp-route-id="@collection.Id">Удалить</a>
-                            <a class="btn btn-danger" asp-area="Admin" asp-controller="Collection" asp-action="Products" asp-route-name="@collection.Name" >Товары</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
+                <tbody>
+                    @foreach (var collection in Model)
+                    {
+                        <tr>
+                            <td>@collection.Id</td>
+                            <td>@collection.Name</td>
+                            <td>@collection.Description</td>
+                            <td>
+                                <form method="post">
+                                    <div class="dropdown text-md-center m-2">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <h6>Изменить</h6>
+                                        </button>
+                                        <ul class="dropdown-menu btn" aria-labelledby="dropdownMenuButton1">
+                                             <input type="text" hidden name="name" value="@collection.Name" />
+                                             <h6>Название:</h6><input type="text"  name="newName" />
+                                             <h6>Описание:</h6><input type="text"  name="description" />
+                                            <button type="submit" class="dropdown-item btn btn-dark" asp-area="Admin" asp-controller="Collection" asp-action="Edit">Ок</button>
+                                        </ul>
+                                    </div>
+                                </form>
+                            </td>
+
+                            <td>
+                                <a class="btn btn-danger" asp-area="Admin" asp-controller="Collection" asp-action="Delete" asp-route-name="@collection.Name">Удалить</a>
+                            </td>
+                            <td>
+                                <a class="btn border-dark" asp-area="Admin" asp-controller="Collection" asp-action="Products" asp-route-name="@collection.Name" >Товары</a>
+                                <a class="btn border-dark" asp-area="Admin" asp-controller="Collection" asp-action="AddProducts" asp-route-name="@collection.Name">Добавить</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
         </table>
     </div>
 </div>
