@@ -55,8 +55,11 @@
   <img src="https://github.com/user-attachments/assets/5ee3143e-a3ec-4989-9d81-dac01df7bb7c">
   <img src="https://github.com/user-attachments/assets/58190c67-4800-4352-91e3-e17f833e728a">
   <img src="https://github.com/user-attachments/assets/1a818d9a-89b1-422d-a257-d5a47539672f">
+  <h3>Избранное</h3>
+  <h4>Во складке избранное отображаются товары авторизованного пользователя, которые он добавил туда.</h4>
+  <h4>Есть возможность удалить из избранного, перейти в карточку товара(по названию кликнуть), сравнить и добавить в корзину</h4>
+  <img src="https://github.com/user-attachments/assets/e3cf4d39-00b4-4535-94fc-3273785211a1">
 
-<h4></h4>
 <h4></h4>
 <h4></h4>
 <h4></h4>
