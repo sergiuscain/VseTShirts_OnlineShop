@@ -22,11 +22,15 @@
         };
         public static List<string> Categories = new List<string>
         {
-            "Shirts",
-            "Pants",
-            "T-Shirts",
-            "Jackets",
-            "Sweaters",
+            "Jacket",
+            "Scarf",
+            "T-shirt",
+            "Jeans",
+            "Hat",
+            "Sweater",
+            "Coat",
+            "Socks",
+            "Bag"
         };
     }
 }

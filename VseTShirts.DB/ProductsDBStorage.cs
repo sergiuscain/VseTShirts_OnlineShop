@@ -84,10 +84,6 @@ namespace VseTShirts.DB
         }
         public List<Product> Filtr(List<Product> products ,FiltersModel filters)
         {
-            filters.Color = filters.Color.ToUpper();
-            filters.Category = filters.Category.ToUpper();
-            filters.Sex = filters.Sex.ToUpper();
-            filters.Size = filters.Size.ToUpper();
             if (filters == null)
                 return products;
             if(products.Count == 0) 
@@ -125,19 +121,19 @@ namespace VseTShirts.DB
             }
             if (filters.Category == null || filters.Category != "ALL")
             {
-                products = products.Where(p => p.Category == filters.Category).ToList();
+                products = products.Where(p => p.Category.ToUpper() == filters.Category.ToUpper()).ToList();
             }
             if (filters.Sex == null || filters.Sex != "ALL")
             {
-                products = products.Where(p => p.Sex == filters.Sex).ToList();
+                products = products.Where(p => p.Sex.ToUpper() == filters.Sex.ToUpper()).ToList();
             }
             if (filters.Color == null || filters.Color != "ALL")
             {
-                products = products.Where(p => p.Color == filters.Color).ToList();
+                products = products.Where(p => p.Color.ToUpper() == filters.Color.ToUpper()).ToList();
             }
             if (filters.Size == null || filters.Size != "ALL")
             {
-                products = products.Where(p => p.Size == filters.Size).ToList();
+                products = products.Where(p => p.Size.ToUpper() == filters.Size.ToUpper()).ToList();
             }
             switch (filters.SortBy)
             {

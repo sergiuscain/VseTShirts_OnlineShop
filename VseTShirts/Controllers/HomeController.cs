@@ -29,13 +29,13 @@ namespace VseTShirts.Controllers
         {
             var filters = new FiltersViewModel
             {
-                Category = "All",
+                Category = "ALL",
                 StartPrice = 0,
                 EndPrice = 0,
                 SortBy = "Price",
-                Color = "All",
-                Size = "All",
-                Sex = "All",
+                Color = "ALL",
+                Size = "ALL",
+                Sex = "ALL",
                 MinQuantity = 0,
                 MaxQuantity = 0,
             };
@@ -81,9 +81,10 @@ namespace VseTShirts.Controllers
         public IActionResult Search(string serachTxt)
         {
             var products = _productStorage.GetAll();
-            var newProductsList = products.Where(p => p.Name.ToLower().Contains(serachTxt.ToLower())).ToList();
+            if (!string.IsNullOrEmpty(serachTxt)) 
+                products = products.Where(p => p.Name.ToLower().Contains(serachTxt.ToLower())).ToList();
             List<CollectionViewModel> collections = _collectionsStorage.GetAll().Select(c => c.ToViewModel()).ToList();
-            var homeIndexViewModel = new HomeIndexViewModel { Products = newProductsList.ToViewModel(), CollectionsList = collections };
+            var homeIndexViewModel = new HomeIndexViewModel { Products = products.ToViewModel(), CollectionsList = collections };
             return View("Index", homeIndexViewModel);
         }
         public IActionResult Filter(FiltersViewModel filters)
