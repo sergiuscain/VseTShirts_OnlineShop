@@ -46,7 +46,7 @@
 <img src="https://github.com/user-attachments/assets/76f7fb35-d8fa-47a4-9d6f-9d1433a3e3ac" />
 <h4>Также на главной странице есть список коллекций (товары, объединенные по одной тематике. В моем случае, просто товары, которые рандомно добавлены в стандартные коллекции.<br /> Управление коллекциями находится в меню администратора)</h4>
 <div>
-  <img src="https://github.com/user-attachments/assets/4c607739-124d-4c76-bc33-16c1fe53790e" />
-  <img src="https://github.com/user-attachments/assets/e93b729a-8396-4a93-a3d8-d1d18e53f7d6"
+  <img width="500" src="https://github.com/user-attachments/assets/4c607739-124d-4c76-bc33-16c1fe53790e" />
+  <img width="500" src="https://github.com/user-attachments/assets/e93b729a-8396-4a93-a3d8-d1d18e53f7d6"
 </div>
 
