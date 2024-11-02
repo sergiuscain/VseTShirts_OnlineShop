@@ -49,4 +49,10 @@
   <img width="500" src="https://github.com/user-attachments/assets/4c607739-124d-4c76-bc33-16c1fe53790e" />
   <img width="500" src="https://github.com/user-attachments/assets/e93b729a-8396-4a93-a3d8-d1d18e53f7d6"
 </div>
-
+<h4>Товары можно сравнить между собой.</h4>
+<img src="https://github.com/user-attachments/assets/f5f6e18a-17f4-4a00-8f3a-f9dd2bf5968c">
+<h4>Так-же, на главной странице и на странице сравнения товаров, можно перейти в карточку товара. В ней есть баннер с изображениями товаров, описания и возможность добавить в корзину/в избранное</h4>
+<h4></h4>
+<h4></h4>
+<h4></h4>
+<h4></h4>
