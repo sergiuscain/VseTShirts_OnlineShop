@@ -75,6 +75,15 @@
      <img src="https://github.com/user-attachments/assets/86dd5f3c-8047-40b2-afd6-b050bb2a6bdd">
     <h6>Страницу оформления заказа надо бы переделать*</h6>
      <img src="https://github.com/user-attachments/assets/5493842b-3924-4822-a22d-0959aa3a679a">
+<h1>Панель админа.</h1>
+<h4>Содержимое панели админа доступна только админам!!</h4>
+![image](https://github.com/user-attachments/assets/f0fb104a-a98c-46bc-8574-7cfed647b258)
+![image](https://github.com/user-attachments/assets/ce8ff1c7-fdc8-47b7-8456-831463c4036a)
+![image](https://github.com/user-attachments/assets/73be3244-52fc-4a40-836a-86f432c66984)
+![image](https://github.com/user-attachments/assets/a974c507-eb71-4b94-b7ab-b18f08d1c6e7)
+![image](https://github.com/user-attachments/assets/a51c3178-44c5-4f37-abbe-584171d776ac)
+  <h4>Возможность добавить рандомно 1, 10 или 50 товаров сделал для себя, что-бы в процессе разработке можно было быстро добовлять товары</h4>
+![image](https://github.com/user-attachments/assets/6734454f-e044-435d-a7b7-5d920dafda26)
 
 
 <h4></h4>
