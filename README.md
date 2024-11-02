@@ -67,5 +67,7 @@
 <h4>Выполнена с помощью ASP.NET Core Identity</h4>
   <img src="https://github.com/user-attachments/assets/fd6b80cf-b686-4b5f-b650-06ecb10e35ac">
   <img src="https://github.com/user-attachments/assets/038a39af-2e41-4234-bf96-539ac727c41a">
+<h4>Если авторизован пользователь без роли админ, ему недоступна панель админа!</h4>
+    <img src="https://github.com/user-attachments/assets/f0b2220d-3072-442b-8bd1-c9b99e1084f5">
 
 <h4></h4>
