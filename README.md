@@ -77,13 +77,17 @@
      <img src="https://github.com/user-attachments/assets/5493842b-3924-4822-a22d-0959aa3a679a">
 <h1>Панель админа.</h1>
 <h4>Содержимое панели админа доступна только админам!!</h4>
-![image](https://github.com/user-attachments/assets/f0fb104a-a98c-46bc-8574-7cfed647b258)
-![image](https://github.com/user-attachments/assets/ce8ff1c7-fdc8-47b7-8456-831463c4036a)
-![image](https://github.com/user-attachments/assets/73be3244-52fc-4a40-836a-86f432c66984)
-![image](https://github.com/user-attachments/assets/a974c507-eb71-4b94-b7ab-b18f08d1c6e7)
-![image](https://github.com/user-attachments/assets/a51c3178-44c5-4f37-abbe-584171d776ac)
+  <img src="https://github.com/user-attachments/assets/f0fb104a-a98c-46bc-8574-7cfed647b258">
+  <img src="https://github.com/user-attachments/assets/ce8ff1c7-fdc8-47b7-8456-831463c4036a">
+  <img src="https://github.com/user-attachments/assets/73be3244-52fc-4a40-836a-86f432c66984">
+  <img src="https://github.com/user-attachments/assets/a974c507-eb71-4b94-b7ab-b18f08d1c6e7">
+  <img src="https://github.com/user-attachments/assets/a51c3178-44c5-4f37-abbe-584171d776ac">
   <h4>Возможность добавить рандомно 1, 10 или 50 товаров сделал для себя, что-бы в процессе разработке можно было быстро добовлять товары</h4>
-![image](https://github.com/user-attachments/assets/6734454f-e044-435d-a7b7-5d920dafda26)
+  <img src="https://github.com/user-attachments/assets/6734454f-e044-435d-a7b7-5d920dafda26">
 
+<h3>Коллекции</h3>
+<img src="https://github.com/user-attachments/assets/72d53db6-782f-44d3-be29-ac18940c94a1">
+<img src="https://github.com/user-attachments/assets/e9661122-42e2-4d01-ba3f-3575fda772a2">
+<img src="https://github.com/user-attachments/assets/fd3ae847-83b5-408c-85b3-70cf43efe93b">
 
 <h4></h4>
