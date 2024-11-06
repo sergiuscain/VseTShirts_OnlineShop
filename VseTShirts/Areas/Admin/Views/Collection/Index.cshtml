@@ -28,17 +28,17 @@
                             <td>@collection.Id</td>
                             <td>@collection.Name</td>
                             <td>@collection.Description</td>
-                            <td>
+                            <td m-3>
                                 <form method="post">
-                                    <div class="dropdown text-md-center m-2">
+                                    <div class="dropdown text-md-center">
                                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                         <h6>Изменить</h6>
                                         </button>
                                         <ul class="dropdown-menu btn" aria-labelledby="dropdownMenuButton1">
-                                             <input type="text" hidden name="name" value="@collection.Name" />
-                                             <h6>Название:</h6><input type="text"  name="newName" />
-                                             <h6>Описание:</h6><input type="text"  name="description" />
-                                            <button type="submit" class="dropdown-item btn btn-dark" asp-area="Admin" asp-controller="Collection" asp-action="Edit">Ок</button>
+                                             <li><input type="text" hidden name="name" value="@collection.Name" /></li>
+                                             <li><h6>Название:</h6><input type="text"  name="newName" /></li>
+                                             <li><h6>Описание:</h6><input type="text"  name="description"/> </li>
+                                            <li class="btn border-dark"><button type="submit" class="dropdown-item btn btn-dark" asp-area="Admin" asp-controller="Collection" asp-action="Edit">Ок</button /></li>
                                         </ul>
                                     </div>
                                 </form>

@@ -64,7 +64,12 @@
              <input asp-for="Category" value="@Model.Category"><br>
              <div><span asp-validation-for="Category"></span></div>
         </div>
-        <div>
+        <div >
+            <label asp-for="NameOfCollection">Коллекция:</label>
+            <br />
+            <input asp-for="NameOfCollection" value="@Model.NameOfCollection"><br>
+            <div><span asp-validation-for="NameOfCollection"></span></div>
+        </div>
             <label asp-for="UploadedFiles">Изображения:</label>
             <br />
             @foreach (var img in Model.ImagePaths)

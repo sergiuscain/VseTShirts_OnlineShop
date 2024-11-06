@@ -36,6 +36,7 @@ namespace VseTShirts.Areas.Admin.Models
         [Required(ErrorMessage = "Обязательное поле")]
         [MaxLength(4, ErrorMessage = "Введите размер одежды(XS/X/M/L/XL/XXL/XXXL)")]
         public string Size { get; set; }
+        public string NameOfCollection { get; set; }
         [Required(ErrorMessage = "Загрузите новую картинку")]
         public List<string> ImagePaths { get; set; }
         public List<IFormFile> UploadedFiles { get; set; }

@@ -130,6 +130,7 @@ public static class Helper
             Size = productVM.Size.ToUpper(),
             Sex = productVM.Sex.ToUpper(),
             Images = imagePaths.Select(i => new ProductImage { URL = i }).ToList(),
+            NameOfCollection = productVM.NameOfCollection,
         };
     }
 
