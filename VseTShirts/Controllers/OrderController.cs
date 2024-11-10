@@ -26,29 +26,29 @@ namespace VseTShirts.Controllers
         }
 
         [HttpPost]
-        public IActionResult Buy(DeliveryInfo deliveryInfo)
+        public async Task<IActionResult> Buy(DeliveryInfo deliveryInfo)
         {
             if (!ModelState.IsValid)
             {
                 return View(deliveryInfo);
             }
-            var user = userManager.FindByNameAsync(User.Identity.Name).Result;
+            var user = await userManager.FindByNameAsync(User.Identity.Name);
             var order = new Order
             {
                 Address = deliveryInfo.Address,
-                Positions = cartsStorage.GetCartByUserId(user.Id).Positions,
+                Positions = (await cartsStorage.GetCartByUserIdAsync(user.Id)).Positions,
                 Name = deliveryInfo.Name,
                 Phone = deliveryInfo.Phone,
                 UserId = user.Id
             };
-            ordersStorage.Add(order);
-            cartsStorage.RemoveAll(user.Id);
+            await ordersStorage.AddAsync(order);
+            await cartsStorage.RemoveAllAsync(user.Id);
             return View(deliveryInfo);
         }
 
-        public IActionResult Order(Guid id)
+        public async Task<IActionResult> Order(Guid id)
         {
-            var order = ordersStorage.GetById(id);
+            var order = await ordersStorage.GetByIdAsync(id);
             return View(order.ToViewModel());
         }
     }

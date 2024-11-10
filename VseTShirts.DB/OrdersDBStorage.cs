@@ -11,47 +11,48 @@ namespace VseTShirts.DB
             _dbContext = dbContext;
         }
 
-        public void Add( Order order)
+        public async Task AddAsync( Order order)
         {
-            _dbContext.Orders.Add(order);
-            _dbContext.SaveChanges();
+            await _dbContext.Orders.AddAsync(order);
+            await _dbContext.SaveChangesAsync();
         }
-        public void Remove( Order order )
+        public async Task RemoveAsync( Order order )
         {
             _dbContext.Orders.Remove(order);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
-        public List<Order> GetAll() => _dbContext
+        public async Task<List<Order>> GetAllAsync() => await _dbContext
             .Orders
             .Include(c => c.Positions)
             .ThenInclude(p => p.Product)
-            .ToList();
+            .ToListAsync();
 
-        public Order GetById(Guid id)
+        public async Task<Order> GetByIdAsync(Guid id)
         {
-            var order = _dbContext.Orders
+            var order = await _dbContext.Orders
                 .Include(c => c.Positions)
                 .ThenInclude(p=>p.Product)
                 .ThenInclude(o => o.Images)
-                .FirstOrDefault(o => o.Id == id);
+                .FirstOrDefaultAsync(o => o.Id == id);
             return order;
         }
 
-        public void UpdateStatus(Guid id, OrderStatus status)
+        public async Task UpdateStatusAsync(Guid id, OrderStatus status)
         {
-            _dbContext.Orders.FirstOrDefault(o=> o.Id == id).Status = status;
-            _dbContext.SaveChanges();
+            (await _dbContext.Orders.FirstOrDefaultAsync(o => o.Id == id)).Status = status;;
+
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void RemoveById(Guid id)
+        public async Task RemoveByIdAsync(Guid id)
         {
-            var removedOrder = _dbContext.Orders
+            var removedOrder = await _dbContext.Orders
                 .Include(o => o.Positions)
                 .ThenInclude(p => p.Product)
                 .ThenInclude(p => p.Images)
-                .FirstOrDefault(o => o.Id == id);
+                .FirstOrDefaultAsync(o => o.Id == id);
             _dbContext.Orders.Remove(removedOrder);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

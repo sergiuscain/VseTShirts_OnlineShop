@@ -4,9 +4,9 @@ namespace VseTShirts.DB
 {
     public interface IFavoriteProductsStorage
     {
-        void Add(string userId, Product product);
-        List<Product> GetByUserId(string userId);
-        bool IsFavorite(string userId, Product product);
-        void Remove(string userId, Product product);
+        Task AddAsync(string userId, Product product);
+        Task<List<Product>> GetByUserIdAsync(string userId);
+        Task<bool> IsFavoriteAsync(string userId, Product product);
+        Task RemoveAsync(string userId, Product product);
     }
 }

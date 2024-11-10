@@ -4,8 +4,8 @@ namespace VseTShirts.DB
 {
     public interface IComparedProductsStorage
     {
-        bool Add(string userId, Product product);
-        bool Delete(string userId);
-        List<Product> GetByUserId(string userId);
+        Task<bool> AddAsync(string userId, Product product);
+        Task<bool> DeleteAsync(string userId);
+        Task<List<Product>> GetByUserIdAsync(string userId);
     }
 }

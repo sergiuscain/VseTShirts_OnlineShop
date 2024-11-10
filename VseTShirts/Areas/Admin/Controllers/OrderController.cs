@@ -18,21 +18,22 @@ namespace VseTShirts.Areas.Admin.Controllers
         {
             this.ordersStorage = ordersStorage;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            List<Order> orders = ordersStorage.GetAll();
-            return View(Helper.ToViewModel(orders));
+            List<Order> orders = await ordersStorage.GetAllAsync();
+            var ordersVM = Helper.ToViewModel(orders);
+            return View();
         }
-        public IActionResult UpdateStatus(Guid id, OrderStatus status)
+        public async Task<IActionResult> UpdateStatus(Guid id, OrderStatus status)
         {
-            ordersStorage.UpdateStatus(id, status);
-            return RedirectToAction(nameof(Index));
+            await ordersStorage.UpdateStatusAsync(id, status);
+            return RedirectToAction(nameof(IndexAsync));
         }
 
-        public IActionResult DelOrder(Guid id)
+        public async Task<IActionResult> DelOrderAsync(Guid id)
         {
-            ordersStorage.RemoveById(id);
-            return RedirectToAction(nameof(Index));
+            await ordersStorage.RemoveByIdAsync(id);
+            return RedirectToAction(nameof(IndexAsync));
         }
 
     }

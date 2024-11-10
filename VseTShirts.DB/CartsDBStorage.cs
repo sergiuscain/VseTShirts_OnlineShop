@@ -11,26 +11,26 @@ namespace VseTShirts.DB
         {
             _dbContext = dbContext;
         }
-        public Cart GetCartByUserId(string userId)
+        public async Task<Cart> GetCartByUserIdAsync(string userId)
         {
-            return _dbContext.Carts.Include(x=>x.Positions).ThenInclude(x=>x.Product).ThenInclude(p => p.Images).FirstOrDefault(c => c.UserId == userId);
+            return await _dbContext.Carts.Include(x=>x.Positions).ThenInclude(x=>x.Product).ThenInclude(p => p.Images).FirstOrDefaultAsync(c => c.UserId == userId);
         }
 
-        public void Add(Guid productId, string userId)
+        public async Task AddAsync(Guid productId, string userId)
         {
 
-            var existingCart = GetCartByUserId(userId);
-            var product = _dbContext.Products.Include(p => p.Images).FirstOrDefault(p => p.Id == productId);
+            var existingCart = GetCartByUserIdAsync(userId);
+            var product = await _dbContext.Products.Include(p => p.Images).FirstOrDefaultAsync(p => p.Id == productId);
             if (existingCart == null)
             {
                 var positions = new List<CartPosition> { new CartPosition{ Name = product.Name, Product = product, Quantity = 1} };
                 var cart = new Cart {UserId = userId,Positions = positions };
                 cart.Positions = positions;
-                _dbContext.Carts.Add(cart);
+                await _dbContext.Carts.AddAsync(cart);
             }
             else
             {
-                var existingCartItem = existingCart?.Positions?.FirstOrDefault(p => p.Product.Id == product.Id);
+                var existingCartItem = await existingCart?.Positions?.FirstOrDefaultAsync(p => p.Product.Id == product.Id);
                 if (existingCartItem != null)
                 {
                     existingCartItem.Quantity++;
@@ -43,9 +43,9 @@ namespace VseTShirts.DB
                 _dbContext.SaveChanges();
         }
 
-        public void Remove(Guid productId, string userId)
+        public void RemoveAsync(Guid productId, string userId)
         {
-            var cart = GetCartByUserId(userId);
+            var cart = GetCartByUserIdAsync(userId);
             var cartItem = cart.Positions.FirstOrDefault(p => p.Product.Id == productId);
             cartItem.Quantity--;
             if (cartItem.Quantity <= 0)
@@ -61,7 +61,7 @@ namespace VseTShirts.DB
         }
         public void RemovePosition(Guid productId, string usertId)
         {
-            var cart = GetCartByUserId(usertId);
+            var cart = GetCartByUserIdAsync(usertId);
             var removedCartPosition = cart.Positions.FirstOrDefault(p => p.Product.Id == productId);
             cart.Positions.Remove(removedCartPosition);
             if (cart.Positions.Count <= 0)
@@ -71,18 +71,18 @@ namespace VseTShirts.DB
             _dbContext.SaveChanges();
         }
 
-        public void RemoveAll(string userId)
+        public void RemoveAllAsync(string userId)
         {
-            Cart removedCart = GetCartByUserId(userId);
+            Cart removedCart = GetCartByUserIdAsync(userId);
             _dbContext.Carts.Remove(removedCart);
             _dbContext.SaveChanges();
         }
 
-        public void Add(string productName, string userId)
+        public async Task AddAsync(string productName, string userId)
         {
 
-            var existingCart = GetCartByUserId(userId);
-            var product = _dbContext.Products.Include(p => p.Images).FirstOrDefault(p => p.Name == productName);
+            var existingCart = await GetCartByUserIdAsync(userId);
+            var product = await _dbContext.Products.Include(p => p.Images).FirstOrDefaultAsync(p => p.Name == productName);
             if (existingCart == null)
             {
                 var positions = new List<CartPosition> { new CartPosition { Name = product.Name, Product = product, Quantity = 1 } };
@@ -92,7 +92,7 @@ namespace VseTShirts.DB
             }
             else
             {
-                var existingCartItem = existingCart?.Positions?.FirstOrDefault(p => p.Product.Name == productName);
+                var existingCartItem = await existingCart?.Positions?.FirstOrDefaultAsync(p => p.Product.Name == productName);
                 if (existingCartItem != null)
                 {
                     existingCartItem.Quantity++;
@@ -102,7 +102,7 @@ namespace VseTShirts.DB
                     existingCart.Positions.Add(new CartPosition { Name = product.Name, Product = product, Quantity = 1 });
                 }
             }
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

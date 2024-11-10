@@ -4,20 +4,20 @@ namespace VseTShirts
 {
     public interface IProductsStorage
     {
-        void Delete(Guid Id);
-        Product GetById(Guid Id);
-        void QuantitiReduce(Guid Id);
-        void Add(Product product);
-        void QuantityIncrease(Guid Id);
-        void EditProduct(Guid Id, Product newProduct);
-        List<Product> GetAll();
-        Product GetByName(string name);
-        void DeleteAll();
-        List<Product> Filtr(List<Product> products ,FiltersModel filters);
-        List<Product> GetByCollection(string name);
-        void RemoveCollectionFromProducts(string name);
-        void RemoveCollectionFromProduct(string name, Guid productId);
-        void DeleteProductFromCollection(Guid id, string collectionName);
-        void AddProductToCollection(Guid id, string collectionName);
+        Task DeleteAsync(Guid Id);
+        Task<Product> GetByIdAsync(Guid Id);
+        Task QuantitiReduceAsync(Guid Id);
+        Task AddAsync(Product product);
+        Task QuantityIncreaseAsync(Guid Id);
+        Task EditProductAsync(Guid Id, Product newProduct);
+        Task<List<Product>> GetAllAsync();
+        Task<Product> GetByNameAsync(string name);
+        Task DeleteAllAsync();
+        Task<List<Product>> FiltrAsync(List<Product> products ,FiltersModel filters);
+        Task<List<Product>> GetByCollectionAsync(string name);
+        Task RemoveCollectionFromProductsAsync(string name);
+        Task RemoveCollectionFromProductAsync(string name, Guid productId);
+        Task DeleteProductFromCollectionAsync(Guid id, string collectionName);
+        Task AddProductToCollectionAsync(Guid id, string collectionName);
     }
 }

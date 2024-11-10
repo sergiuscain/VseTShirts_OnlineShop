@@ -4,10 +4,10 @@ namespace VseTShirts.DB
 {
     public interface ICollectionsStorage
     {
-        void Add(Collection collection);
-        void Clear();
-        void Delete(string id);
-        void Edit(string name, string newName, string description);
-        List<Collection> GetAll();
+        Task AddAsync(Collection collection);
+        Task ClearAsync();
+        Task DeleteAsync(string id);
+        Task EditAsync(string name, string newName, string description);
+        Task<List<Collection>> GetAllAsync();
     }
 }

@@ -4,10 +4,10 @@ namespace VseTShirts.DB
 {
     public interface ICartsStorage
     {
-        void Add(Guid productId, string userId);
-        void RemoveAll(string userId);
-        void Remove(Guid productId, string userId);
-        Cart GetCartByUserId(string userId);
-        void RemovePosition(Guid productId,string userId);
+        Task AddAsync(Guid productId, string userId);
+        Task RemoveAllAsync(string userId);
+        Task RemoveAsync(Guid productId, string userId);
+        Task<Cart> GetCartByUserIdAsync(string userId);
+        Task RemovePositionAsync(Guid productId,string userId);
     }
 }

@@ -14,75 +14,73 @@ namespace VseTShirts.DB
         }
 
 
-        public void Add(Product product)
+        public async Task AddAsync(Product product)
         {
             _dbContext.Products.Add(product);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void Delete(Guid Id)
+        public async Task DeleteAsync(Guid Id)
         {
-            _dbContext.Products
-                .Remove(_dbContext.Products.Include(p => p.Images)
-                .FirstOrDefault(p=>p.Id==Id));
-
-            _dbContext.SaveChanges();
+            var product = await _dbContext.Products.FirstOrDefaultAsync(p => p.Id == Id);
+            _dbContext.Products.Remove(product);
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void DeleteAll()
+        public async Task DeleteAllAsync()
         {
-            var allProducts = _dbContext.Products.ToArray();
+            var allProducts = await _dbContext.Products.ToArrayAsync();
             _dbContext.Products.RemoveRange(allProducts);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void EditProduct(Guid id, Product newProduct)
-        {
-            _dbContext.Products
-                .Remove(_dbContext.Products.Include(p => p.Images)
-                .FirstOrDefault(p => p.Id == id));
+        public async Task EditProductAsync(Guid id, Product newProduct)
+        {  
+            var product = await _dbContext.Products.Include(p => p.Images).FirstOrDefaultAsync(p => p.Id == id);
+            _dbContext.Products.Remove(product);
 
             newProduct.Id = id;
-            Add(newProduct);
+            _dbContext.Products.Add(newProduct);
+            await _dbContext.SaveChangesAsync();
         }
 
 
-        public List<Product>? GetAll() => _dbContext.Products
+        public async Task<List<Product>>? GetAllAsync() => await _dbContext.Products
             .Include(p =>p.Images)
             .Include(x=>x.CartPositions)
-            .ToList();
+            .ToListAsync();
 
-        public Product GetById(Guid id)
+        public async Task<Product> GetByIdAsync(Guid id)
         {
-            return _dbContext.Products.Include(p=>p.Images).FirstOrDefault(product => product.Id == id);
+            return await _dbContext.Products.Include(p=>p.Images).FirstOrDefaultAsync(product => product.Id == id);
         }
 
-        public Product GetByName(string name)
+        public async Task<Product> GetByNameAsync(string name)
         {
-            return _dbContext.Products.Include(p=>p.Images).FirstOrDefault(product => product.Name == name);
+            return await _dbContext.Products.Include(p => p.Images).FirstOrDefaultAsync(product => product.Name == name);
         }
 
-        public void QuantitiReduce(Guid Id)
+        public async Task QuantitiReduceAsync(Guid Id)
         {
-            var product = _dbContext.Products.Include(p => p.Images).FirstOrDefault(p => p.Id == Id);
+            var product = await _dbContext.Products.Include(p => p.Images).FirstOrDefaultAsync(p => p.Id == Id);
             if ( product.Quantity > 0)
                 product.Quantity--;
             if (product.Quantity <= 0)
             {
-                _dbContext.Products.Remove(_dbContext.Products.Include(p => p.Images).FirstOrDefault(p => p.Id == Id));
+                _dbContext.Products.Remove(product);
             }
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
         }
 
 
-        public void QuantityIncrease(Guid Id)
+        public async Task QuantityIncreaseAsync(Guid Id)
         {
-            var product = _dbContext.Products.Include(p => p.Images).FirstOrDefault(p => p.Id == Id);
+            var product = await _dbContext.Products.Include(p => p.Images).FirstOrDefaultAsync(p => p.Id == Id);
             if (product != null)
                 product.Quantity++;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
-        public List<Product> Filtr(List<Product> products ,FiltersModel filters)
+        public async Task<List<Product>> FiltrAsync(List<Product> products ,FiltersModel filters)
         {
             if (filters == null)
                 return products;
@@ -92,7 +90,7 @@ namespace VseTShirts.DB
             {
                 if (filters.EndPrice > 0)
                 {
-                    products = products.Where(p => p.Price >= filters.StartPrice && p.Price<= filters.EndPrice).ToList();
+                    products = products.Where(p => p.Price >= filters.StartPrice && p.Price <= filters.EndPrice).ToList();
                 }
                 else
                 {
@@ -165,41 +163,44 @@ namespace VseTShirts.DB
                 return products;
         }
 
-        public List<Product> GetByCollection(string nameOfCollection)
+        public async Task<List<Product>> GetByCollectionAsync(string nameOfCollection)
         {
-            var products = _dbContext.Products.Where(p => p.NameOfCollection == nameOfCollection)
+            var products = await _dbContext.Products.Where(p => p.NameOfCollection == nameOfCollection)
                 .Include(p => p.Images)
-                .ToList();
+                .ToListAsync();
             return products;
         }
 
-        public void RemoveCollectionFromProducts(string name)
+        public async Task RemoveCollectionFromProductsAsync(string name)
         {
-            var products = _dbContext.Products.Where(p => p.NameOfCollection == name).ToList();
+            var products = await _dbContext.Products.Where(p => p.NameOfCollection == name).ToListAsync();
             foreach(var product in products)
             {
                 product.NameOfCollection = "Не задана";
             }
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void RemoveCollectionFromProduct(string name, Guid productId)
+        public async Task RemoveCollectionFromProductAsync(string name, Guid productId)
         {
-            throw new NotImplementedException();
+            var product = await _dbContext.Products.FirstOrDefaultAsync(p => p.Id == productId);
+            if (product != null)
+                product.NameOfCollection = "Не задана";
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void DeleteProductFromCollection(Guid id, string collectionName)
+        public async Task DeleteProductFromCollectionAsync(Guid id, string collectionName)
         {
-            var products = _dbContext.Products.Where(p => p.Id == id).First();
+            var products = await _dbContext.Products.Where(p => p.Id == id).FirstAsync();
             products.NameOfCollection = "Не задана";
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void AddProductToCollection(Guid id, string collectionName)
+        public async Task AddProductToCollectionAsync(Guid id, string collectionName)
         {
-            var products = _dbContext.Products.Where(p => p.Id == id).First();
+            var products = await _dbContext.Products.Where(p => p.Id == id).FirstAsync();
             products.NameOfCollection = collectionName;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }   

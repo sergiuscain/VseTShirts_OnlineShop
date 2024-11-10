@@ -15,32 +15,32 @@ namespace VseTShirts.DB
         {
             _dbContext = dbContext;
         }
-        public void Add(string userId, Product product)
+        public async Task AddAsync(string userId, Product product)
         {
-            var existongProduct = _dbContext.FavoriteProducts.FirstOrDefault(p => p.Product == product && p.UserId == userId);
+            var existongProduct = await _dbContext.FavoriteProducts.FirstOrDefaultAsync(p => p.Product == product && p.UserId == userId);
             if (existongProduct == null)
             {
                 _dbContext.FavoriteProducts.Add(new FavoriteProduct { UserId = userId, Product = product });
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
             }
         }
-        public void Remove(string userId, Product product)
+        public async Task RemoveAsync(string userId, Product product)
         {
-            var existingProduct = _dbContext.FavoriteProducts.FirstOrDefault(p => p.UserId == userId && p.Product == product);
+            var existingProduct = await _dbContext.FavoriteProducts.FirstOrDefaultAsync(p => p.UserId == userId && p.Product == product);
             _dbContext.FavoriteProducts.Remove(existingProduct);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
-        public bool IsFavorite(string userId, Product product)
+        public async Task<bool> IsFavoriteAsync(string userId, Product product)
         {
-            return _dbContext.FavoriteProducts.Any(p => p.UserId == userId && p.Product == product);
+            return await _dbContext.FavoriteProducts.AnyAsync(p => p.UserId == userId && p.Product == product);
         }
-        public List<Product> GetByUserId(string userId)
+        public async Task<List<Product>> GetByUserIdAsync(string userId)
         {
-            return _dbContext.FavoriteProducts.Where(p => p.UserId == userId)
+            return await _dbContext.FavoriteProducts.Where(p => p.UserId == userId)
                 .Include(p => p.Product)
                 .ThenInclude(p => p.Images)
                 .Select(p => p.Product)
-                .ToList();
+                .ToListAsync();
         }
     }
 }
