@@ -15,11 +15,11 @@ namespace VseTShirts.DB
         {
             _dbContext = dbContext;
         }
-        public List<Collection> GetAll()
+        public async Task<List<Collection>> GetAllAsync()
         {
-            return _dbContext.Collections.ToList();
+            return await _dbContext.Collections.ToListAsync();
         }
-        public void Add(Collection collection)
+        public async Task AddAsync(Collection collection)
         {
             if (collection.Description == null)
                 collection.Description = " ";
@@ -28,15 +28,15 @@ namespace VseTShirts.DB
             if (_dbContext.Collections.Where(c => c.Name == collection.Name).Count()>0)
                 return;
             _dbContext.Collections.Add(collection);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
-        public void Clear()
+        public async Task ClearAsync()
         {
-            _dbContext.Collections.ExecuteDelete();
+            await _dbContext.Collections.ExecuteDeleteAsync();
         }
-        public void Edit(int id, Collection newCollection)
+        public async Task EditAsync(int id, Collection newCollection)
         {
-            var lastCollection = _dbContext.Collections.FirstOrDefault(c => c.Id == id);
+            var lastCollection = await _dbContext.Collections.FirstOrDefaultAsync(c => c.Id == id);
             if (lastCollection != null)
             {
                 lastCollection.Description = newCollection.Description;
@@ -44,22 +44,22 @@ namespace VseTShirts.DB
             }
             else
             {
-                throw new InvalidOperationException("Collection not found");
+                throw new InvalidOperationException("Коллекция не найдена!!!!");
             }
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
 
         }
-        public void Delete(string name)
+        public async Task DeleteAsync(string name)
         {
-            var collectionToDelete = _dbContext.Collections.FirstOrDefault(c => c.Name == name);
+            var collectionToDelete = await _dbContext.Collections.FirstOrDefaultAsync(c => c.Name == name);
             if (collectionToDelete != null)
             {
                 _dbContext.Collections.Remove(collectionToDelete);
             }
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void Edit(string name, string newName , string description)
+        public async Task EditAsync(string name, string newName , string description)
         {
             if (_dbContext.Collections.Where(c => c.Name == newName).Count() > 0 || newName == null || name == null)
                 return;
@@ -70,7 +70,7 @@ namespace VseTShirts.DB
             {
                 collection.Name = newName;
                 collection.Description = description;
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
             }
         }
     }

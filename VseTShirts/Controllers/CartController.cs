@@ -20,37 +20,37 @@ namespace VseTShirts.Controllers
             this.cartsStorage = cartsStorage;
             this.userManager = userManager;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var user = userManager.FindByNameAsync(User.Identity.Name).Result;
-            var cart = cartsStorage.GetCartByUserId(user.Id);
+            var user = await userManager.FindByNameAsync(User.Identity.Name);
+            var cart = await cartsStorage.GetCartByUserIdAsync(user.Id);
             return View(cart.ToViewModel());
         }
-        public IActionResult Add(Guid Id)
+        public async Task<IActionResult> AddAsync(Guid Id)
         {
-            Product product = productStorage.GetById(Id);
-            var user = userManager.FindByNameAsync(User.Identity.Name).Result;
-            cartsStorage.Add(product.Id, user.Id);
+            Product product = await productStorage.GetByIdAsync(Id);
+            var user = await userManager.FindByNameAsync(User.Identity.Name);
+            await cartsStorage.AddAsync(product.Id, user.Id);
             return RedirectToAction("Index");
         }
-        public IActionResult Remove(Guid Id)
+        public async Task<IActionResult> RemoveAsync(Guid Id)
         {
-            var product = productStorage.GetById(Id);
-            var user = userManager.FindByNameAsync(User.Identity.Name).Result;
-            cartsStorage.Remove(product.Id, user.Id);
+            var product = await productStorage.GetByIdAsync(Id);
+            var user = await userManager.FindByNameAsync(User.Identity.Name);
+            await cartsStorage.RemoveAsync(product.Id, user.Id);
             return RedirectToAction("Index");
         }
-        public IActionResult RemovePosition(Guid Id)
+        public async Task<IActionResult> RemovePositionAsync(Guid Id)
         {
-            var product = productStorage.GetById(Id);
-            var user = userManager.FindByNameAsync(User.Identity.Name).Result;
-            cartsStorage.RemovePosition(product.Id, user.Id);
+            var product = await productStorage.GetByIdAsync(Id);
+            var user = await userManager.FindByNameAsync(User.Identity.Name);
+            await cartsStorage.RemovePositionAsync(product.Id, user.Id);
             return RedirectToAction("Index");
         }
-        public IActionResult RemoveAll()
+        public async Task<IActionResult> RemoveAllAsync()
         {
-            var user = userManager.FindByNameAsync(User.Identity.Name).Result;
-            cartsStorage.RemoveAll(user.Id);
+            var user = await userManager.FindByNameAsync(User.Identity.Name);
+            await cartsStorage.RemoveAllAsync(user.Id);
             return RedirectToAction("Index");
         }
     }

@@ -15,32 +15,32 @@ namespace VseTShirts.DB
         {
             _dbContext = dbContext;
         }
-        public bool Add(string userId, Product product)
+        public async Task<bool> AddAsync(string userId, Product product)
         {
             var comparedProduct = new ComparedProduct { UserId = userId, product = product };
             if (_dbContext.ComparedProducts.Where(p => p.UserId == comparedProduct.UserId).Count() < 2)
             {
-                _dbContext.ComparedProducts.Add(comparedProduct);
-                _dbContext.SaveChanges();
+                await _dbContext.ComparedProducts.AddAsync(comparedProduct);
+                await _dbContext.SaveChangesAsync();
                 return true;
             }
             return false;
         }
-        public bool Delete(string userId)
+        public async Task<bool> DeleteAsync(string userId)
         {
             var products = (_dbContext.ComparedProducts.Where(p => p.UserId == userId));
             if (products.Count() > 0)
             {
                 _dbContext.ComparedProducts.RemoveRange(products);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 //Console.WriteLine($"Найдено {_dbContext.ComparedProducts.Where(p => p.UserId == userId).Count()} продуктов");
                 return true;
             }
             return false;
         }
-        public List<Product> GetByUserId(string userId)
+        public async Task<List<Product>> GetByUserIdAsync(string userId)
         {
-            var comparedProducts = _dbContext.ComparedProducts.Include(p=>p.product).ThenInclude(p => p.Images).Where(p => p.UserId == userId).ToList();
+            var comparedProducts = await _dbContext.ComparedProducts.Include(p=>p.product).ThenInclude(p => p.Images).Where(p => p.UserId == userId).ToListAsync();
             return Mapping.ToProducts(comparedProducts);
         }
     }

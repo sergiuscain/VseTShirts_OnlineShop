@@ -18,25 +18,25 @@ namespace VseTShirts.Controllers
             _productsStorage = productsStorage;
             _userManager = userManager;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
-            var favoriteProducts = _favoriteProductsStorage.GetByUserId(user.Id);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var favoriteProducts = await _favoriteProductsStorage.GetByUserIdAsync(user.Id);
             var favoriteProductsViewModel = Helper.ToViewModel(favoriteProducts);
             return View(favoriteProductsViewModel);
         }
-        public IActionResult Add(Guid Id)
+        public async Task<IActionResult> AddAsync(Guid Id)
         {
-            var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
-            var product = _productsStorage.GetById(Id);
-            _favoriteProductsStorage.Add(user.Id, product);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var product = await _productsStorage.GetByIdAsync(Id);
+            await _favoriteProductsStorage.AddAsync(user.Id, product);
             return RedirectToAction("Index");
         }
-        public IActionResult Remove(Guid Id)
+        public async Task<IActionResult> RemoveAsync(Guid Id)
         {
-            var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
-            var product = _productsStorage.GetById(Id);
-            _favoriteProductsStorage.Remove(user.Id, product);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var product = await _productsStorage.GetByIdAsync(Id);
+            await _favoriteProductsStorage.RemoveAsync(user.Id, product);
             return RedirectToAction("Index");
         }
     }

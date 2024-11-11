@@ -25,7 +25,7 @@ namespace VseTShirts.Controllers
         }
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var filters = new FiltersViewModel
             {
@@ -39,8 +39,8 @@ namespace VseTShirts.Controllers
                 MinQuantity = 0,
                 MaxQuantity = 0,
             };
-            var productsViewModel = _productStorage.GetAll().ToViewModel();
-            List<CollectionViewModel> collections = _collectionsStorage.GetAll().Select(c => c.ToViewModel()).ToList();
+            var productsViewModel = (await _productStorage.GetAllAsync()).ToViewModel();
+            List<CollectionViewModel> collections = (await _collectionsStorage.GetAllAsync()).Select(c => c.ToViewModel()).ToList();
             var homeIndexModel = new HomeIndexViewModel { Products = productsViewModel, Filters = filters, CollectionsList = collections, IsActiveFilters = false};
             return View(homeIndexModel);
         }
@@ -56,46 +56,46 @@ namespace VseTShirts.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
         [Authorize]
-        public IActionResult Compare(Guid Id)
+        public async Task<IActionResult> CompareAsync(Guid Id)
         {
-            var product1 = _productStorage.GetById(Id);
-            var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
-            if (_comparedStorage.Add(user.Id, product1))
+            var product1 = await _productStorage.GetByIdAsync(Id);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            if (await _comparedStorage.AddAsync(user.Id, product1))
             {
-                var products = _comparedStorage.GetByUserId(user.Id);
+                var products = await _comparedStorage.GetByUserIdAsync(user.Id);
                 if (products.Count < 2)
                     return RedirectToAction("Index");
                 else
                     return View(products.ToViewModel());
             }
-            return View(_comparedStorage.GetByUserId(user.Id).ToViewModel());
+            return View((await _comparedStorage.GetByUserIdAsync(user.Id)).ToViewModel());
         }
 
-        public IActionResult RemoveCompare()
+        public async Task<IActionResult> RemoveCompareAsync()
         {
-            var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
-            _comparedStorage.Delete(user.Id);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            await _comparedStorage.DeleteAsync(user.Id);
             return RedirectToAction("Index");
         }
 
-        public IActionResult Search(string serachTxt)
+        public async Task<IActionResult> SearchAsync(string serachTxt)
         {
-            var products = _productStorage.GetAll();
+            var products = await _productStorage.GetAllAsync();
             if (!string.IsNullOrEmpty(serachTxt)) 
                 products = products.Where(p => p.Name.ToLower().Contains(serachTxt.ToLower())).ToList();
-            List<CollectionViewModel> collections = _collectionsStorage.GetAll().Select(c => c.ToViewModel()).ToList();
+            List<CollectionViewModel> collections = (await _collectionsStorage.GetAllAsync()).Select(c => c.ToViewModel()).ToList();
             var homeIndexViewModel = new HomeIndexViewModel { Products = products.ToViewModel(), CollectionsList = collections };
             return View("Index", homeIndexViewModel);
         }
-        public IActionResult Filter(FiltersViewModel filters)
+        public async Task<IActionResult> FilterAsync(FiltersViewModel filters)
         {
-            var products = _productStorage.GetAll();        
-            var filtredProducts = _productStorage.Filtr(products, filters.ToDBModel());
-            List<CollectionViewModel> collections = _collectionsStorage.GetAll().Select(c => c.ToViewModel()).ToList();
+            var products = await _productStorage.GetAllAsync();        
+            var filtredProducts = await _productStorage.FiltrAsync(products, filters.ToDBModel());
+            List<CollectionViewModel> collections = (await _collectionsStorage.GetAllAsync()).Select(c => c.ToViewModel()).ToList();
             var homeIndexViewModel = new HomeIndexViewModel { Products = filtredProducts.ToViewModel(), Filters = filters, CollectionsList = collections };
             return View("Index", homeIndexViewModel);
         }
-        public IActionResult Collection(string name)
+        public async Task<IActionResult> CollectionAsync(string name)
         {
             var filters = new FiltersViewModel
             {
@@ -109,8 +109,8 @@ namespace VseTShirts.Controllers
                 MinQuantity = 0,
                 MaxQuantity = 0,
             };
-            var products = _productStorage.GetByCollection(name).ToViewModel();
-            List<CollectionViewModel> collections = _collectionsStorage.GetAll().Select(c => c.ToViewModel()).ToList();
+            var products = (await _productStorage.GetByCollectionAsync(name)).ToViewModel();
+            List<CollectionViewModel> collections = (await _collectionsStorage.GetAllAsync()).Select(c => c.ToViewModel()).ToList();
             var homeIndexModel = new HomeIndexViewModel { Products = products, Filters = filters, CollectionsList = collections, IsActiveFilters = false };
             return View(homeIndexModel);
         }

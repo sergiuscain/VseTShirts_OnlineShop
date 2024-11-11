@@ -15,12 +15,12 @@ namespace VseTShirts.Views.Shared.ViewComponents.CartViewComponents
             favoriteProductsStorage = _favoriteProductsStorage;
             userManager = _userManager;
         }
-        public IViewComponentResult Invoke()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
             try 
             {
-                var user = userManager.FindByNameAsync(User.Identity.Name).Result;
-                int productsCount = favoriteProductsStorage.GetByUserId(user.Id).Count;
+                var user = await userManager.FindByNameAsync(User.Identity.Name);
+                int productsCount = (await favoriteProductsStorage.GetByUserIdAsync(user.Id)).Count;
                 return View("FavoriteProductsCountView",productsCount);
             }
             catch

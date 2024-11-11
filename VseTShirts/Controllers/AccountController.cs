@@ -33,7 +33,7 @@ namespace VseTShirts.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login( LoginModel login)
+        public IActionResult LoginAsync( LoginModel login)
         {
             if (ModelState.IsValid)
             {
@@ -58,7 +58,7 @@ namespace VseTShirts.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(RegisterModel register)
+        public IActionResult RegisterAsync(RegisterModel register)
         {
             if (register.UserName == register.Password)
             {

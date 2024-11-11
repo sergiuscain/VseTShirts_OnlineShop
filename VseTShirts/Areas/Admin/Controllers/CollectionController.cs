@@ -16,40 +16,40 @@ namespace VseTShirts.Areas.Admin.Controllers
             _collections = collections;
             _products = productsStorage;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var collections = _collections.GetAll();
+            var collections = await _collections.GetAllAsync();
             var collectionsVM = collections.Select(c => c.ToViewModel()).ToList();
             return View(collectionsVM);
         }
         [HttpPost]
-        public IActionResult Add(int id, string description, string name)
+        public async Task<IActionResult> AddAsync(int id, string description, string name)
         {
-            _collections.Add(new DB.Models.Collection { Count = 0, Name = name, Description = description });
+            await _collections.AddAsync(new DB.Models.Collection { Count = 0, Name = name, Description = description });
             return RedirectToAction("Index");
         }
-        public IActionResult Delete(string name)
+        public async Task<IActionResult> DeleteAsync(string name)
         {
-            _collections.Delete(name);
-            _products.RemoveCollectionFromProducts(name);
+            await _collections.DeleteAsync(name);
+            await _products.RemoveCollectionFromProductsAsync(name);
             return RedirectToAction("Index");
         }
-        public IActionResult Products(string name)
+        public async Task<IActionResult> ProductsAsync(string name)
         {
-            var products = _products.GetByCollection(name);
+            var products = await _products.GetByCollectionAsync(name);
             var productsVM = products.ToViewModel();
             return View(productsVM);
         }
         [HttpPost]
-        public IActionResult Edit(string name, string newName, string description)
+        public async Task<IActionResult> EditAsync(string name, string newName, string description)
         {
-            _collections.Edit(name, newName, description);
+            await _collections.EditAsync(name, newName, description);
             return RedirectToAction("Index");
         }
-        public IActionResult AddProducts(string name)
+        public async Task<IActionResult> AddProductsAsync(string name)
         {
-            var allProducts = _products.GetAll();
-            var productsInCollection = _products.GetByCollection(name);
+            var allProducts = await _products.GetAllAsync();
+            var productsInCollection = await _products.GetByCollectionAsync(name);
             var productsNotInCollection = allProducts.Except(productsInCollection).ToList();
             var addProductsViewModel = new ProductsOfCollection 
             { 
@@ -58,18 +58,18 @@ namespace VseTShirts.Areas.Admin.Controllers
             };
             return View(addProductsViewModel);
         }
-        public IActionResult AddProduct(string idAndCollectionName)
+        public async Task<IActionResult> AddProductAsync(string idAndCollectionName)
         {
             var collectionName = idAndCollectionName.Split('*').Last();
             var productId = Guid.Parse(idAndCollectionName.Split('*').First());
-             _products.AddProductToCollection(productId, collectionName);
+            await _products.AddProductToCollectionAsync(productId, collectionName);
             return RedirectToAction("AddProducts", new { name = collectionName });
         }
-        public IActionResult DeleteProduct(string idAndCollectionName)
+        public async Task<IActionResult> DeleteProductAsync(string idAndCollectionName)
         {
             var collectionName = idAndCollectionName.Split('*').Last();
             var productId = Guid.Parse(idAndCollectionName.Split('*').First());
-            _products.DeleteProductFromCollection(productId, collectionName);
+            await _products.DeleteProductFromCollectionAsync(productId, collectionName);
             return RedirectToAction("AddProducts", new { name = collectionName });
         }
     }

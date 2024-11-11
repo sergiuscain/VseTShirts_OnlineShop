@@ -26,7 +26,7 @@ namespace VseTShirts.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Buy(DeliveryInfo deliveryInfo)
+        public async Task<IActionResult> BuyAsync(DeliveryInfo deliveryInfo)
         {
             if (!ModelState.IsValid)
             {
@@ -46,7 +46,7 @@ namespace VseTShirts.Controllers
             return View(deliveryInfo);
         }
 
-        public async Task<IActionResult> Order(Guid id)
+        public async Task<IActionResult> OrderAsync(Guid id)
         {
             var order = await ordersStorage.GetByIdAsync(id);
             return View(order.ToViewModel());

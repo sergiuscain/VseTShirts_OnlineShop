@@ -14,12 +14,12 @@ namespace VseTShirts.Views.Shared.Components.CalcCartCount
             _cartStorage = cartStorage;
             this.userManager = userManager;
         }
-        public IViewComponentResult Invoke()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
             try
             {
-                var user = userManager.FindByNameAsync(User.Identity.Name).Result;
-                var cart = _cartStorage.GetCartByUserId(user.Id);//.Positions.Count();
+                var user = await userManager.FindByNameAsync(User.Identity.Name);
+                var cart = await _cartStorage.GetCartByUserIdAsync(user.Id);//.Positions.Count();
                 var positions = cart == null ? null : cart.Positions;
                 int count = positions == null ? 0 : Helper.ToViewModel(cart).productsCountInCart;
                 return View("CalcCartCountViewComponent", count);

@@ -27,15 +27,15 @@ namespace VseTShirts.Areas.Admin.Controllers
             var model =  new UserIndexViewModel { Users = users.Select(u => u.ToViewModel()).ToList(), Roles = roles.Select(r => new RoleViewModel { Name = r.Name }).ToList() };
             return View(model);
         }
-        public IActionResult ChangePassword(string Email)
+        public async Task<IActionResult> ChangePasswordAsync(string Email)
         {
-            var user = userManager.FindByEmailAsync(Email).Result;
+            var user = await userManager.FindByEmailAsync(Email);
             var changeData = new ChangePasswordViewModel { Email = Email,  OldPassword = "@Admin2024!!"};
             return View(changeData);
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel data)
+        public async Task<IActionResult> ChangePasswordAsync(ChangePasswordViewModel data)
         {
             if (!ModelState.IsValid)
             {
@@ -44,26 +44,26 @@ namespace VseTShirts.Areas.Admin.Controllers
             var user = await userManager.FindByEmailAsync(data.Email);
             var newHashPassword = userManager.PasswordHasher.HashPassword(user, data.NewPassword);
             user.PasswordHash = newHashPassword;
-            userManager.UpdateAsync(user).Wait();
+            await userManager.UpdateAsync(user);
             return View("passwordSuccessfullyChanged");
         }
             public IActionResult Block(uint id)
         {
             return View();
         }
-        public IActionResult Del(string Email)
+        public async Task<IActionResult> DelAsync(string Email)
         {
-            var user = userManager.FindByEmailAsync(Email);
-            userManager.DeleteAsync(user.Result).Wait();
+            var user = await userManager.FindByEmailAsync(Email);
+            await userManager.DeleteAsync(user);
             return RedirectToAction("Index");
         }
-        public IActionResult EditRole(string RoleName ,string Email)
+        public async Task<IActionResult> EditRoleAsync(string RoleName ,string Email)
         {
-            var user = userManager.FindByEmailAsync(Email).Result;
-            var userRoles = userManager.GetRolesAsync(user).Result;
+            var user = await userManager.FindByEmailAsync(Email);
+            var userRoles = await userManager.GetRolesAsync(user);
             user.Role = RoleName;
-            var result = userManager.RemoveFromRolesAsync(user, userRoles).Result;
-            userManager.AddToRoleAsync(user, RoleName).Wait();
+            var result = await userManager.RemoveFromRolesAsync(user, userRoles);
+            await userManager.AddToRoleAsync(user, RoleName);
             return RedirectToAction("Index");
         }
     }

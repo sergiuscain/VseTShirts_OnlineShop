@@ -19,7 +19,7 @@ namespace VseTShirts.DB
         public async Task AddAsync(Guid productId, string userId)
         {
 
-            var existingCart = GetCartByUserIdAsync(userId);
+            var existingCart = await GetCartByUserIdAsync(userId);
             var product = await _dbContext.Products.Include(p => p.Images).FirstOrDefaultAsync(p => p.Id == productId);
             if (existingCart == null)
             {
@@ -30,22 +30,22 @@ namespace VseTShirts.DB
             }
             else
             {
-                var existingCartItem = await existingCart?.Positions?.FirstOrDefaultAsync(p => p.Product.Id == product.Id);
-                if (existingCartItem != null)
+                var existingPositions =  existingCart.Positions.FirstOrDefault(p => p.Product.Id == product.Id);
+                if (existingPositions != null)
                 {
-                    existingCartItem.Quantity++;
+                    existingPositions.Quantity++;
                 }
                 else
                 {
                     existingCart.Positions.Add(new CartPosition{ Name = product.Name, Product = product, Quantity = 1 });
                 }
             }
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
         }
 
-        public void RemoveAsync(Guid productId, string userId)
+        public async Task RemoveAsync(Guid productId, string userId)
         {
-            var cart = GetCartByUserIdAsync(userId);
+            var cart = await GetCartByUserIdAsync(userId);
             var cartItem = cart.Positions.FirstOrDefault(p => p.Product.Id == productId);
             cartItem.Quantity--;
             if (cartItem.Quantity <= 0)
@@ -57,25 +57,25 @@ namespace VseTShirts.DB
             {
                 _dbContext.Carts.Remove(cart);
             }
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
-        public void RemovePosition(Guid productId, string usertId)
+        public async Task RemovePositionAsync(Guid productId, string usertId)
         {
-            var cart = GetCartByUserIdAsync(usertId);
+            var cart = await GetCartByUserIdAsync(usertId);
             var removedCartPosition = cart.Positions.FirstOrDefault(p => p.Product.Id == productId);
             cart.Positions.Remove(removedCartPosition);
             if (cart.Positions.Count <= 0)
             {
                 _dbContext.Carts.Remove(cart);
             }
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void RemoveAllAsync(string userId)
+        public async Task RemoveAllAsync(string userId)
         {
-            Cart removedCart = GetCartByUserIdAsync(userId);
+            Cart removedCart = await GetCartByUserIdAsync(userId);
             _dbContext.Carts.Remove(removedCart);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task AddAsync(string productName, string userId)
@@ -92,7 +92,7 @@ namespace VseTShirts.DB
             }
             else
             {
-                var existingCartItem = await existingCart?.Positions?.FirstOrDefaultAsync(p => p.Product.Name == productName);
+                var existingCartItem =  existingCart?.Positions?.FirstOrDefault(p => p.Product.Name == productName);
                 if (existingCartItem != null)
                 {
                     existingCartItem.Quantity++;
