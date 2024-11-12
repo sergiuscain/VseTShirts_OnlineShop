@@ -77,7 +77,7 @@
      <h6>Страницу оформления заказа надо бы переделать*</h6>
      <img src="https://github.com/user-attachments/assets/5493842b-3924-4822-a22d-0959aa3a679a">
 <h1>Панель админа.</h1>
-<h4>Содержимое панели админа доступна только админам!!</h4>
+<h4>Содержимое панели админа доступно только админам!!</h4>
   <img src="https://github.com/user-attachments/assets/f0fb104a-a98c-46bc-8574-7cfed647b258">
   <img src="https://github.com/user-attachments/assets/ce8ff1c7-fdc8-47b7-8456-831463c4036a">
   <img src="https://github.com/user-attachments/assets/73be3244-52fc-4a40-836a-86f432c66984">
